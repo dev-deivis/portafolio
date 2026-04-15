@@ -1,11 +1,55 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout        from '../layouts/Layout.astro';
+import BlobBackground from '../components/BlobBackground.astro';
+import IntroScreen   from '../components/IntroScreen.astro';
+import Navbar        from '../components/Navbar.astro';
+import Hero          from '../components/Hero.astro';
+import About         from '../components/About.astro';
+import Skills        from '../components/Skills.astro';
+import Projects      from '../components/Projects.astro';
+import Services      from '../components/Services.astro';
+import Contact       from '../components/Contact.astro';
 ---
 
 <Layout>
-	<Welcome />
+  <BlobBackground />
+  <IntroScreen />
+
+  <div id="main-portfolio" class="portfolio hidden">
+    <Navbar />
+    <main>
+      <Hero />
+      <About />
+      <Skills />
+      <Projects />
+      <Services />
+      <Contact />
+    </main>
+  </div>
 </Layout>
+
+<style is:global>
+  .portfolio {
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  .portfolio.show {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  import { initGSAP } from '../scripts/gsap-init';
+
+  const portfolio = document.getElementById('main-portfolio')!;
+
+  window.addEventListener('portfolio:open', () => {
+    portfolio.classList.remove('hidden');
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        portfolio.classList.add('show');
+        initGSAP();
+      })
+    );
+  });
+</script>

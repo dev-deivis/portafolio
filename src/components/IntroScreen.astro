@@ -1,0 +1,233 @@
+<!-- Pantalla de carga inicial con secuencia animada -->
+<div id="intro-screen" class="intro-screen">
+  <div class="intro-content">
+    <div class="logo-intro">DEV.SYS</div>
+
+    <div class="loading-sequence">
+      <p class="loading-text" id="loading-text-1">Inicializando Portafolio...</p>
+      <p class="loading-text hidden" id="loading-text-2">Cargando Módulos...</p>
+      <div class="loading-bar hidden" id="loading-bar">
+        <div class="loading-progress"></div>
+      </div>
+      <p class="loading-text hidden access-granted" id="loading-text-3">Acceso Concedido</p>
+    </div>
+
+    <button id="open-portfolio-btn" class="btn-open-portfolio hidden">
+      Abrir Portafolio
+    </button>
+
+    <div class="system-status">
+      <span>SYSTEM READY</span>
+      <span class="time-display" id="time-display">00:00:00</span>
+    </div>
+  </div>
+
+  <div class="scanlines" aria-hidden="true"></div>
+</div>
+
+<style>
+  .intro-screen {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .intro-screen.fade-out {
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none;
+  }
+
+  .intro-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    padding: 2rem;
+  }
+
+  .logo-intro {
+    font-family: var(--mono);
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    color: var(--c-cyan);
+    text-shadow: 0 0 30px rgba(0, 229, 255, 0.5);
+    margin-bottom: 2.5rem;
+    animation: glitch 4s infinite;
+  }
+
+  @keyframes glitch {
+    0%, 88%, 100% { transform: translate(0); }
+    90%  { transform: translate(-2px,  2px); }
+    92%  { transform: translate( 2px, -2px); }
+    94%  { transform: translate(-2px, -2px); }
+    96%  { transform: translate( 2px,  2px); }
+  }
+
+  .loading-sequence {
+    margin: 2rem 0;
+  }
+
+  .loading-text {
+    font-family: var(--mono);
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin: 1rem 0;
+    min-height: 1.5rem;
+    transition: opacity 0.5s ease;
+  }
+  .loading-text.hidden {
+    opacity: 0;
+    display: none;
+  }
+
+  .access-granted {
+    color: var(--c-green);
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-shadow: 0 0 30px rgba(0, 255, 163, 0.6);
+    animation: blink 1.5s infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.5; }
+  }
+
+  .loading-bar {
+    width: 280px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    margin: 1.5rem auto;
+    overflow: hidden;
+  }
+  .loading-progress {
+    height: 100%;
+    border-radius: 10px;
+    background: var(--grad-main);
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.7);
+    animation: barFill 2s ease forwards;
+  }
+  @keyframes barFill {
+    from { width: 0%; }
+    to   { width: 100%; }
+  }
+
+  .btn-open-portfolio {
+    margin-top: 2rem;
+    padding: 1rem 3rem;
+    background: var(--grad-main);
+    color: var(--bg);
+    font-size: 1.1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
+    font-family: var(--font);
+  }
+  .btn-open-portfolio.show {
+    opacity: 1;
+    transform: translateY(0);
+    animation: btnGlow 2s infinite;
+  }
+  .btn-open-portfolio:hover {
+    transform: translateY(-5px) scale(1.05) !important;
+    box-shadow: 0 10px 40px rgba(0, 229, 255, 0.5);
+  }
+  @keyframes btnGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(0, 229, 255, 0.3); }
+    50%       { box-shadow: 0 0 40px rgba(0, 229, 255, 0.7); }
+  }
+
+  .system-status {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--c-green);
+    display: flex;
+    gap: 1.5rem;
+    opacity: 0.7;
+  }
+  .time-display {
+    color: var(--c-cyan);
+  }
+
+  .scanlines {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      transparent 50%,
+      rgba(0, 229, 255, 0.015) 50%
+    );
+    background-size: 100% 4px;
+    animation: scanMove 12s linear infinite;
+    opacity: 0.4;
+  }
+  @keyframes scanMove {
+    from { background-position: 0 0; }
+    to   { background-position: 0 100%; }
+  }
+</style>
+
+<script>
+  const introScreen = document.getElementById('intro-screen')!;
+  const t2          = document.getElementById('loading-text-2')!;
+  const t3          = document.getElementById('loading-text-3')!;
+  const bar         = document.getElementById('loading-bar')!;
+  const openBtn     = document.getElementById('open-portfolio-btn')!;
+  const timeEl      = document.getElementById('time-display')!;
+
+  /* Reloj */
+  function tick() {
+    const d  = new Date();
+    const hh = String(d.getHours()).padStart(2, '0');
+    const mm = String(d.getMinutes()).padStart(2, '0');
+    const ss = String(d.getSeconds()).padStart(2, '0');
+    timeEl.textContent = `${hh}:${mm}:${ss}`;
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  /* Secuencia de carga */
+  setTimeout(() => {
+    t2.classList.remove('hidden');
+    bar.classList.remove('hidden');
+  }, 600);
+
+  setTimeout(() => t3.classList.remove('hidden'), 1600);
+
+  setTimeout(() => {
+    openBtn.classList.remove('hidden');
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => openBtn.classList.add('show'))
+    );
+  }, 2200);
+
+  /* Entrada automática si el usuario no hace clic */
+  const autoTimer = setTimeout(launch, 6000);
+
+  function launch() {
+    if (introScreen.classList.contains('fade-out')) return;
+    clearTimeout(autoTimer);
+    introScreen.classList.add('fade-out');
+    setTimeout(() => {
+      introScreen.style.display = 'none';
+      /* Notifica al resto de la página */
+      window.dispatchEvent(new CustomEvent('portfolio:open'));
+    }, 900);
+  }
+
+  openBtn.addEventListener('click', launch);
+</script>

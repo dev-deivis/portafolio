@@ -1,0 +1,380 @@
+---
+interface Slide {
+  type: 'img' | 'video';
+  src: string;
+  alt?: string;
+}
+
+interface Project {
+  id:        string;
+  title:     string;
+  desc:      string;
+  tech:      string[];
+  links:     { label: string; href: string; primary?: boolean }[];
+  slides:    Slide[];
+  featured?: boolean;
+}
+
+const projects: Project[] = [
+  {
+    id: 'hackathon',
+    featured: true,
+    title: 'Plataforma de Gestión de Hackathones',
+    desc: 'Sistema completo para gestionar eventos de hackathones desde el registro de participantes hasta la evaluación de proyectos y generación automática de constancias en PDF.',
+    tech: ['Laravel 11', 'PostgreSQL', 'Supabase', 'TailwindCSS', 'Alpine.js', 'Railway'],
+    links: [
+      { label: 'Demo en Vivo',   href: 'https://web-production-ef44a.up.railway.app/', primary: true },
+      { label: 'Código Fuente',  href: 'https://github.com/dev-deivis/hackathon-events' },
+    ],
+    slides: [
+      { type: 'video', src: '/assets/videos/hackathon-demo.mp4' },
+      { type: 'img', src: '/assets/images/projects/hackathon-home.png',      alt: 'Home' },
+      { type: 'img', src: '/assets/images/projects/hackathon-dashboard.png', alt: 'Dashboard' },
+      { type: 'img', src: '/assets/images/projects/hackathon-teams.png',     alt: 'Equipos' },
+      { type: 'img', src: '/assets/images/projects/hackathon-admin.png',     alt: 'Admin' },
+      { type: 'img', src: '/assets/images/projects/hackathon-rankings.png',  alt: 'Rankings' },
+    ],
+  },
+  {
+    id: 'pacman',
+    title: 'Pac-Man Game',
+    desc: 'Recreación del clásico juego Pac-Man con gráficos 3D usando OpenGL, incluyendo IA de fantasmas y sistema de colisiones.',
+    tech: ['C++', 'OpenGL', 'GLFW'],
+    links: [{ label: 'Ver en GitHub', href: 'https://github.com/dev-deivis/pacman-opengl' }],
+    slides: [
+      { type: 'video', src: '/assets/videos/pacman-demo.mp4' },
+      { type: 'img', src: '/assets/images/projects/pacman-1.png', alt: 'Gameplay' },
+      { type: 'img', src: '/assets/images/projects/pacman-2.png', alt: 'Fantasmas' },
+      { type: 'img', src: '/assets/images/projects/pacman-3.png', alt: 'Vista 3D' },
+    ],
+  },
+  {
+    id: 'laberinto',
+    title: 'Laberinto Cúbico 3D',
+    desc: 'Laberinto interactivo en las 6 caras de un cubo con navegación en primera persona y física realista.',
+    tech: ['C++', 'OpenGL', '3D Graphics'],
+    links: [{ label: 'Ver Detalles', href: '#' }],
+    slides: [
+      { type: 'video', src: '/assets/videos/laberinto-demo.mp4' },
+      { type: 'img', src: '/assets/images/projects/laberinto-1.png', alt: 'Laberinto' },
+      { type: 'img', src: '/assets/images/projects/laberinto-2.png', alt: 'Vista 3D' },
+      { type: 'img', src: '/assets/images/projects/laberinto-3.png', alt: 'Navegación' },
+    ],
+  },
+  {
+    id: 'volaris',
+    title: 'Clon Volaris — Sistema de Reservaciones',
+    desc: 'Réplica completa de la interfaz principal de Volaris. Diseño responsive fiel al original.',
+    tech: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design'],
+    links: [
+      { label: 'Demo en Vivo',  href: 'https://wise-owl-dev.github.io/volaris_equipo8/', primary: true },
+      { label: 'Código Fuente', href: 'https://github.com/wise-owl-dev/volaris_equipo8' },
+    ],
+    slides: [
+      { type: 'img', src: '/assets/images/projects/volaris-1.png', alt: 'Home' },
+      { type: 'img', src: '/assets/images/projects/volaris-2.png', alt: 'Búsqueda' },
+      { type: 'img', src: '/assets/images/projects/volaris-3.png', alt: 'Reservación' },
+    ],
+  },
+  {
+    id: 'voces',
+    title: 'Voces Indígenas — Preservación Lingüística',
+    desc: 'Plataforma web educativa para la documentación y preservación de 6 lenguas indígenas mexicanas en peligro de extinción. Incluye mapa interactivo y análisis de crisis.',
+    tech: ['HTML5', 'CSS3', 'JavaScript', 'Leaflet.js', 'Responsive'],
+    links: [
+      { label: 'Ver Página', href: 'https://dev-deivis.github.io/voces_indigenas/', primary: true },
+      { label: 'Ver Código', href: 'https://github.com/dev-deivis/voces_indigenas' },
+    ],
+    slides: [
+      { type: 'img', src: '/assets/images/projects/voces-1.png', alt: 'Home' },
+      { type: 'img', src: '/assets/images/projects/voces-2.png', alt: 'Mapa' },
+      { type: 'img', src: '/assets/images/projects/voces-3.png', alt: 'Perfiles' },
+      { type: 'img', src: '/assets/images/projects/voces-4.png', alt: 'Crisis' },
+    ],
+  },
+];
+---
+
+<section id="projects" class="projects reveal-section">
+  <div class="container-wide">
+    <h2 class="section-title">Portafolio de Proyectos</h2>
+
+    <div class="grid">
+      {projects.map((p) => (
+        <article
+          class={`glass-card project-card ${p.featured ? 'featured' : ''}`}
+          data-project-id={p.id}
+        >
+          {p.featured && <div class="badge">★ DESTACADO</div>}
+
+          <!-- Carrusel -->
+          <div class="carousel">
+            <div class="track">
+              {p.slides.map((s, i) => (
+                <div class={`slide ${i === 0 ? 'active' : ''}`}>
+                  {s.type === 'video'
+                    ? <video src={import.meta.env.BASE_URL + s.src.slice(1)} autoplay muted loop playsinline></video>
+                    : <img src={import.meta.env.BASE_URL + s.src.slice(1)} alt={s.alt ?? p.title} loading="lazy" />
+                  }
+                </div>
+              ))}
+            </div>
+            <button class="car-btn prev" aria-label="Anterior">‹</button>
+            <button class="car-btn next" aria-label="Siguiente">›</button>
+            <div class="dots"></div>
+          </div>
+
+          <!-- Info -->
+          <div class="info">
+            <h3 class="project-title">{p.title}</h3>
+            <p class="project-desc">{p.desc}</p>
+            <ul class="tech-list" aria-label="Tecnologías">
+              {p.tech.map((t) => <li>{t}</li>)}
+            </ul>
+            <div class="project-btns">
+              {p.links.map(({ label, href, primary }) => (
+                <a
+                  href={href}
+                  target={href.startsWith('http') ? '_blank' : undefined}
+                  rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  class={primary ? 'btn-project-primary' : 'btn-project-secondary'}
+                >
+                  {label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects { background: rgba(0, 0, 0, 0.1); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .project-card {
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    padding: 0;
+    position: relative;
+  }
+  .project-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(108, 99, 255, 0.4);
+    box-shadow: 0 24px 70px rgba(108, 99, 255, 0.18);
+  }
+  .project-card.featured {
+    grid-column: span 2;
+  }
+
+  /* Badge */
+  .badge {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    z-index: 10;
+    background: linear-gradient(135deg, #00E5FF, #00FFA3);
+    color: var(--bg);
+    padding: 0.38rem 1.1rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    box-shadow: 0 4px 16px rgba(0, 255, 163, 0.4);
+    animation: badgePulse 2.5s infinite;
+  }
+  @keyframes badgePulse {
+    0%, 100% { box-shadow: 0 4px 16px rgba(0, 255, 163, 0.3); }
+    50%       { box-shadow: 0 4px 28px rgba(0, 255, 163, 0.6); }
+  }
+
+  /* Carousel */
+  .carousel {
+    position: relative;
+    width: 100%;
+    height: 260px;
+    overflow: hidden;
+    border-radius: 23px 23px 0 0;
+    background: rgba(0, 0, 0, 0.3);
+  }
+  .project-card.featured .carousel { height: 350px; }
+
+  .track { position: relative; width: 100%; height: 100%; }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .slide.active {
+    opacity: 1;
+    z-index: 1;
+  }
+  .slide img,
+  .slide video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .slide video { object-fit: contain; }
+
+  .car-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 229, 255, 0.22);
+    border: 2px solid var(--c-cyan);
+    color: var(--text);
+    font-size: 1.6rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    transition: all var(--ease);
+  }
+  .car-btn:hover {
+    background: var(--c-cyan);
+    color: var(--bg);
+    transform: translateY(-50%) scale(1.1);
+  }
+  .prev { left: 0.7rem; }
+  .next { right: 0.7rem; }
+
+  .dots {
+    position: absolute;
+    bottom: 0.6rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    z-index: 5;
+  }
+
+  /* Info */
+  .info { padding: 1.8rem; }
+
+  .project-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.7rem;
+    line-height: 1.3;
+  }
+  .project-card.featured .project-title { font-size: 1.55rem; }
+
+  .project-desc {
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    font-size: 0.92rem;
+  }
+
+  .tech-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 1.2rem;
+  }
+  .tech-list li {
+    padding: 0.28rem 0.8rem;
+    background: rgba(108, 99, 255, 0.16);
+    border: 1px solid rgba(108, 99, 255, 0.4);
+    border-radius: 20px;
+    font-size: 0.72rem;
+    color: var(--c-purple);
+    font-weight: 600;
+    font-family: var(--mono);
+  }
+
+  .project-btns {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .project-card.featured { grid-column: span 2; }
+  }
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+    .project-card.featured { grid-column: span 1; }
+  }
+</style>
+
+<script>
+  /* Carousel universal: cada .carousel es independiente */
+  document.querySelectorAll<HTMLElement>('.carousel').forEach((carousel) => {
+    const slides    = carousel.querySelectorAll<HTMLElement>('.slide');
+    const dotsEl    = carousel.querySelector<HTMLElement>('.dots')!;
+    const prevBtn   = carousel.querySelector<HTMLButtonElement>('.prev')!;
+    const nextBtn   = carousel.querySelector<HTMLButtonElement>('.next')!;
+    let   current   = 0;
+    let   timer: ReturnType<typeof setInterval>;
+
+    /* Crear dots dinámicamente */
+    slides.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.className = i === 0 ? 'dot active' : 'dot';
+      dot.addEventListener('click', () => go(i));
+      dotsEl.appendChild(dot);
+    });
+
+    const getDots = () => dotsEl.querySelectorAll<HTMLElement>('.dot');
+
+    function go(n: number) {
+      slides[current].classList.remove('active');
+      getDots()[current].classList.remove('active');
+      current = (n + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      getDots()[current].classList.add('active');
+    }
+
+    function startAuto() {
+      timer = setInterval(() => go(current + 1), 5000);
+    }
+    function resetAuto() {
+      clearInterval(timer);
+      startAuto();
+    }
+
+    prevBtn.addEventListener('click', () => { go(current - 1); resetAuto(); });
+    nextBtn.addEventListener('click', () => { go(current + 1); resetAuto(); });
+
+    startAuto();
+  });
+
+  /* Estilos de los dots (scoped no alcanza a elementos dinámicos) */
+  const style = document.createElement('style');
+  style.textContent = `
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      border: 1.5px solid rgba(255,255,255,0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+    .dot.active {
+      background: #00E5FF;
+      border-color: #00E5FF;
+      box-shadow: 0 0 8px rgba(0,229,255,0.7);
+    }
+  `;
+  document.head.appendChild(style);
+</script>

@@ -1,0 +1,112 @@
+<!--
+  Fondo ambiental — Ribbons volumétricos 3D.
+  Técnica: Path2D reutilizable + capas de lineWidth decreciente.
+  El grosor va de muy ancho/transparente → delgado/brillante,
+  creando la ilusión de volumen y profundidad de seda.
+-->
+<canvas id="blob-canvas" aria-hidden="true"></canvas>
+
+<style>
+  #blob-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  const canvas = document.getElementById('blob-canvas') as HTMLCanvasElement;
+  const ctx    = canvas.getContext('2d')!;
+
+  let W = 0, H = 0, raf = 0;
+  const t0 = performance.now();
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  /* ── Configuración de cada stream ───────────────────────────────────
+     yBase  : posición vertical inicial  (fracción de H)
+     slope  : deriva vertical de izq→der (fracción de H, neg = sube)
+     freq   : frecuencia de onda         (rad/px)
+     phase  : fase inicial               (rad)
+     speed  : velocidad                  (rad/ms)
+     amp    : amplitud                   (fracción de H)
+     body   : color RGB del cuerpo       (más oscuro, visible)
+     hl     : color RGB del highlight    (acento brillante)
+     hw     : half-width del ribbon      (fracción de H)
+  ──────────────────────────────────────────────────────────────────── */
+  const streams = [
+    { yBase:0.55, slope:-0.38, freq:0.0013, phase:0,    speed:0.00120, amp:0.10, body:'55,40,160',  hl:'150,140,255', hw:0.14 },
+    { yBase:0.70, slope:-0.45, freq:0.0019, phase:2.09, speed:0.00085, amp:0.12, body:'10,80,130',  hl:'60,210,255',  hw:0.12 },
+    { yBase:0.38, slope:-0.28, freq:0.0012, phase:4.19, speed:0.00150, amp:0.08, body:'10,100,75',  hl:'60,240,170',  hw:0.10 },
+    { yBase:0.82, slope:-0.50, freq:0.0016, phase:1.05, speed:0.00100, amp:0.09, body:'40,20,130',  hl:'115,100,245', hw:0.09 },
+  ] as const;
+
+  /* ── Capas de cada ribbon (de exterior a centro) ────────────────────
+     [multiplicador de hw → lineWidth, alpha, usa hl?]
+     Sin shadowBlur — el efecto volumétrico viene solo de apilar trazos
+     anchos+transparentes sobre estrechos+opacos. Mucho más ligero.
+  ──────────────────────────────────────────────────────────────────── */
+  const LAYERS: [number, number, boolean][] = [
+    [3.2,  0.06, false],  // halo exterior
+    [2.0,  0.11, false],  // cuerpo exterior
+    [1.10, 0.22, false],  // cuerpo principal
+    [0.50, 0.40, false],  // zona interior
+    [0.18, 0.62, true ],  // zona highlight
+    [0.04, 0.85, true ],  // glint central
+  ];
+
+  const STEP = 14;
+
+  function makePath(s: typeof streams[number], t: number): Path2D {
+    const path = new Path2D();
+    const A  = s.amp   * H;
+    const dY = s.slope * H;
+    const n  = Math.ceil(W / STEP) + 2;
+    let px = 0, py = 0;
+
+    for (let i = 0; i < n; i++) {
+      const x = i * STEP;
+      const y = s.yBase * H + (x / W) * dY
+              + Math.sin(x * s.freq + t * s.speed + s.phase) * A;
+
+      if (i === 0) {
+        path.moveTo(x, y);
+      } else {
+        path.quadraticCurveTo(px, py, (px + x) / 2, (py + y) / 2);
+      }
+      px = x; py = y;
+    }
+    path.lineTo(W, py);
+    return path;
+  }
+
+  function drawStream(s: typeof streams[number], t: number) {
+    const path = makePath(s, t);
+    const hw   = s.hw * H;
+
+    for (const [hwMult, alpha, useHl] of LAYERS) {
+      const color = useHl ? s.hl : s.body;
+      ctx.strokeStyle = `rgba(${color},${alpha.toFixed(3)})`;
+      ctx.lineWidth   = hw * hwMult;
+      ctx.stroke(path);
+    }
+  }
+
+  function frame() {
+    const t = performance.now() - t0;
+    ctx.clearRect(0, 0, W, H);
+    for (const s of streams) drawStream(s, t);
+    raf = requestAnimationFrame(frame);
+  }
+
+  frame();
+  document.addEventListener('astro:before-swap', () => cancelAnimationFrame(raf));
+</script>

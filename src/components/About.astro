@@ -1,0 +1,178 @@
+---
+const timeline = [
+  {
+    active: true,
+    label: 'ACTUAL:',
+    title: 'Desarrollador Full Stack Freelance',
+    desc: 'Disponible para proyectos de desarrollo web, apps móviles, APIs REST y soluciones cloud.',
+    iconPath: 'M20 10V20L26 26',
+    iconShape: 'circle',
+  },
+  {
+    active: false,
+    label: 'STACK PRINCIPAL:',
+    title: 'Backend & Frontend Development',
+    desc: 'Laravel, Spring Boot, React, Flutter, PostgreSQL, MySQL, Docker, AWS.',
+    iconPath: 'M12 12h16v16H12z',
+    iconShape: 'rect',
+  },
+  {
+    active: false,
+    label: 'EXPERIENCIA:',
+    title: 'Proyectos Funcionando con Tráfico Real',
+    desc: 'Docker, CI/CD, bases de datos en cloud, arquitecturas escalables. Plataformas en Railway y AWS con autenticación y roles multinivel.',
+    iconPath: 'M10 20L18 28L30 12',
+    iconShape: 'check',
+  },
+];
+---
+
+<section id="about" class="about reveal-section">
+  <div class="container">
+    <h2 class="section-title">Sobre Mí</h2>
+
+    <div class="grid">
+      <!-- Texto -->
+      <div class="glass-card text-card">
+        <h3 class="headline gradient-text">
+          Convierto ideas de negocio en aplicaciones web y móviles robustas,
+          escalables y listas para crecer contigo.
+        </h3>
+
+        <p>
+          Ayudo a emprendedores y empresas a crear productos digitales que funcionan
+          bien desde el día uno y están preparados para crecer. Mi trabajo abarca desde
+          el análisis inicial hasta el despliegue y soporte en producción.
+        </p>
+        <p>
+          Trabajo tanto en backend (Laravel, Spring Boot, APIs REST) como en frontend
+          (React, Vue.js), además de desarrollo móvil con Flutter y React Native.
+          Utilizo PostgreSQL y MySQL, y manejo el ciclo completo de despliegue con
+          Docker, Git, Railway, AWS y Supabase.
+        </p>
+        <p>
+          ¿Cómo trabajo? Analizo tu necesidad, propongo la mejor solución técnica,
+          desarrollo con código limpio (SOLID, Clean Code) y te acompaño hasta el
+          despliegue y primeras semanas en producción.
+        </p>
+        <p class="cta-text">
+          📍 Disponible para proyectos freelance &nbsp;|&nbsp; ⚡ Respondo en menos de 24 horas
+        </p>
+      </div>
+
+      <!-- Timeline -->
+      <div class="timeline">
+        {timeline.map(({ active, label, title, desc }) => (
+          <div class={`glass-card timeline-card ${active ? 'active' : ''}`}>
+            <div class="t-icon">
+              {active && (
+                <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+                  <circle cx="20" cy="20" r="18" stroke="url(#tg1)" stroke-width="2"/>
+                  <path d="M20 10V20L26 26" stroke="#00E5FF" stroke-width="2" stroke-linecap="round"/>
+                  <defs>
+                    <linearGradient id="tg1" x1="0" y1="0" x2="40" y2="40">
+                      <stop offset="0%" stop-color="#6C63FF"/>
+                      <stop offset="100%" stop-color="#00E5FF"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              )}
+              {!active && label === 'STACK PRINCIPAL:' && (
+                <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+                  <rect x="12" y="12" width="16" height="16" stroke="#6C63FF" stroke-width="2"/>
+                </svg>
+              )}
+              {!active && label === 'EXPERIENCIA:' && (
+                <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+                  <path d="M10 20L18 28L30 12" stroke="#00FFA3" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              )}
+            </div>
+            <div class="t-body">
+              <span class="t-label">{label}</span>
+              <h4>{title}</h4>
+              <p>{desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about { background: rgba(0, 0, 0, 0.1); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .text-card { padding: 2.5rem; }
+
+  .headline {
+    font-size: 1.5rem;
+    line-height: 1.4;
+    margin-bottom: 1.8rem;
+  }
+
+  .text-card p {
+    color: var(--text-muted);
+    line-height: 1.85;
+    margin-bottom: 1.2rem;
+    font-size: 0.96rem;
+  }
+  .cta-text {
+    color: var(--c-green) !important;
+    font-weight: 600;
+  }
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .timeline-card {
+    padding: 1.8rem;
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+    transition: all var(--ease);
+  }
+  .timeline-card.active {
+    border-color: rgba(0, 229, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 229, 255, 0.1);
+  }
+  .timeline-card:hover {
+    transform: translateX(6px);
+    border-color: rgba(108, 99, 255, 0.4);
+  }
+
+  .t-icon { flex-shrink: 0; margin-top: 4px; }
+
+  .t-label {
+    display: block;
+    font-size: 0.68rem;
+    color: var(--c-green);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.4rem;
+    font-family: var(--mono);
+  }
+  .t-body h4 {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+  .t-body p {
+    color: var(--text-muted);
+    line-height: 1.65;
+    font-size: 0.88rem;
+  }
+
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
