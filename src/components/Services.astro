@@ -1,73 +1,74 @@
 ---
-const services = [
+interface Service {
+  num:      string;
+  title:    string;
+  desc:     string;
+  features: string[];
+  icon:     string;
+}
+
+const services: Service[] = [
   {
-    title: 'DESARROLLO WEB',
-    desc: 'Sitios web responsivos y de alto rendimiento construidos con frameworks modernos. Desde landing pages hasta aplicaciones web complejas.',
-    features: ['Laravel, Spring Boot & Node.js', 'React, Vue.js & Alpine.js', 'APIs REST escalables'],
-    gradId: 'gs1',
-    gradColors: ['#00E5FF', '#00FFA3'],
+    num:  '01',
+    title: 'Desarrollo Web',
+    desc:  'Sitios web responsivos y de alto rendimiento construidos con frameworks modernos. Desde landing pages hasta aplicaciones web complejas.',
+    features: ['Laravel & Node.js', 'React & Next.js', 'APIs REST escalables'],
+    icon: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
   },
   {
-    title: 'SOLUCIONES MÓVILES',
-    desc: 'Aplicaciones móviles nativas y multiplataforma para iOS y Android. Especializándome en Flutter y React Native.',
-    features: ['Flutter & React Native', 'Integración con APIs', 'Android Studio & Xcode'],
-    gradId: 'gs2',
-    gradColors: ['#6C63FF', '#00E5FF'],
+    num:  '02',
+    title: 'Soluciones Móviles',
+    desc:  'Aplicaciones móviles multiplataforma para Android. Desde el diseño hasta la publicación en tienda.',
+    features: ['Flutter & Dart', 'Integración con APIs REST', 'Android'],
+    icon: '<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>',
   },
   {
-    title: 'BASES DE DATOS & BACKEND',
-    desc: 'Diseño e implementación de bases de datos robustas y APIs REST escalables con las mejores prácticas de la industria.',
-    features: ['PostgreSQL, MySQL & MongoDB', 'APIs REST con autenticación', 'Optimización de consultas'],
-    gradId: 'gs3',
-    gradColors: ['#00FFA3', '#00E5FF'],
-  },
-  {
-    title: 'DEVOPS & CLOUD',
-    desc: 'Deploy y administración de aplicaciones en la nube con Docker, Railway, AWS y configuración de CI/CD.',
-    features: ['Railway, AWS & Supabase', 'Docker & Contenedores', 'CI/CD & GitHub Actions'],
-    gradId: 'gs4',
-    gradColors: ['#FF6B6B', '#6C63FF'],
+    num:  '03',
+    title: 'Bases de Datos & Backend',
+    desc:  'Diseño e implementación de bases de datos robustas y APIs REST escalables con las mejores prácticas de la industria.',
+    features: ['PostgreSQL & MySQL', 'APIs REST con autenticación', 'Optimización de consultas'],
+    icon: '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>',
   },
 ];
 ---
 
 <section id="services" class="services reveal-section">
   <div class="container">
-    <h2 class="section-title">SERVICIOS FREELANCE</h2>
+    <h2 class="section-title">Servicios Freelance</h2>
     <p class="section-subtitle">
-      Soluciones de software de vanguardia, adaptadas para tu negocio.
+      ¿Tienes un proyecto en mente? Puedo ayudarte a construirlo.
     </p>
 
-    <div class="grid">
-      {services.map(({ title, desc, features, gradId, gradColors }) => (
-        <div class="glass-card service-card">
-          <div class="icon" aria-hidden="true">
-            <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-              <circle cx="30" cy="30" r="28" stroke={`url(#${gradId})`} stroke-width="1.5"/>
-              <circle cx="30" cy="30" r="8"  fill={`url(#${gradId})`} opacity="0.7"/>
-              <defs>
-                <linearGradient id={gradId} x1="0" y1="0" x2="60" y2="60">
-                  <stop offset="0%"   stop-color={gradColors[0]}/>
-                  <stop offset="100%" stop-color={gradColors[1]}/>
-                </linearGradient>
-              </defs>
+    <div class="services-grid">
+      {services.map(({ num, title, desc, features, icon }, idx) => (
+        <div class={`glass-card svc-card svc-card--${idx + 1}`}>
+          <span class="svc-num" aria-hidden="true">{num}</span>
+
+          <div class="svc-icon">
+            <svg
+              width="22" height="22" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor"
+              stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"
+            >
+              <Fragment set:html={icon} />
             </svg>
           </div>
-          <h3>{title}</h3>
-          <p class="desc">{desc}</p>
-          <ul>
-            {features.map((f) => <li>{f}</li>)}
-          </ul>
-          <a href="#contact" class="link">Saber Más →</a>
+
+          <h3 class="svc-title">{title}</h3>
+          <p class="svc-desc">{desc}</p>
+
+          <div class="svc-pills">
+            {features.map((f) => <span class="svc-pill">{f}</span>)}
+          </div>
         </div>
       ))}
     </div>
 
-    <div class="cta">
+    <div class="svc-cta">
       <a href="#contact" class="btn btn-large">
-        INICIAR UN PROYECTO →<span class="btn-glow"></span>
+        Iniciar un Proyecto <span class="btn-glow"></span>
       </a>
-      <p>¿Listo para innovar? Discutamos tu próximo proyecto breakthrough.</p>
+      <p class="svc-cta-sub">¿Listo para construir algo? Hablemos.</p>
     </div>
   </div>
 </section>
@@ -75,94 +76,156 @@ const services = [
 <style>
   .services { background: rgba(0, 0, 0, 0.2); }
 
-  .grid {
+  /* ── Tokens de acento por tarjeta ────────────────────────── */
+  .svc-card--1 {
+    --accent:   #00E5FF;
+    --a-06:     rgba(0, 229, 255, 0.06);
+    --a-15:     rgba(0, 229, 255, 0.15);
+    --a-30:     rgba(0, 229, 255, 0.30);
+    --a-shadow: rgba(0, 229, 255, 0.13);
+    --a-grad:   linear-gradient(90deg, #00E5FF, #00FFA3);
+  }
+  .svc-card--2 {
+    --accent:   #6C63FF;
+    --a-06:     rgba(108, 99, 255, 0.06);
+    --a-15:     rgba(108, 99, 255, 0.15);
+    --a-30:     rgba(108, 99, 255, 0.30);
+    --a-shadow: rgba(108, 99, 255, 0.13);
+    --a-grad:   linear-gradient(90deg, #6C63FF, #00E5FF);
+  }
+  .svc-card--3 {
+    --accent:   #00FFA3;
+    --a-06:     rgba(0, 255, 163, 0.06);
+    --a-15:     rgba(0, 255, 163, 0.15);
+    --a-30:     rgba(0, 255, 163, 0.30);
+    --a-shadow: rgba(0, 255, 163, 0.13);
+    --a-grad:   linear-gradient(90deg, #00FFA3, #00E5FF);
+  }
+  /* ── Grid 3 columnas ────────────────────────────────────── */
+  .services-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
     margin-top: 3rem;
   }
 
-  .service-card {
-    padding: 2rem;
-    transition: all var(--ease);
+  /* ── Tarjeta ─────────────────────────────────────────────── */
+  .svc-card {
+    padding: 2.4rem 2.2rem 2rem;
     position: relative;
     overflow: hidden;
+    transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
   }
-  .service-card::before {
+  .svc-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--grad-main);
+    height: 2px;
+    background: var(--a-grad);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform var(--ease);
+    transition: transform 0.45s ease;
     border-radius: 24px 24px 0 0;
   }
-  .service-card:hover::before { transform: scaleX(1); }
-  .service-card:hover {
+  .svc-card:hover::before { transform: scaleX(1); }
+  .svc-card:hover {
     transform: translateY(-8px);
-    border-color: rgba(0, 229, 255, 0.3);
-    box-shadow: 0 16px 50px rgba(0, 229, 255, 0.12);
+    border-color: var(--a-30);
+    box-shadow: 0 22px 64px var(--a-shadow);
   }
 
-  .icon { margin-bottom: 1.2rem; }
-
-  h3 {
-    font-size: 0.92rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    margin-bottom: 0.9rem;
-  }
-
-  .desc {
-    color: var(--text-muted);
-    line-height: 1.75;
-    margin-bottom: 1rem;
-    font-size: 0.87rem;
-  }
-
-  ul {
-    list-style: none;
-    margin-bottom: 1.2rem;
-  }
-  li {
-    color: var(--text-muted);
-    padding: 0.35rem 0 0.35rem 1.3rem;
-    position: relative;
-    font-size: 0.84rem;
-  }
-  li::before {
-    content: '→';
+  /* ── Número decorativo ───────────────────────────────────── */
+  .svc-num {
     position: absolute;
-    left: 0;
-    color: var(--c-cyan);
+    top: 1rem;
+    right: 1.4rem;
+    font-size: 5.5rem;
+    font-weight: 900;
+    font-family: var(--mono);
+    color: var(--accent);
+    opacity: 0.18;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    transition: opacity 0.4s ease;
+  }
+  .svc-card:hover .svc-num { opacity: 0.32; }
+
+  /* ── Icono ───────────────────────────────────────────────── */
+  .svc-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 13px;
+    background: var(--a-06);
+    border: 1px solid var(--a-15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  }
+  .svc-card:hover .svc-icon {
+    background: var(--a-15);
+    border-color: var(--a-30);
+    box-shadow: 0 0 18px var(--a-shadow);
   }
 
-  .link {
-    color: var(--c-cyan);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.87rem;
+  /* ── Título y descripción ────────────────────────────────── */
+  .svc-title {
+    font-size: 1.08rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    margin-bottom: 0.7rem;
+  }
+  .svc-desc {
+    color: var(--text-muted);
+    line-height: 1.78;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── Pills ───────────────────────────────────────────────── */
+  .svc-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .svc-pill {
     display: inline-block;
-    transition: all var(--ease);
+    padding: 0.3rem 0.85rem;
+    background: var(--a-06);
+    border: 1px solid var(--a-15);
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent);
+    font-family: var(--mono);
+    transition: background 0.3s ease, border-color 0.3s ease;
+    /* Asegurar que no hereda ningún pseudo-elemento de otro componente */
+    list-style: none;
   }
-  .link:hover { transform: translateX(5px); color: var(--c-green); }
+  .svc-card:hover .svc-pill {
+    background: var(--a-15);
+    border-color: var(--a-30);
+  }
 
-  .cta {
-    text-align: center;
-    margin-top: 4rem;
+  /* ── CTA ─────────────────────────────────────────────────── */
+  .svc-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 4.5rem;
   }
-  .cta p {
-    margin-top: 1rem;
+  .svc-cta-sub {
     color: var(--text-muted);
     font-size: 0.95rem;
   }
 
-  @media (max-width: 1200px) {
-    .grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 600px) {
-    .grid { grid-template-columns: 1fr; }
+  /* ── Responsive ──────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .services-grid { grid-template-columns: 1fr; }
   }
 </style>

@@ -1,18 +1,17 @@
 ---
-interface Slide {
-  type: 'img' | 'video';
-  src: string;
-  alt?: string;
-}
+interface Slide { type: 'img' | 'video'; src: string; alt?: string; }
 
 interface Project {
-  id:        string;
-  title:     string;
-  desc:      string;
-  tech:      string[];
-  links:     { label: string; href: string; primary?: boolean }[];
-  slides:    Slide[];
+  id:       string;
+  title:    string;
+  desc:     string;
+  metrics?: string;
+  note?:    string;
+  tech:     string[];
+  links:    { label: string; href: string; primary?: boolean }[];
+  slides:   Slide[];
   featured?: boolean;
+  wip?:     boolean;
 }
 
 const projects: Project[] = [
@@ -21,10 +20,11 @@ const projects: Project[] = [
     featured: true,
     title: 'Plataforma de Gestión de Hackathones',
     desc: 'Sistema completo para gestionar eventos de hackathones desde el registro de participantes hasta la evaluación de proyectos y generación automática de constancias en PDF.',
+    metrics: '+50 equipos registrados · 20 eventos gestionados',
     tech: ['Laravel 11', 'PostgreSQL', 'Supabase', 'TailwindCSS', 'Alpine.js', 'Railway'],
     links: [
-      { label: 'Demo en Vivo',   href: 'https://web-production-ef44a.up.railway.app/', primary: true },
-      { label: 'Código Fuente',  href: 'https://github.com/dev-deivis/hackathon-events' },
+      { label: 'Demo en Vivo',  href: 'https://web-production-ef44a.up.railway.app/', primary: true },
+      { label: 'Código Fuente', href: 'https://github.com/dev-deivis/hackathon-events' },
     ],
     slides: [
       { type: 'video', src: '/assets/videos/hackathon-demo.mp4' },
@@ -36,50 +36,10 @@ const projects: Project[] = [
     ],
   },
   {
-    id: 'pacman',
-    title: 'Pac-Man Game',
-    desc: 'Recreación del clásico juego Pac-Man con gráficos 3D usando OpenGL, incluyendo IA de fantasmas y sistema de colisiones.',
-    tech: ['C++', 'OpenGL', 'GLFW'],
-    links: [{ label: 'Ver en GitHub', href: 'https://github.com/dev-deivis/pacman-opengl' }],
-    slides: [
-      { type: 'video', src: '/assets/videos/pacman-demo.mp4' },
-      { type: 'img', src: '/assets/images/projects/pacman-1.png', alt: 'Gameplay' },
-      { type: 'img', src: '/assets/images/projects/pacman-2.png', alt: 'Fantasmas' },
-      { type: 'img', src: '/assets/images/projects/pacman-3.png', alt: 'Vista 3D' },
-    ],
-  },
-  {
-    id: 'laberinto',
-    title: 'Laberinto Cúbico 3D',
-    desc: 'Laberinto interactivo en las 6 caras de un cubo con navegación en primera persona y física realista.',
-    tech: ['C++', 'OpenGL', '3D Graphics'],
-    links: [{ label: 'Ver Detalles', href: '#' }],
-    slides: [
-      { type: 'video', src: '/assets/videos/laberinto-demo.mp4' },
-      { type: 'img', src: '/assets/images/projects/laberinto-1.png', alt: 'Laberinto' },
-      { type: 'img', src: '/assets/images/projects/laberinto-2.png', alt: 'Vista 3D' },
-      { type: 'img', src: '/assets/images/projects/laberinto-3.png', alt: 'Navegación' },
-    ],
-  },
-  {
-    id: 'volaris',
-    title: 'Clon Volaris — Sistema de Reservaciones',
-    desc: 'Réplica completa de la interfaz principal de Volaris. Diseño responsive fiel al original.',
-    tech: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design'],
-    links: [
-      { label: 'Demo en Vivo',  href: 'https://wise-owl-dev.github.io/volaris_equipo8/', primary: true },
-      { label: 'Código Fuente', href: 'https://github.com/wise-owl-dev/volaris_equipo8' },
-    ],
-    slides: [
-      { type: 'img', src: '/assets/images/projects/volaris-1.png', alt: 'Home' },
-      { type: 'img', src: '/assets/images/projects/volaris-2.png', alt: 'Búsqueda' },
-      { type: 'img', src: '/assets/images/projects/volaris-3.png', alt: 'Reservación' },
-    ],
-  },
-  {
     id: 'voces',
     title: 'Voces Indígenas — Preservación Lingüística',
     desc: 'Plataforma web educativa para la documentación y preservación de 6 lenguas indígenas mexicanas en peligro de extinción. Incluye mapa interactivo y análisis de crisis.',
+    note: 'Presentado en exposición de preservación de lenguas indígenas',
     tech: ['HTML5', 'CSS3', 'JavaScript', 'Leaflet.js', 'Responsive'],
     links: [
       { label: 'Ver Página', href: 'https://dev-deivis.github.io/voces_indigenas/', primary: true },
@@ -92,6 +52,15 @@ const projects: Project[] = [
       { type: 'img', src: '/assets/images/projects/voces-4.png', alt: 'Crisis' },
     ],
   },
+  {
+    id: 'medibot',
+    wip: true,
+    title: 'MediBot — Asistente de Salud con IA',
+    desc: 'App móvil de salud inteligente con asistente conversacional basado en IA. Orientada a facilitar el acceso a información médica básica.',
+    tech: ['Flutter', 'Dart', 'AI'],
+    links: [],
+    slides: [],
+  },
 ];
 ---
 
@@ -102,47 +71,76 @@ const projects: Project[] = [
     <div class="grid">
       {projects.map((p) => (
         <article
-          class={`glass-card project-card ${p.featured ? 'featured' : ''}`}
+          class={`glass-card project-card ${p.featured ? 'featured' : ''} ${p.wip ? 'wip-card' : ''}`}
           data-project-id={p.id}
         >
           {p.featured && <div class="badge">★ DESTACADO</div>}
+          {p.wip      && <div class="badge badge-wip">EN DESARROLLO</div>}
 
-          <!-- Carrusel -->
-          <div class="carousel">
-            <div class="track">
-              {p.slides.map((s, i) => (
-                <div class={`slide ${i === 0 ? 'active' : ''}`}>
-                  {s.type === 'video'
-                    ? <video src={import.meta.env.BASE_URL + s.src.slice(1)} autoplay muted loop playsinline></video>
-                    : <img src={import.meta.env.BASE_URL + s.src.slice(1)} alt={s.alt ?? p.title} loading="lazy" />
-                  }
-                </div>
-              ))}
+          {/* Carrusel — solo si hay slides */}
+          {p.slides.length > 0 ? (
+            <div class="carousel">
+              <div class="track">
+                {p.slides.map((s, i) => (
+                  <div class={`slide ${i === 0 ? 'active' : ''}`}>
+                    {s.type === 'video'
+                      ? <video src={import.meta.env.BASE_URL + s.src.slice(1)} autoplay muted loop playsinline></video>
+                      : <img src={import.meta.env.BASE_URL + s.src.slice(1)} alt={s.alt ?? p.title} loading="lazy" />
+                    }
+                  </div>
+                ))}
+              </div>
+              <button class="car-btn prev" aria-label="Anterior">‹</button>
+              <button class="car-btn next" aria-label="Siguiente">›</button>
+              <div class="dots"></div>
             </div>
-            <button class="car-btn prev" aria-label="Anterior">‹</button>
-            <button class="car-btn next" aria-label="Siguiente">›</button>
-            <div class="dots"></div>
-          </div>
+          ) : (
+            <div class="wip-placeholder">
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+                <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+                <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+              </svg>
+              <span>En construcción</span>
+            </div>
+          )}
 
-          <!-- Info -->
+          {/* Info */}
           <div class="info">
             <h3 class="project-title">{p.title}</h3>
             <p class="project-desc">{p.desc}</p>
+
+            {p.metrics && (
+              <div class="metrics">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                {p.metrics}
+              </div>
+            )}
+
+            {p.note && (
+              <div class="note">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                {p.note}
+              </div>
+            )}
+
             <ul class="tech-list" aria-label="Tecnologías">
               {p.tech.map((t) => <li>{t}</li>)}
             </ul>
-            <div class="project-btns">
-              {p.links.map(({ label, href, primary }) => (
-                <a
-                  href={href}
-                  target={href.startsWith('http') ? '_blank' : undefined}
-                  rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  class={primary ? 'btn-project-primary' : 'btn-project-secondary'}
-                >
-                  {label}
-                </a>
-              ))}
-            </div>
+            {p.links.length > 0 && (
+              <div class="project-btns">
+                {p.links.map(({ label, href, primary }) => (
+                  <a
+                    href={href}
+                    target={href.startsWith('http') ? '_blank' : undefined}
+                    rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    class={primary ? 'btn-project-primary' : 'btn-project-secondary'}
+                  >
+                    {label}
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
         </article>
       ))}
@@ -155,7 +153,7 @@ const projects: Project[] = [
 
   .grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
     margin-top: 3rem;
   }
@@ -196,16 +194,85 @@ const projects: Project[] = [
     50%       { box-shadow: 0 4px 28px rgba(0, 255, 163, 0.6); }
   }
 
+  /* Badge WIP */
+  .badge-wip {
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+    box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4);
+    animation: wipPulse 2.5s infinite;
+  }
+  @keyframes wipPulse {
+    0%, 100% { box-shadow: 0 4px 16px rgba(245,158,11,0.3); }
+    50%       { box-shadow: 0 4px 28px rgba(245,158,11,0.6); }
+  }
+
+  /* Tarjeta WIP */
+  .wip-card {
+    border: 1.5px dashed rgba(245, 158, 11, 0.4) !important;
+  }
+  .wip-card:hover {
+    border-color: rgba(245, 158, 11, 0.7) !important;
+    box-shadow: 0 24px 70px rgba(245, 158, 11, 0.12) !important;
+  }
+
+  /* Placeholder WIP */
+  .wip-placeholder {
+    width: 100%;
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    background: rgba(245, 158, 11, 0.04);
+    border-bottom: 1px dashed rgba(245, 158, 11, 0.2);
+    color: rgba(245, 158, 11, 0.5);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+  }
+
+  /* Métricas */
+  .metrics {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: rgba(0, 229, 255, 0.08);
+    border: 1px solid rgba(0, 229, 255, 0.25);
+    border-radius: 20px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--c-cyan);
+    margin-bottom: 0.9rem;
+    font-family: var(--mono);
+  }
+  .metrics svg { flex-shrink: 0; }
+
+  /* Nota */
+  .note {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 0.9rem;
+    padding: 0.3rem 0;
+    border-left: 2px solid rgba(108, 99, 255, 0.4);
+    padding-left: 0.75rem;
+  }
+  .note svg { flex-shrink: 0; color: var(--c-purple); }
+
   /* Carousel */
   .carousel {
     position: relative;
     width: 100%;
-    height: 260px;
+    height: 300px;
     overflow: hidden;
     border-radius: 23px 23px 0 0;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(8, 8, 18, 0.85);
   }
-  .project-card.featured .carousel { height: 350px; }
+  .project-card.featured .carousel { height: 420px; }
 
   .track { position: relative; width: 100%; height: 100%; }
 
@@ -219,13 +286,17 @@ const projects: Project[] = [
     opacity: 1;
     z-index: 1;
   }
-  .slide img,
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: top center;
+  }
   .slide video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
-  .slide video { object-fit: contain; }
 
   .car-btn {
     position: absolute;
@@ -307,11 +378,7 @@ const projects: Project[] = [
   }
 
   /* Responsive */
-  @media (max-width: 900px) {
-    .grid { grid-template-columns: repeat(2, 1fr); }
-    .project-card.featured { grid-column: span 2; }
-  }
-  @media (max-width: 600px) {
+  @media (max-width: 700px) {
     .grid { grid-template-columns: 1fr; }
     .project-card.featured { grid-column: span 1; }
   }
