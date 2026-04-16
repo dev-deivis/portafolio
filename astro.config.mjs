@@ -2,6 +2,5 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://dev-deivis.github.io',
-  base: '/portafolio',
+  site: 'https://dev-deivis.vercel.app',
 });
