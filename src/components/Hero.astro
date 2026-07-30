@@ -1,90 +1,79 @@
 ---
 // Hero — devdeivis
 // Paleta negro + azul eléctrico (rediseño 2026)
-// Foto integrada a la derecha (duotono negro + azul #2D5CFF)
+// Foto integrada a la derecha (duotono negro + azul #2D5CFF) con position: absolute
 const heroPhotoSrc = `${import.meta.env.BASE_URL}assets/images/projects/foto-hero.png`;
 ---
 
 <section id="home" class="hero">
-  <div class="hero-container">
 
-    <!-- Columna izquierda: Información principal -->
-    <div class="hero-inner">
+  <!-- Contenido principal (Texto y botones) -->
+  <div class="hero-inner">
 
-      <!-- Indicador de disponibilidad -->
-      <div class="avail-badge" aria-label="Estado: disponible para proyectos">
-        <span class="avail-dot" aria-hidden="true"></span>
-        <span class="avail-label">Disponible para proyectos</span>
-      </div>
-
-      <!-- Handle / marca personal -->
-      <p class="hero-handle">devdeivis</p>
-
-      <!-- Nombre y rol — el corazón del Hero -->
-      <h1 class="hero-name">
-        David<br />Almaraz
-      </h1>
-
-      <p class="hero-role">
-        Desarrollador Full Stack &amp; Freelancer
-      </p>
-
-      <!-- CTA -->
-      <div class="hero-btns">
-        <a href="#projects" class="btn btn-primary">Ver proyectos</a>
-        <a href="#contact" class="btn btn-secondary">Hablemos</a>
-      </div>
-
+    <!-- Indicador de disponibilidad -->
+    <div class="avail-badge" aria-label="Estado: disponible para proyectos">
+      <span class="avail-dot" aria-hidden="true"></span>
+      <span class="avail-label">Disponible para proyectos</span>
     </div>
 
-    <!-- Columna derecha: Foto de perfil duotono más grande y pegada -->
-    <div class="hero-photo-wrap" aria-hidden="true">
-      <div class="hero-photo-filter">
-        <img
-          src={heroPhotoSrc}
-          alt="David Almaraz"
-          class="hero-photo-img"
-          loading="eager"
-        />
-      </div>
-      <!-- Fundido continuo a --bg en base y laterales -->
-      <div class="hero-photo-fade"></div>
-    </div>
+    <!-- Handle / marca personal -->
+    <p class="hero-handle">devdeivis</p>
 
-    <!-- Indicador de scroll -->
-    <div class="scroll-hint" aria-hidden="true">
-      <span class="scroll-line"></span>
-      <span class="scroll-text">scroll</span>
+    <!-- Nombre y rol — el corazón del Hero -->
+    <h1 class="hero-name">
+      David<br />Almaraz
+    </h1>
+
+    <p class="hero-role">
+      Desarrollador Full Stack &amp; Freelancer
+    </p>
+
+    <!-- CTA -->
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-primary">Ver proyectos</a>
+      <a href="#contact" class="btn btn-secondary">Hablemos</a>
     </div>
 
   </div>
+
+  <!-- Foto de perfil duotono (Posicionada a la derecha de forma independiente) -->
+  <div class="hero-photo-wrap" aria-hidden="true">
+    <div class="hero-photo-filter">
+      <img
+        src={heroPhotoSrc}
+        alt="David Almaraz"
+        class="hero-photo-img"
+        loading="eager"
+      />
+    </div>
+    <!-- Fundido continuo a --bg en la base -->
+    <div class="hero-photo-fade"></div>
+  </div>
+
+  <!-- Indicador de scroll -->
+  <div class="scroll-hint" aria-hidden="true">
+    <span class="scroll-line"></span>
+    <span class="scroll-text">scroll</span>
+  </div>
+
 </section>
 
 <style>
-  /* ── Sección Hero ── */
+  /* ── Sección ── */
   .hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    padding: 110px 4rem 4rem;
+    /* padding-top compensa la navbar fija */
+    padding: 120px 4rem 6rem;
     position: relative;
     overflow: hidden;
   }
 
-  .hero-container {
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 540px;
-    align-items: center;
-    gap: 0;
-    position: relative;
-  }
-
+  /* Contenido alineado exactamente como estaba originalmente */
   .hero-inner {
-    max-width: 720px;
-    margin-left: 2vw;
+    max-width: 760px;
+    margin: 0 0 0 6vw;
     position: relative;
     z-index: 2;
   }
@@ -98,7 +87,7 @@ const heroPhotoSrc = `${import.meta.env.BASE_URL}assets/images/projects/foto-her
     border: 1px solid var(--accent);
     border-radius: 50px;
     padding: 0.35rem 1rem 0.35rem 0.75rem;
-    margin-bottom: 1.8rem;
+    margin-bottom: 2rem;
     opacity: 0;
     animation: fadeUp 0.6s ease 0.1s forwards;
   }
@@ -126,20 +115,20 @@ const heroPhotoSrc = `${import.meta.env.BASE_URL}assets/images/projects/foto-her
     font-size: 0.9rem;
     letter-spacing: 0.18em;
     color: var(--text-muted);
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
     opacity: 0;
     animation: fadeUp 0.6s ease 0.25s forwards;
   }
 
-  /* ── Nombre ── */
+  /* ── Nombre — exactamente con la tipografía y escala original ── */
   .hero-name {
     font-family: var(--font-display);
-    font-size: clamp(4.2rem, 8.5vw, 8.5rem);
+    font-size: clamp(5.5rem, 15vw, 13rem);
     font-weight: 800;
-    line-height: 0.90;
+    line-height: 0.88;
     letter-spacing: -0.04em;
     color: var(--text);
-    margin-bottom: 1.8rem;
+    margin-bottom: 2rem;
     opacity: 0;
     animation: fadeUp 0.7s ease 0.4s forwards;
   }
@@ -147,10 +136,10 @@ const heroPhotoSrc = `${import.meta.env.BASE_URL}assets/images/projects/foto-her
   /* ── Rol ── */
   .hero-role {
     font-family: var(--font);
-    font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
     font-weight: 400;
     color: var(--text-muted);
-    margin-bottom: 2.5rem;
+    margin-bottom: 3rem;
     line-height: 1.5;
     opacity: 0;
     animation: fadeUp 0.6s ease 0.6s forwards;
@@ -165,12 +154,12 @@ const heroPhotoSrc = `${import.meta.env.BASE_URL}assets/images/projects/foto-her
     animation: fadeUp 0.6s ease 0.8s forwards;
   }
 
-  /* ── Foto de perfil duotono (Columna Derecha: más grande y pegada a la izquierda) ── */
+  /* ── Foto de perfil duotono (Posición Absoluta a la derecha — no afecta el texto ni el scroll) ── */
   .hero-photo-wrap {
-    position: relative;
-    width: 100%;
-    max-width: 580px;
-    margin-left: -5rem; /* Desplaza la foto hacia la izquierda, pegada a "David Almaraz" */
+    position: absolute;
+    right: 2vw;
+    bottom: 0;
+    width: min(580px, 44vw);
     z-index: 1;
     opacity: 0;
     animation: fadeUp 0.8s ease 0.45s forwards;
@@ -181,7 +170,7 @@ const heroPhotoSrc = `${import.meta.env.BASE_URL}assets/images/projects/foto-her
   .hero-photo-filter {
     position: relative;
     width: 100%;
-    /* Máscara doble: difumina el borde izquierdo y la base inferior */
+    /* Difuminado suave en el borde izquierdo e inferior */
     -webkit-mask-image: 
       linear-gradient(to right, transparent 0%, black 18%, black 85%, transparent 100%),
       linear-gradient(to bottom, black 65%, transparent 100%);
@@ -196,7 +185,7 @@ const heroPhotoSrc = `${import.meta.env.BASE_URL}assets/images/projects/foto-her
   .hero-photo-img {
     width: 100%;
     height: auto;
-    max-height: 86vh;
+    max-height: 88vh;
     object-fit: cover;
     object-position: top center;
     display: block;
@@ -214,11 +203,11 @@ const heroPhotoSrc = `${import.meta.env.BASE_URL}assets/images/projects/foto-her
     pointer-events: none;
   }
 
-  /* ── Scroll hint ── */
+  /* ── Scroll hint — alineación original perfecta ── */
   .scroll-hint {
     position: absolute;
-    bottom: 2rem;
-    left: calc(2vw + 4px);
+    bottom: 3rem;
+    left: calc(6vw + 4px); /* alineado exactamente con el borde original de hero-inner */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -275,37 +264,32 @@ const heroPhotoSrc = `${import.meta.env.BASE_URL}assets/images/projects/foto-her
 
   /* ── Responsive ── */
   @media (max-width: 1200px) {
-    .hero-container {
-      grid-template-columns: 1fr 440px;
-    }
     .hero-photo-wrap {
-      max-width: 460px;
-      margin-left: -2rem;
+      width: min(480px, 42vw);
+      right: 1vw;
     }
   }
 
-  @media (max-width: 960px) {
-    .hero-container {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-    .hero-inner {
-      margin-left: 0;
-    }
+  @media (max-width: 900px) {
+    .hero { padding: 110px 2rem 5rem; }
+    .hero-inner { margin: 0; }
+    .scroll-hint { left: 2rem; }
     .hero-photo-wrap {
-      max-width: 360px;
-      margin: 0 auto;
-      justify-self: center;
+      position: relative;
+      right: auto;
+      bottom: auto;
+      width: min(340px, 75vw);
+      margin: 2.5rem auto 0;
     }
   }
 
   @media (max-width: 600px) {
     .hero { padding: 100px 1.5rem 4rem; }
-    .hero-name { font-size: clamp(3rem, 12vw, 4.5rem); line-height: 0.95; }
+    .hero-name { line-height: 1; }
     .hero-btns { flex-direction: column; }
     .hero-photo-wrap {
-      max-width: 280px;
-      margin: 0 auto;
+      width: 260px;
+      margin: 1.5rem auto 0;
     }
     .scroll-hint { display: none; }
   }
