@@ -154,12 +154,12 @@ const heroPhotoSrc = `${import.meta.env.BASE_URL}assets/images/projects/foto-her
     animation: fadeUp 0.6s ease 0.8s forwards;
   }
 
-  /* ── Foto de perfil duotono (Posición Absoluta a la derecha — no afecta el texto ni el scroll) ── */
+  /* ── Foto de perfil duotono ── */
   .hero-photo-wrap {
     position: absolute;
-    right: 2vw;
+    right: 3vw;
     bottom: 0;
-    width: min(580px, 44vw);
+    width: min(680px, 46vw);
     z-index: 1;
     opacity: 0;
     animation: fadeUp 0.8s ease 0.45s forwards;
@@ -170,24 +170,24 @@ const heroPhotoSrc = `${import.meta.env.BASE_URL}assets/images/projects/foto-her
   .hero-photo-filter {
     position: relative;
     width: 100%;
-    /* Difuminado suave en el borde izquierdo e inferior */
+    /* Difuminado suave en los bordes */
     -webkit-mask-image: 
-      linear-gradient(to right, transparent 0%, black 18%, black 85%, transparent 100%),
+      linear-gradient(to right, transparent 0%, black 15%, black 88%, transparent 100%),
       linear-gradient(to bottom, black 65%, transparent 100%);
     -webkit-mask-composite: source-in, destination-in;
     mask-image: 
-      linear-gradient(to right, transparent 0%, black 18%, black 85%, transparent 100%),
+      linear-gradient(to right, transparent 0%, black 15%, black 88%, transparent 100%),
       linear-gradient(to bottom, black 65%, transparent 100%);
     mask-composite: intersect;
   }
 
-  /* Filtro Duotono Puro: Grayscale -> Sepia -> Hue Rotate (Azul Eléctrico #2D5CFF) */
+  /* Filtro Duotono Puro + enfoque centrado en la mitad derecha */
   .hero-photo-img {
     width: 100%;
     height: auto;
     max-height: 88vh;
     object-fit: cover;
-    object-position: top center;
+    object-position: 65% top;
     display: block;
     filter: grayscale(100%) sepia(100%) hue-rotate(195deg) saturate(380%) contrast(1.25) brightness(0.9);
   }
@@ -263,34 +263,72 @@ const heroPhotoSrc = `${import.meta.env.BASE_URL}assets/images/projects/foto-her
   }
 
   /* ── Responsive ── */
-  @media (max-width: 1200px) {
+  @media (max-width: 1100px) {
     .hero-photo-wrap {
-      width: min(480px, 42vw);
+      width: min(500px, 42vw);
       right: 1vw;
     }
   }
 
-  @media (max-width: 900px) {
-    .hero { padding: 110px 2rem 5rem; }
-    .hero-inner { margin: 0; }
-    .scroll-hint { left: 2rem; }
-    .hero-photo-wrap {
+  @media (max-width: 960px) {
+    .hero {
+      padding: 110px 1.5rem 4rem;
       position: relative;
-      right: auto;
-      bottom: auto;
-      width: min(340px, 75vw);
-      margin: 2.5rem auto 0;
+    }
+    .hero-inner {
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-name {
+      font-size: clamp(3.2rem, 11vw, 4.8rem);
+      line-height: 0.95;
+      max-width: 62%; /* Deja espacio a la derecha para la foto */
+    }
+    .hero-photo-wrap {
+      position: absolute;
+      right: 35px;
+      top: 255px; /* Un poco más abajo y más a la izquierda */
+      width: min(180px, 38vw);
+      max-width: 180px;
+      margin: 0;
+      z-index: 1;
+    }
+    .hero-photo-img {
+      max-height: 260px;
+      object-fit: cover;
+      object-position: top center;
+    }
+    .scroll-hint {
+      left: 1.5rem;
     }
   }
 
   @media (max-width: 600px) {
-    .hero { padding: 100px 1.5rem 4rem; }
-    .hero-name { line-height: 1; }
-    .hero-btns { flex-direction: column; }
-    .hero-photo-wrap {
-      width: 260px;
-      margin: 1.5rem auto 0;
+    .hero {
+      padding: 100px 1.25rem 4rem;
     }
-    .scroll-hint { display: none; }
+    .hero-name {
+      font-size: clamp(2.8rem, 11vw, 4rem);
+      line-height: 0.95;
+      max-width: 60%;
+    }
+    .hero-btns {
+      flex-direction: column;
+    }
+    .hero-photo-wrap {
+      right: 20px; /* Desplazada más hacia la izquierda */
+      top: 245px;  /* Un poco más abajo */
+      width: 160px;
+    }
+    .hero-photo-img {
+      max-height: 230px;
+      object-position: top center;
+    }
+    .scroll-hint {
+      display: none;
+    }
   }
 </style>
