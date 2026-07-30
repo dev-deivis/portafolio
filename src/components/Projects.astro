@@ -74,68 +74,150 @@ const projects: Project[] = [
           <!-- Separador superior -->
           <div class="row-divider" aria-hidden="true"></div>
 
-          <div class="row-inner">
-            <!-- Número de índice -->
-            <span class="project-index" aria-hidden="true">{p.index}</span>
-
-            <!-- Cuerpo del proyecto -->
-            <div class="project-body">
-              <div class="project-top">
-                <div class="project-meta">
-                  <!-- Status badge -->
-                  {p.status === 'live' && (
-                    <span class="status-badge status-live">
-                      <span class="status-dot" aria-hidden="true"></span>
-                      Live
-                    </span>
-                  )}
-                  {p.status === 'wip' && (
-                    <span class="status-badge status-wip">En desarrollo</span>
-                  )}
-                  {p.note && (
-                    <span class="project-note">{p.note}</span>
-                  )}
-                </div>
-
-                <!-- Thumbnail — solo si hay imagen y no es WIP -->
-                {p.thumb && p.status !== 'wip' && (
-                  <div class="project-thumb" aria-hidden="true">
-                    <img
-                      src={import.meta.env.BASE_URL + p.thumb.slice(1)}
-                      alt=""
-                      loading="lazy"
-                    />
-                  </div>
-                )}
-              </div>
-
-              <h3 class="project-title">{p.title}</h3>
-              <p class="project-desc">{p.desc}</p>
-
-              <!-- Tags de stack -->
-              <ul class="tech-pills" aria-label="Stack tecnológico">
-                {p.tech.map((t) => <li class="tech-pill">{t}</li>)}
-              </ul>
-
-              <!-- Links -->
-              {p.links.length > 0 && (
-                <div class="project-links">
-                  {p.links.map(({ label, href, primary }) => (
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class={primary ? 'proj-link proj-link--primary' : 'proj-link'}
-                    >
-                      {label}
-                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                        <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    </a>
-                  ))}
-                </div>
+          <!-- Cabecera de fila: índice + status -->
+          <div class="row-header">
+            <span class="project-index">{p.index}</span>
+            <div class="project-meta">
+              {p.status === 'live' && (
+                <span class="status-badge status-live">
+                  <span class="status-dot" aria-hidden="true"></span>
+                  Live
+                </span>
               )}
+              {p.status === 'wip' && (
+                <span class="status-badge status-wip">En desarrollo</span>
+              )}
+              {p.note && <span class="project-note">{p.note}</span>}
             </div>
+          </div>
+
+          <!-- Imagen de preview — ancho completo, 16:9 -->
+          <div class="project-visual">
+            {p.thumb ? (
+              <img
+                src={import.meta.env.BASE_URL + p.thumb.slice(1)}
+                alt={`Preview de ${p.title}`}
+                loading="lazy"
+              />
+            ) : (
+              <!-- Placeholder MediBot — wireframe de chat móvil con grid punteado -->
+              <div class="visual-placeholder" aria-hidden="true">
+                <svg
+                  class="wf-svg"
+                  viewBox="0 0 800 450"
+                  xmlns="http://www.w3.org/2000/svg"
+                  preserveAspectRatio="xMidYMid slice"
+                >
+                  <defs>
+                    <!-- Grid de puntos de fondo -->
+                    <pattern id="dots" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+                      <circle cx="1.5" cy="1.5" r="1.5" fill="rgba(245,158,11,0.18)" />
+                    </pattern>
+                  </defs>
+
+                  <!-- Fondo con puntos -->
+                  <rect width="800" height="450" fill="rgba(245,158,11,0.03)" />
+                  <rect width="800" height="450" fill="url(#dots)" />
+
+                  <!-- Marco del teléfono — centrado -->
+                  <rect x="290" y="30" width="220" height="390" rx="22" ry="22"
+                    fill="rgba(245,158,11,0.05)" stroke="rgba(245,158,11,0.3)" stroke-width="1.5"/>
+
+                  <!-- Notch superior -->
+                  <rect x="350" y="38" width="100" height="14" rx="7"
+                    fill="rgba(245,158,11,0.15)"/>
+
+                  <!-- Barra de estatus del app -->
+                  <rect x="306" y="66" width="188" height="28" rx="4"
+                    fill="rgba(245,158,11,0.08)" stroke="rgba(245,158,11,0.15)" stroke-width="1"/>
+                  <!-- Avatar bot -->
+                  <circle cx="322" cy="80" r="8" fill="rgba(245,158,11,0.2)" stroke="rgba(245,158,11,0.35)" stroke-width="1"/>
+                  <!-- Líneas de nombre en header -->
+                  <rect x="336" y="74" width="60" height="5" rx="2.5" fill="rgba(245,158,11,0.25)"/>
+                  <rect x="336" y="83" width="40" height="3.5" rx="1.75" fill="rgba(245,158,11,0.15)"/>
+                  <!-- Dot online -->
+                  <circle cx="318" cy="88" r="4" fill="rgba(74,222,128,0.5)"/>
+
+                  <!-- Burbuja IA (izquierda) — larga -->
+                  <rect x="308" y="106" width="130" height="30" rx="12" rx="12"
+                    fill="rgba(245,158,11,0.12)" stroke="rgba(245,158,11,0.22)" stroke-width="1"/>
+                  <rect x="318" y="115" width="80" height="5" rx="2.5" fill="rgba(245,158,11,0.3)"/>
+                  <rect x="318" y="124" width="55" height="4" rx="2" fill="rgba(245,158,11,0.18)"/>
+
+                  <!-- Burbuja usuario (derecha) -->
+                  <rect x="376" y="148" width="106" height="24" rx="10"
+                    fill="rgba(45,92,255,0.2)" stroke="rgba(45,92,255,0.3)" stroke-width="1"/>
+                  <rect x="386" y="157" width="68" height="4.5" rx="2.25" fill="rgba(45,92,255,0.45)"/>
+
+                  <!-- Burbuja IA (izquierda) — media -->
+                  <rect x="308" y="184" width="148" height="48" rx="12"
+                    fill="rgba(245,158,11,0.12)" stroke="rgba(245,158,11,0.22)" stroke-width="1"/>
+                  <rect x="318" y="194" width="100" height="5" rx="2.5" fill="rgba(245,158,11,0.3)"/>
+                  <rect x="318" y="203" width="82" height="4" rx="2" fill="rgba(245,158,11,0.18)"/>
+                  <rect x="318" y="211" width="60" height="4" rx="2" fill="rgba(245,158,11,0.12)"/>
+                  <!-- Indicador tipeo IA (tres puntitos) -->
+                  <circle cx="318" cy="225" r="3" fill="rgba(245,158,11,0.35)"/>
+                  <circle cx="327" cy="225" r="3" fill="rgba(245,158,11,0.25)"/>
+                  <circle cx="336" cy="225" r="3" fill="rgba(245,158,11,0.15)"/>
+
+                  <!-- Burbuja usuario (derecha) corta -->
+                  <rect x="410" y="246" width="72" height="24" rx="10"
+                    fill="rgba(45,92,255,0.2)" stroke="rgba(45,92,255,0.3)" stroke-width="1"/>
+                  <rect x="420" y="255" width="44" height="4.5" rx="2.25" fill="rgba(45,92,255,0.45)"/>
+
+                  <!-- Burbuja IA punteada (respondiendo) -->
+                  <rect x="308" y="282" width="80" height="28" rx="12"
+                    fill="none" stroke="rgba(245,158,11,0.3)" stroke-width="1" stroke-dasharray="4 3"/>
+                  <circle cx="326" cy="296" r="3.5" fill="rgba(245,158,11,0.4)"/>
+                  <circle cx="338" cy="296" r="3.5" fill="rgba(245,158,11,0.25)"/>
+                  <circle cx="350" cy="296" r="3.5" fill="rgba(245,158,11,0.12)"/>
+
+                  <!-- Barra de input inferior -->
+                  <rect x="306" y="328" width="188" height="34" rx="14"
+                    fill="rgba(245,158,11,0.07)" stroke="rgba(245,158,11,0.2)" stroke-width="1"/>
+                  <!-- Texto placeholder en input -->
+                  <rect x="318" y="341" width="90" height="4.5" rx="2.25" fill="rgba(245,158,11,0.15)"/>
+                  <!-- Botón enviar -->
+                  <circle cx="476" cy="345" r="11"
+                    fill="rgba(245,158,11,0.2)" stroke="rgba(245,158,11,0.35)" stroke-width="1"/>
+                  <path d="M471 345 l7-3 -7-3 v2.5 l4 0.5 -4 0.5 z"
+                    fill="rgba(245,158,11,0.6)"/>
+
+                  <!-- Label "En desarrollo" en la esquina -->
+                  <text x="400" y="396" text-anchor="middle"
+                    font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="3"
+                    fill="rgba(245,158,11,0.4)" text-transform="uppercase">EN DESARROLLO</text>
+                </svg>
+              </div>
+            )}
+          </div>
+
+          <!-- Texto debajo de la imagen -->
+          <div class="project-body">
+            <h3 class="project-title">{p.title}</h3>
+            <p class="project-desc">{p.desc}</p>
+
+            <ul class="tech-pills" aria-label="Stack tecnológico">
+              {p.tech.map((t) => <li class="tech-pill">{t}</li>)}
+            </ul>
+
+            {p.links.length > 0 && (
+              <div class="project-links">
+                {p.links.map(({ label, href, primary }) => (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class={primary ? 'proj-link proj-link--primary' : 'proj-link'}
+                  >
+                    {label}
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                      <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
 
         </article>
@@ -184,57 +266,32 @@ const projects: Project[] = [
     color: var(--text);
   }
 
-  /* ── Fila de proyecto ── */
+  /* ── Separador ── */
   .row-divider {
     height: 1px;
     background: rgba(255, 255, 255, 0.08);
   }
 
+  /* ── Fila de proyecto ── */
   .project-row {
-    padding: 3rem 0;
-    transition: background 0.25s ease;
-  }
-  .project-row:hover {
-    background: rgba(45, 92, 255, 0.03);
+    padding: 2.5rem 0 3.5rem;
   }
 
-  .row-inner {
+  /* Cabecera: índice + status, en una línea */
+  .row-header {
     display: flex;
-    gap: 3rem;
-    align-items: flex-start;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 1.4rem;
   }
 
-  /* Número de índice */
   .project-index {
     font-family: var(--mono);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 600;
     color: var(--text-muted);
-    letter-spacing: 0.05em;
-    padding-top: 0.3rem;
-    flex-shrink: 0;
-    width: 2rem;
+    letter-spacing: 0.08em;
     opacity: 0.5;
-    transition: color 0.25s ease, opacity 0.25s ease;
-  }
-  .project-row:hover .project-index {
-    color: var(--accent);
-    opacity: 1;
-  }
-
-  /* Cuerpo */
-  .project-body {
-    flex: 1;
-    min-width: 0;
-  }
-
-  /* Top row: meta + thumbnail */
-  .project-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1.5rem;
-    margin-bottom: 1rem;
   }
 
   .project-meta {
@@ -282,61 +339,74 @@ const projects: Project[] = [
     border: 1px solid rgba(245, 158, 11, 0.25);
   }
 
-  /* Nota del proyecto */
   .project-note {
     font-size: 0.75rem;
     color: var(--text-muted);
     font-style: italic;
   }
 
-  /* Thumbnail */
-  .project-thumb {
-    width: 100px;
-    height: 66px;
-    border-radius: 6px;
+  /* ── Imagen a ancho completo, ratio 16:9 ── */
+  .project-visual {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
     overflow: hidden;
-    flex-shrink: 0;
+    background: var(--bg-raised);
     border: 1px solid rgba(255, 255, 255, 0.06);
-    opacity: 0.7;
-    transition: opacity 0.25s ease;
+    margin-bottom: 1.8rem;
   }
-  .project-row:hover .project-thumb {
-    opacity: 1;
-  }
-  .project-thumb img {
+
+  .project-visual img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top;
+    object-position: top center;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .project-row:hover .project-visual img {
+    transform: scale(1.02);
   }
 
-  /* Título */
+  /* Placeholder MediBot — ocupa todo el contenedor, SVG interno */
+  .visual-placeholder {
+    width: 100%;
+    height: 100%;
+    border: 1px dashed rgba(245, 158, 11, 0.25);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .wf-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* ── Texto debajo de la imagen ── */
+  .project-body {
+    /* sin restricción de ancho — la imagen ya marcó la pauta */
+  }
+
   .project-title {
     font-family: var(--font-display);
-    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
     font-weight: 600;
     color: var(--text);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
     margin-bottom: 0.75rem;
-    line-height: 1.15;
-    transition: color 0.25s ease;
-  }
-  .project-row:hover .project-title {
-    color: #fff;
+    line-height: 1.2;
   }
 
-  /* WIP — título muted */
   .project-row--wip .project-title {
     color: var(--text-muted);
   }
 
-  /* Descripción */
   .project-desc {
-    font-size: 0.92rem;
+    font-size: 0.93rem;
     line-height: 1.75;
     color: var(--text-muted);
     margin-bottom: 1.2rem;
-    max-width: 600px;
   }
 
   /* Pills de stack */
@@ -357,17 +427,12 @@ const projects: Project[] = [
     background: rgba(45, 92, 255, 0.08);
     border: 1px solid rgba(45, 92, 255, 0.22);
     color: rgba(180, 195, 255, 0.85);
-    transition: background 0.2s ease, border-color 0.2s ease;
-  }
-  .project-row:hover .tech-pill {
-    background: rgba(45, 92, 255, 0.13);
-    border-color: rgba(45, 92, 255, 0.38);
   }
 
   /* Links */
   .project-links {
     display: flex;
-    gap: 1.2rem;
+    gap: 1.4rem;
     flex-wrap: wrap;
     align-items: center;
   }
@@ -382,22 +447,16 @@ const projects: Project[] = [
     text-decoration: none;
     transition: color 0.2s ease;
   }
-  .proj-link:hover {
-    color: var(--text);
-  }
+  .proj-link:hover { color: var(--text); }
 
   .proj-link--primary {
     color: var(--accent);
     font-weight: 600;
   }
-  .proj-link--primary:hover {
-    color: #6b8fff;
-  }
+  .proj-link--primary:hover { color: #6b8fff; }
 
-  /* WIP — borde dashed sutil */
-  .project-row--wip {
-    opacity: 0.7;
-  }
+  /* WIP — opacidad reducida */
+  .project-row--wip { opacity: 0.7; }
 
   /* Estado inicial para animación GSAP */
   .project-card {
@@ -408,16 +467,11 @@ const projects: Project[] = [
   /* ── Responsive ── */
   @media (max-width: 900px) {
     .projects { padding: 6rem 2rem; }
-    .row-inner { gap: 1.5rem; }
-    .project-thumb { width: 80px; height: 52px; }
   }
 
   @media (max-width: 600px) {
     .projects { padding: 5rem 1.5rem; }
     .projects-header { margin-bottom: 3rem; }
-    .project-index { display: none; }
-    .row-inner { gap: 0; }
-    .project-thumb { display: none; }
-    .project-row { padding: 2rem 0; }
+    .project-row { padding: 2rem 0 2.5rem; }
   }
 </style>

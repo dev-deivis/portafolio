@@ -36,7 +36,8 @@ export function initGSAP() {
 
   enterFrom('.project-card',  { opacity: 0, y: 35 });
   enterFrom('.skill-card',    { opacity: 0, scale: 0.94 }, { ease: 'back.out(1.3)' }, 0.06);
-  enterFrom('.service-card',  { opacity: 0, y: 30 }, {}, 0.06);
+  enterFrom('.service-card',  { opacity: 0, y: 28 }, {}, 0.07);
+  enterFrom('.contact-block', { opacity: 0, y: 28 }, {}, 0.08);
   enterFrom('.timeline-card', { opacity: 0, x: 30 }, {}, 0.1);
 
   /* ── Historia — timeline narrativo ──
