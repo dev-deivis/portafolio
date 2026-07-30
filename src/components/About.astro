@@ -1,174 +1,196 @@
 ---
-const timeline = [
+// About.astro — Sobre Mí
+// Layout: texto grande izquierda + 3 tarjetas derecha (bg-raised, borde --line).
+// Paleta: --accent azul eléctrico. Sin gradientes, sin morado/cian/verde.
+
+const specs = [
   {
-    active: true,
-    label: 'ACTUAL:',
-    title: 'Desarrollador Full Stack Freelance',
-    desc: 'Disponible para proyectos de desarrollo web, apps móviles y APIs REST.',
-    iconPath: 'M20 10V20L26 26',
-    iconShape: 'circle',
+    label: 'ACTUAL',
+    title: 'Full Stack Freelance',
+    desc:  'Disponible para proyectos de desarrollo web, apps móviles y APIs REST.',
   },
   {
-    active: false,
-    label: 'STACK PRINCIPAL:',
-    title: 'Backend & Frontend Development',
-    desc: 'React, Next.js, Laravel, Node.js, Flutter, PostgreSQL, MySQL, Docker.',
-    iconPath: 'M12 12h16v16H12z',
-    iconShape: 'rect',
+    label: 'STACK PRINCIPAL',
+    title: 'Backend · Frontend · Mobile',
+    desc:  'Laravel · Next.js · Flutter · PostgreSQL · Docker',
   },
   {
-    active: false,
-    label: 'EXPERIENCIA:',
-    title: 'Proyectos Funcionando con Tráfico Real',
-    desc: 'Docker, CI/CD, bases de datos en cloud, arquitecturas escalables. Plataformas en Railway y AWS con autenticación y roles multinivel.',
-    iconPath: 'M10 20L18 28L30 12',
-    iconShape: 'check',
+    label: 'EXPERIENCIA',
+    title: 'Proyectos con Tráfico Real',
+    desc:  'Plataformas desplegadas con autenticación y roles multinivel.',
   },
 ];
 ---
 
-<section id="about" class="about reveal-section">
-  <div class="container">
-    <h2 class="section-title">Sobre Mí</h2>
+<section id="about" class="about">
+  <div class="about-container">
 
-    <div class="grid">
-      <!-- Texto -->
-      <div class="glass-card text-card">
-        <h3 class="headline gradient-text">
-          Construyo aplicaciones web y móviles completas, del backend al frontend,
-          listas para crecer contigo.
-        </h3>
+    <span class="section-label">Sobre Mí</span>
 
-        <p>
-          ¿Tienes una idea pero no sabes cómo hacerla realidad? Me encargo de todo
-          el ciclo: base de datos, backend, frontend y deploy.
-        </p>
-        <p>
-          Trabajo con código limpio y buenas prácticas para que tu producto no solo
-          funcione hoy, sino que pueda crecer mañana.
-        </p>
-        <p>
+    <div class="about-grid">
+
+      <!-- Párrafo principal — texto grande sin caja, no tocar -->
+      <div class="about-text">
+        <h2 class="declaration">
+          Construyo aplicaciones web<br />
+          y móviles completas,<br />
+          <span class="declaration-accent">del backend al frontend.</span>
+        </h2>
+        <p class="about-body">
           Analizo tu necesidad, propongo la solución más simple que resuelva el
           problema y te acompaño hasta el lanzamiento.
         </p>
-        <p class="cta-text">
-          📍 Disponible para proyectos freelance &nbsp;|&nbsp; ⚡ Respondo en menos de 24 horas
+        <p class="availability">
+          <span class="avail-dot" aria-hidden="true"></span>
+          Disponible &nbsp;·&nbsp; Respondo en menos de 24 h
         </p>
       </div>
 
-      <!-- Timeline -->
-      <div class="timeline">
-        {timeline.map(({ active, label, title, desc }) => (
-          <div class={`glass-card timeline-card ${active ? 'active' : ''}`}>
-            <div class="t-icon">
-              {active && (
-                <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
-                  <circle cx="20" cy="20" r="18" stroke="url(#tg1)" stroke-width="2"/>
-                  <path d="M20 10V20L26 26" stroke="#00E5FF" stroke-width="2" stroke-linecap="round"/>
-                  <defs>
-                    <linearGradient id="tg1" x1="0" y1="0" x2="40" y2="40">
-                      <stop offset="0%" stop-color="#6C63FF"/>
-                      <stop offset="100%" stop-color="#00E5FF"/>
-                    </linearGradient>
-                  </defs>
-                </svg>
-              )}
-              {!active && label === 'STACK PRINCIPAL:' && (
-                <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
-                  <rect x="12" y="12" width="16" height="16" stroke="#6C63FF" stroke-width="2"/>
-                </svg>
-              )}
-              {!active && label === 'EXPERIENCIA:' && (
-                <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
-                  <path d="M10 20L18 28L30 12" stroke="#00FFA3" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-              )}
-            </div>
-            <div class="t-body">
-              <span class="t-label">{label}</span>
-              <h4>{title}</h4>
-              <p>{desc}</p>
-            </div>
+      <!-- 3 tarjetas de specs -->
+      <div class="specs-col">
+        {specs.map(({ label, title, desc }) => (
+          <div class="spec-card">
+            <span class="spec-label">{label}</span>
+            <h3 class="spec-title">{title}</h3>
+            <p class="spec-desc">{desc}</p>
           </div>
         ))}
       </div>
+
     </div>
   </div>
 </section>
 
 <style>
-  .about { background: rgba(0, 0, 0, 0.1); }
+  /* ── Sección ── */
+  .about {
+    padding: 6rem 4rem 7rem;
+    content-visibility: visible;
+  }
 
-  .grid {
+  .about-container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Etiqueta de sección */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 2.5rem;
+  }
+
+  /* Grid: texto | tarjetas */
+  .about-grid {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
-    gap: 3rem;
+    gap: 4rem;
     align-items: start;
   }
 
-  .text-card { padding: 2.5rem; }
-
-  .headline {
-    font-size: 1.5rem;
-    line-height: 1.4;
-    margin-bottom: 1.8rem;
+  /* ── Columna de texto ── */
+  .declaration {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 3.5vw, 3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin: 0 0 1.5rem;
   }
 
-  .text-card p {
+  .declaration-accent {
+    color: var(--accent);
+  }
+
+  .about-body {
+    font-size: 0.95rem;
+    line-height: 1.8;
     color: var(--text-muted);
-    line-height: 1.85;
-    margin-bottom: 1.2rem;
-    font-size: 0.96rem;
-  }
-  .cta-text {
-    color: var(--c-green) !important;
-    font-weight: 600;
+    margin-bottom: 1.8rem;
+    max-width: 480px;
   }
 
-  .timeline {
+  .availability {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .avail-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #3ddc84;
+    flex-shrink: 0;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1;   transform: scale(1);   }
+    50%       { opacity: 0.5; transform: scale(1.45); }
+  }
+
+  /* ── Columna de tarjetas ── */
+  .specs-col {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
-  .timeline-card {
-    padding: 1.8rem;
-    display: flex;
-    gap: 1.2rem;
-    align-items: flex-start;
-    transition: all var(--ease);
-  }
-  .timeline-card.active {
-    border-color: rgba(0, 229, 255, 0.3);
-    box-shadow: 0 8px 32px rgba(0, 229, 255, 0.1);
-  }
-  .timeline-card:hover {
-    transform: translateX(6px);
-    border-color: rgba(108, 99, 255, 0.4);
+  .spec-card {
+    background: #1c1c22;          /* más claro que --bg (#0a0a0c): contraste real */
+    border: 1px solid #383840;    /* borde visible sobre negro, sin ser blanco */
+    border-radius: 12px;
+    padding: 1.6rem 1.8rem;
   }
 
-  .t-icon { flex-shrink: 0; margin-top: 4px; }
-
-  .t-label {
-    display: block;
-    font-size: 0.68rem;
-    color: var(--c-green);
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    margin-bottom: 0.4rem;
+  .spec-label {
     font-family: var(--mono);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.5rem;
   }
-  .t-body h4 {
+
+  .spec-title {
+    font-family: var(--font-display);
     font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
     margin-bottom: 0.4rem;
+    line-height: 1.3;
   }
-  .t-body p {
+
+  .spec-desc {
+    font-size: 0.875rem;
     color: var(--text-muted);
     line-height: 1.65;
-    font-size: 0.88rem;
+    margin: 0;
   }
 
+  /* ── Responsive ── */
   @media (max-width: 900px) {
-    .grid { grid-template-columns: 1fr; }
+    .about { padding: 5rem 2rem 6rem; }
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .about { padding: 4rem 1.5rem 5rem; }
+    .declaration { font-size: clamp(1.6rem, 6vw, 2.2rem); }
   }
 </style>
