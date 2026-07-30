@@ -63,8 +63,14 @@ const techGroups = [
 
 <section id="skills" class="skills reveal-section">
   <div class="container">
-    <h2 class="section-title">De la Idea al Producto</h2>
-    <p class="section-subtitle">Cómo convierto tu visión en software que funciona</p>
+
+    <!-- Encabezado — mismo patrón que Proyectos / Servicios / Historia -->
+    <div class="skills-header">
+      <span class="section-label">Proceso & Stack</span>
+      <h2 class="skills-title">
+        De la Idea<br />al Producto
+      </h2>
+    </div>
 
     <!-- Proceso: 4 tarjetas -->
     <div class="steps-grid">
@@ -112,6 +118,30 @@ const techGroups = [
 
 <style>
   .skills { background: rgba(0, 0, 0, 0.15); }
+
+  /* ── Encabezado — mismo patrón que Proyectos / Servicios / Historia ── */
+  .skills-header {
+    margin-bottom: 4rem;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 1.2rem;
+  }
+
+  .skills-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
 
   /* ── Proceso ── */
   .steps-grid {
@@ -193,10 +223,10 @@ const techGroups = [
   .tech-eyebrow {
     display: block;
     font-family: var(--mono);
-    font-size: 0.65rem;
+    font-size: 0.72rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: var(--accent);
     margin-bottom: 2rem;
   }
 
