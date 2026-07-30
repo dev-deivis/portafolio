@@ -154,12 +154,12 @@ const heroPhotoSrc = `${import.meta.env.BASE_URL}assets/images/projects/foto-her
     animation: fadeUp 0.6s ease 0.8s forwards;
   }
 
-  /* ── Foto de perfil duotono (Posición Absoluta a la derecha — no afecta el texto ni el scroll) ── */
+  /* ── Foto de perfil duotono ── */
   .hero-photo-wrap {
     position: absolute;
-    right: 2vw;
+    right: 3vw;
     bottom: 0;
-    width: min(580px, 44vw);
+    width: min(680px, 46vw);
     z-index: 1;
     opacity: 0;
     animation: fadeUp 0.8s ease 0.45s forwards;
@@ -170,24 +170,24 @@ const heroPhotoSrc = `${import.meta.env.BASE_URL}assets/images/projects/foto-her
   .hero-photo-filter {
     position: relative;
     width: 100%;
-    /* Difuminado suave en el borde izquierdo e inferior */
+    /* Difuminado suave en los bordes */
     -webkit-mask-image: 
-      linear-gradient(to right, transparent 0%, black 18%, black 85%, transparent 100%),
+      linear-gradient(to right, transparent 0%, black 15%, black 88%, transparent 100%),
       linear-gradient(to bottom, black 65%, transparent 100%);
     -webkit-mask-composite: source-in, destination-in;
     mask-image: 
-      linear-gradient(to right, transparent 0%, black 18%, black 85%, transparent 100%),
+      linear-gradient(to right, transparent 0%, black 15%, black 88%, transparent 100%),
       linear-gradient(to bottom, black 65%, transparent 100%);
     mask-composite: intersect;
   }
 
-  /* Filtro Duotono Puro: Grayscale -> Sepia -> Hue Rotate (Azul Eléctrico #2D5CFF) */
+  /* Filtro Duotono Puro + enfoque centrado en la mitad derecha */
   .hero-photo-img {
     width: 100%;
     height: auto;
     max-height: 88vh;
     object-fit: cover;
-    object-position: top center;
+    object-position: 65% top;
     display: block;
     filter: grayscale(100%) sepia(100%) hue-rotate(195deg) saturate(380%) contrast(1.25) brightness(0.9);
   }
