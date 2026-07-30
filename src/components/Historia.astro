@@ -1,7 +1,7 @@
 ---
-// Historia.astro — Timeline narrativo por año
-// Animaciones: GSAP ScrollTrigger (registrado en gsap-init.ts)
-// Cada .historia-item entra con fade + slide desde abajo al hacer scroll
+// Historia.astro — Timeline horizontal pineado (desktop) / vertical (mobile)
+// Desktop: GSAP ScrollTrigger pin + horizontal scrub  (gsap-init.ts)
+// Mobile:  layout vertical con fade-in normal
 
 const hitos = [
   {
@@ -45,62 +45,75 @@ const hitos = [
 ---
 
 <section id="historia" class="historia">
-  <div class="historia-container">
 
-    <!-- Encabezado de sección -->
-    <div class="historia-header historia-item">
-      <span class="section-label">Mi Historia</span>
-      <h2 class="historia-title">
-        Cómo llegué<br />hasta aquí
-      </h2>
-    </div>
-
-    <!-- Timeline -->
-    <div class="timeline">
-      <!-- Línea vertical decorativa -->
-      <div class="timeline-rail" aria-hidden="true"></div>
-
-      {hitos.map((hito) => (
-        <article class={`historia-item hito${hito.current ? ' hito--current' : ''}`}>
-          <!-- Año -->
-          <div class="hito-year-col">
-            <span class="hito-year">{hito.year}</span>
-          </div>
-
-          <!-- Nodo en la línea -->
-          <div class="hito-node" aria-hidden="true">
-            <div class="hito-dot"></div>
-          </div>
-
-          <!-- Contenido -->
-          <div class="hito-content">
-            <span class="hito-tag">{hito.tag}</span>
-            <h3 class="hito-title">{hito.title}</h3>
-            <p class="hito-desc">{hito.desc}</p>
-          </div>
-        </article>
-      ))}
-    </div>
-
+  <!-- Panel izquierdo: se queda fijo mientras el track se desliza -->
+  <div class="historia-header">
+    <span class="section-label">Mi Historia</span>
+    <h2 class="historia-title">
+      Cómo llegué<br />hasta aquí
+    </h2>
   </div>
+
+  <!-- Máscara de degradado — cubre el panel izquierdo en desktop -->
+  <div class="historia-mask" aria-hidden="true"></div>
+
+  <!-- Track horizontal: GSAP lo desplaza con translateX en desktop -->
+  <div class="historia-track" id="historia-track">
+
+    <!-- Riel horizontal -->
+    <div class="track-rail" aria-hidden="true"></div>
+
+    {hitos.map((hito) => (
+      <article class={`hito${hito.current ? ' hito--current' : ''}`}>
+
+        <!-- Año: zona superior -->
+        <div class="hito-upper">
+          <span class="hito-year">{hito.year}</span>
+        </div>
+
+        <!-- Nodo en el riel -->
+        <div class="hito-node" aria-hidden="true">
+          <div class="hito-dot"></div>
+        </div>
+
+        <!-- Contenido: zona inferior -->
+        <div class="hito-lower">
+          <span class="hito-tag">{hito.tag}</span>
+          <h3 class="hito-title">{hito.title}</h3>
+          <p class="hito-desc">{hito.desc}</p>
+        </div>
+
+      </article>
+    ))}
+  </div>
+
 </section>
 
 <style>
-  /* ── Sección ── */
+  /* ════════════════════════════════════════
+     DESKTOP — scroll horizontal pineado
+     (≥ 768px)
+  ════════════════════════════════════════ */
   .historia {
-    padding: 8rem 4rem;
-    /* override al content-visibility global para que GSAP mida correctamente */
-    content-visibility: visible;
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    /* Neutraliza section { padding: 7rem 4rem } de global.css */
+    padding: 0;
+    /* ScrollTrigger necesita medir y repintar este elemento en tiempo real */
+    content-visibility: visible !important;
+    contain-intrinsic-size: none !important;
   }
 
-  .historia-container {
-    max-width: 960px;
-    margin: 0 auto;
-  }
-
-  /* ── Encabezado ── */
+  /* Panel de encabezado: posición absoluta a la izquierda, centrado vertical */
   .historia-header {
-    margin-bottom: 6rem;
+    position: absolute;
+    left: 4rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 220px;
+    z-index: 5;
+    pointer-events: none;
   }
 
   .section-label {
@@ -122,42 +135,64 @@ const hitos = [
     color: var(--text);
   }
 
-  /* ── Timeline wrapper ── */
-  .timeline {
-    position: relative;
-    /* padding-left = ancho columna año + nodo */
-    padding-left: 200px;
-  }
-
-  /* Riel vertical */
-  .timeline-rail {
+  /* Máscara: degradado sobre el panel izquierdo para que los hitos
+     desaparezcan suavemente al deslizarse debajo del header */
+  .historia-mask {
     position: absolute;
-    left: 176px;  /* alineado con el centro del nodo */
-    top: 8px;
-    bottom: 8px;
-    width: 1px;
-    background: rgba(255, 255, 255, 0.14);
+    left: 0;
+    top: 0;
+    height: 100%;
+    /* ancho = zona del header + un poco de margen */
+    width: calc(220px + 7rem);
+    background: linear-gradient(
+      to right,
+      var(--bg) 55%,
+      transparent 100%
+    );
+    z-index: 4;
+    pointer-events: none;
   }
 
-  /* ── Hito (fila) ── */
-  .hito {
+  /* Track: flex-row, se desplaza con GSAP translateX */
+  .historia-track {
     display: flex;
-    align-items: flex-start;
-    gap: 0;
-    padding-bottom: 4rem;
+    align-items: stretch;
+    height: 100%;
+    /* Empieza después del panel del header */
+    padding-left: calc(220px + 7rem);
+    padding-right: 6rem;
     position: relative;
-  }
-  .hito:last-child {
-    padding-bottom: 0;
+    will-change: transform;
   }
 
-  /* Columna del año — posición absoluta a la izquierda */
-  .hito-year-col {
+  /* Riel horizontal — línea a mitad de la sección */
+  .track-rail {
     position: absolute;
-    left: -200px;
-    top: 2px;
-    width: 160px;
-    text-align: right;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.13);
+    pointer-events: none;
+  }
+
+  /* Cada hito: columna vertical de ancho fijo */
+  .hito {
+    width: clamp(340px, 30vw, 460px);
+    flex-shrink: 0;
+    height: 100%;
+    /* Grid: zona superior | nodo | zona inferior */
+    display: grid;
+    grid-template-rows: 1fr auto 1fr;
+    padding: 0 2.5rem;
+    position: relative;
+  }
+
+  /* Zona superior: año alineado al fondo (justo sobre el riel) */
+  .hito-upper {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 1.4rem;
   }
 
   .hito-year {
@@ -165,20 +200,15 @@ const hitos = [
     font-size: 0.8rem;
     font-weight: 600;
     color: var(--text-muted);
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
   }
 
-  /* Nodo en la línea */
+  /* Nodo sobre el riel */
   .hito-node {
-    position: absolute;
-    left: -24px;  /* centrado sobre el riel */
-    top: 4px;
-    width: 16px;
-    height: 16px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
   }
 
   .hito-dot {
@@ -186,17 +216,15 @@ const hitos = [
     height: 11px;
     border-radius: 50%;
     background: var(--bg);
-    border: 2px solid rgba(255, 255, 255, 0.25);
-    transition: background 0.3s ease, border-color 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.28);
+    transition: border-color 0.3s ease;
   }
 
-  /* Nodo del hito actual — más presencia que los demás */
-  .hito--current .hito-node {
-    width: 22px;
-    height: 22px;
-    left: -28px;
+  .hito:hover .hito-dot {
+    border-color: rgba(45, 92, 255, 0.6);
   }
 
+  /* Nodo activo (Ahora) */
   .hito--current .hito-dot {
     width: 14px;
     height: 14px;
@@ -211,9 +239,9 @@ const hitos = [
     50%       { box-shadow: 0 0 0 8px var(--accent-dim), 0 0 24px rgba(45,92,255,0.65); }
   }
 
-  /* Contenido */
-  .hito-content {
-    padding-left: 2rem;
+  /* Zona inferior: contenido del hito */
+  .hito-lower {
+    padding-top: 1.4rem;
   }
 
   .hito-tag {
@@ -223,64 +251,124 @@ const hitos = [
     text-transform: uppercase;
     color: var(--accent);
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.55rem;
   }
 
   .hito-title {
     font-family: var(--font-display);
-    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    font-size: clamp(1.15rem, 1.8vw, 1.45rem);
     font-weight: 600;
     color: var(--text);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.8rem;
     letter-spacing: -0.01em;
+    line-height: 1.25;
   }
 
   .hito-desc {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     line-height: 1.75;
     color: var(--text-muted);
-    max-width: 540px;
+    max-width: 340px;
   }
 
-  /* Estado inicial de animación — GSAP los anima al entrar en viewport */
-  .historia-item {
-    opacity: 0;
-    transform: translateY(28px);
-  }
-
-  /* ── Responsive ── */
-  @media (max-width: 900px) {
-    .historia { padding: 6rem 2rem; }
-
-    .timeline { padding-left: 0; }
-
-    .timeline-rail { left: 7px; }
-
-    .hito-year-col {
-      position: static;
-      width: auto;
-      text-align: left;
-      padding-left: 2.2rem;
-      margin-bottom: 0.3rem;
+  /* ════════════════════════════════════════
+     MOBILE — timeline vertical normal
+     (< 768px)
+  ════════════════════════════════════════ */
+  @media (max-width: 767px) {
+    .historia {
+      height: auto;
+      overflow: visible;
+      padding: 5rem 1.5rem 6rem;
     }
 
-    .hito-node {
-      left: -0.5px;
+    /* Header: block normal, con estado inicial para GSAP */
+    .historia-header {
+      position: static;
+      transform: none;
+      width: auto;
+      pointer-events: auto;
+      margin-bottom: 3.5rem;
+      opacity: 0;
+      translate: 0 28px;
+    }
+
+    /* La máscara no aplica en mobile */
+    .historia-mask {
+      display: none;
+    }
+
+    /* Track: columna vertical */
+    .historia-track {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      padding: 0 0 0 1.8rem;
+      position: relative;
+      will-change: auto;
+    }
+
+    /* Riel vertical en mobile */
+    .track-rail {
+      position: absolute;
+      left: 5px;
+      top: 0;
+      bottom: 0;
+      right: auto;
+      width: 1px;
+      height: auto;
+      /* top: 50% del desktop ya no aplica */
       top: 0;
     }
 
+    /* Hito: fila vertical */
     .hito {
+      width: auto;
+      height: auto;
+      display: flex;
       flex-direction: column;
-      padding-bottom: 3rem;
+      grid-template-rows: none;
+      padding: 0 0 3rem 0;
+      opacity: 0;
+      translate: 0 28px;
+    }
+    .hito:last-child {
+      padding-bottom: 0;
     }
 
-    .hito-content {
-      padding-left: 2.2rem;
+    /* Año encima del título, sin zona upper */
+    .hito-upper {
+      display: block;
+      padding-bottom: 0;
+      margin-bottom: 0.35rem;
+    }
+
+    /* Nodo: posición absoluta sobre el riel vertical */
+    .hito-node {
+      position: absolute;
+      left: -1.8rem;
+      top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+    }
+
+    .hito-lower {
+      padding-top: 0;
+    }
+
+    .hito-title {
+      font-size: clamp(1.1rem, 4vw, 1.4rem);
+    }
+
+    .hito-desc {
+      max-width: 100%;
     }
   }
 
-  @media (max-width: 600px) {
-    .historia { padding: 5rem 1.5rem; }
-    .historia-header { margin-bottom: 3.5rem; }
+  @media (max-width: 480px) {
+    .historia { padding: 4rem 1.25rem 5rem; }
+    .historia-title { font-size: clamp(2rem, 8vw, 2.8rem); }
   }
 </style>
