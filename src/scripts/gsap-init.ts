@@ -38,4 +38,27 @@ export function initGSAP() {
   enterFrom('.skill-card',    { opacity: 0, scale: 0.94 }, { ease: 'back.out(1.3)' }, 0.06);
   enterFrom('.service-card',  { opacity: 0, y: 30 }, {}, 0.06);
   enterFrom('.timeline-card', { opacity: 0, x: 30 }, {}, 0.1);
+
+  /* ── Historia — timeline narrativo ──
+     Cada .historia-item entra con fade + slide desde abajo, escalonado.
+     start: 'top 88%' para que el trigger sea visible antes de que llegue al centro.
+  ── */
+  gsap.utils.toArray<HTMLElement>('.historia-item').forEach((el, i) => {
+    gsap.fromTo(
+      el,
+      { opacity: 0, y: 32 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.55,
+        ease: 'power2.out',
+        delay: i * 0.08,
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          once: true,
+        },
+      }
+    );
+  });
 }

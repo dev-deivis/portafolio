@@ -1,15 +1,15 @@
 ---
 const links = [
   { href: '#home',     label: 'Inicio'    },
+  { href: '#historia', label: 'Historia'  },
   { href: '#projects', label: 'Proyectos' },
   { href: '#services', label: 'Servicios' },
-  { href: '#about',    label: 'Acerca'    },
   { href: '#contact',  label: 'Contacto'  },
 ];
 ---
 
 <nav class="navbar" id="navbar">
-  <a href="#home" class="nav-logo" aria-label="Inicio">DEV.IO</a>
+  <a href="#home" class="nav-logo" aria-label="Inicio">devdeivis</a>
 
   <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
     <span></span>
@@ -54,14 +54,15 @@ const links = [
 
   .nav-logo {
     font-family: var(--mono);
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    background: var(--grad-main);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--text);
     text-decoration: none;
+    transition: color var(--ease);
+  }
+  .nav-logo:hover {
+    color: var(--accent);
   }
 
   .nav-links {

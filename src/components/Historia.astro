@@ -1,0 +1,286 @@
+---
+// Historia.astro — Timeline narrativo por año
+// Animaciones: GSAP ScrollTrigger (registrado en gsap-init.ts)
+// Cada .historia-item entra con fade + slide desde abajo al hacer scroll
+
+const hitos = [
+  {
+    year: '2021',
+    tag: 'Origen',
+    title: 'Primer cliente real',
+    desc: 'Empecé haciendo webs para negocios locales en Oaxaca — tiendas, restaurantes, servicios. Sin frameworks, con muchas ganas y algo de HTML/CSS/JS. El primer pago fue suficiente para querer seguir.',
+  },
+  {
+    year: '2022',
+    tag: 'Certificación',
+    title: 'Huawei HCIA-Cloud',
+    desc: 'Obtuve la certificación HCIA-Cloud de Huawei. Fundamentos de arquitectura en la nube, virtualización y servicios IaaS/PaaS. Primera vez que vi el software a escala de infraestructura.',
+  },
+  {
+    year: '2022',
+    tag: 'Academia',
+    title: 'Ingreso al ITO Oaxaca',
+    desc: 'Entré a Ingeniería en Sistemas Computacionales en el Instituto Tecnológico de Oaxaca. El freelance siguió en paralelo — la carrera le dio estructura a lo que ya estaba construyendo.',
+  },
+  {
+    year: '2025',
+    tag: 'Servicio',
+    title: 'Técnico TI — TecNM',
+    desc: 'Servicio social como técnico en tecnologías de la información en una institución TecNM. Redes, soporte, infraestructura física. Aprendí que los sistemas reales son mucho más sucios que los de clase.',
+  },
+  {
+    year: '2026',
+    tag: 'Hackathon',
+    title: 'MappAche — HackaTec 2026',
+    desc: 'Desarrollé MappAche en el HackaTec 2026: aplicación móvil de mapeo colaborativo construida con Flutter. Primer lugar en categoría móvil. El tipo de presión que te hace crecer rápido.',
+  },
+  {
+    year: '2026',
+    tag: 'Ahora',
+    title: 'Freelance remoto & Appoax',
+    desc: 'Buscando proyectos freelance y trabajo remoto mientras escalo Appoax. Stack principal: Laravel, Flutter, PostgreSQL, Spring Boot. Disponible para proyectos que valga la pena construir.',
+    current: true,
+  },
+];
+---
+
+<section id="historia" class="historia">
+  <div class="historia-container">
+
+    <!-- Encabezado de sección -->
+    <div class="historia-header historia-item">
+      <span class="section-label">Mi Historia</span>
+      <h2 class="historia-title">
+        Cómo llegué<br />hasta aquí
+      </h2>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline">
+      <!-- Línea vertical decorativa -->
+      <div class="timeline-rail" aria-hidden="true"></div>
+
+      {hitos.map((hito) => (
+        <article class={`historia-item hito${hito.current ? ' hito--current' : ''}`}>
+          <!-- Año -->
+          <div class="hito-year-col">
+            <span class="hito-year">{hito.year}</span>
+          </div>
+
+          <!-- Nodo en la línea -->
+          <div class="hito-node" aria-hidden="true">
+            <div class="hito-dot"></div>
+          </div>
+
+          <!-- Contenido -->
+          <div class="hito-content">
+            <span class="hito-tag">{hito.tag}</span>
+            <h3 class="hito-title">{hito.title}</h3>
+            <p class="hito-desc">{hito.desc}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ── Sección ── */
+  .historia {
+    padding: 8rem 4rem;
+    /* override al content-visibility global para que GSAP mida correctamente */
+    content-visibility: visible;
+  }
+
+  .historia-container {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* ── Encabezado ── */
+  .historia-header {
+    margin-bottom: 6rem;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 1.2rem;
+  }
+
+  .historia-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  /* ── Timeline wrapper ── */
+  .timeline {
+    position: relative;
+    /* padding-left = ancho columna año + nodo */
+    padding-left: 200px;
+  }
+
+  /* Riel vertical */
+  .timeline-rail {
+    position: absolute;
+    left: 176px;  /* alineado con el centro del nodo */
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  /* ── Hito (fila) ── */
+  .hito {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    padding-bottom: 4rem;
+    position: relative;
+  }
+  .hito:last-child {
+    padding-bottom: 0;
+  }
+
+  /* Columna del año — posición absoluta a la izquierda */
+  .hito-year-col {
+    position: absolute;
+    left: -200px;
+    top: 2px;
+    width: 160px;
+    text-align: right;
+  }
+
+  .hito-year {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* Nodo en la línea */
+  .hito-node {
+    position: absolute;
+    left: -24px;  /* centrado sobre el riel */
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .hito-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+
+  /* Nodo del hito actual — más presencia que los demás */
+  .hito--current .hito-node {
+    width: 22px;
+    height: 22px;
+    left: -28px;
+  }
+
+  .hito--current .hito-dot {
+    width: 14px;
+    height: 14px;
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 5px var(--accent-dim), 0 0 16px rgba(45, 92, 255, 0.5);
+    animation: nodePulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes nodePulse {
+    0%, 100% { box-shadow: 0 0 0 5px var(--accent-dim), 0 0 16px rgba(45,92,255,0.4); }
+    50%       { box-shadow: 0 0 0 8px var(--accent-dim), 0 0 24px rgba(45,92,255,0.65); }
+  }
+
+  /* Contenido */
+  .hito-content {
+    padding-left: 2rem;
+  }
+
+  .hito-tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .hito-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .hito-desc {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--text-muted);
+    max-width: 540px;
+  }
+
+  /* Estado inicial de animación — GSAP los anima al entrar en viewport */
+  .historia-item {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .historia { padding: 6rem 2rem; }
+
+    .timeline { padding-left: 0; }
+
+    .timeline-rail { left: 7px; }
+
+    .hito-year-col {
+      position: static;
+      width: auto;
+      text-align: left;
+      padding-left: 2.2rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .hito-node {
+      left: -0.5px;
+      top: 0;
+    }
+
+    .hito {
+      flex-direction: column;
+      padding-bottom: 3rem;
+    }
+
+    .hito-content {
+      padding-left: 2.2rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .historia { padding: 5rem 1.5rem; }
+    .historia-header { margin-bottom: 3.5rem; }
+  }
+</style>

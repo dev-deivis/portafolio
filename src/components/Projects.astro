@@ -1,447 +1,423 @@
 ---
-interface Slide { type: 'img' | 'video'; src: string; alt?: string; }
+// Projects.astro — Grid numerado 01 / 02 / 03
+// Rediseño 2026: formato editorial estilo heynesh.com
+// Animación: GSAP ScrollTrigger en .project-card (registrado en gsap-init.ts)
 
 interface Project {
-  id:       string;
-  title:    string;
-  desc:     string;
-  metrics?: string;
-  note?:    string;
-  tech:     string[];
-  links:    { label: string; href: string; primary?: boolean }[];
-  slides:   Slide[];
-  featured?: boolean;
-  wip?:     boolean;
+  index:     string;       // "01", "02", "03"
+  id:        string;
+  title:     string;
+  desc:      string;
+  tech:      string[];
+  thumb?:    string;       // imagen de preview (primera slide del proyecto)
+  links:     { label: string; href: string; primary?: boolean }[];
+  status?:   'live' | 'wip';
+  note?:     string;
 }
 
 const projects: Project[] = [
   {
+    index: '01',
     id: 'hackathon',
-    featured: true,
-    title: 'Plataforma de Gestión de Hackathones',
-    desc: 'Sistema completo para gestionar eventos de hackathones desde el registro de participantes hasta la evaluación de proyectos y generación automática de constancias en PDF.',
-    metrics: '+50 equipos registrados · 20 eventos gestionados',
+    title: 'Gestión de Hackathones',
+    desc: 'Sistema completo para gestionar eventos de hackathones — registro de equipos, evaluación de proyectos y generación automática de constancias en PDF. Más de 50 equipos y 20 eventos gestionados.',
     tech: ['Laravel 11', 'PostgreSQL', 'Supabase', 'TailwindCSS', 'Alpine.js', 'Railway'],
+    thumb: '/assets/images/projects/hackathon-home.png',
+    status: 'live',
     links: [
-      { label: 'Demo en Vivo',  href: 'https://web-production-ef44a.up.railway.app/', primary: true },
-      { label: 'Código Fuente', href: 'https://github.com/dev-deivis/hackathon-events' },
-    ],
-    slides: [
-      { type: 'video', src: '/assets/videos/hackathon-demo.mp4' },
-      { type: 'img', src: '/assets/images/projects/hackathon-home.png',      alt: 'Home' },
-      { type: 'img', src: '/assets/images/projects/hackathon-dashboard.png', alt: 'Dashboard' },
-      { type: 'img', src: '/assets/images/projects/hackathon-teams.png',     alt: 'Equipos' },
-      { type: 'img', src: '/assets/images/projects/hackathon-admin.png',     alt: 'Admin' },
-      { type: 'img', src: '/assets/images/projects/hackathon-rankings.png',  alt: 'Rankings' },
+      { label: 'Demo en vivo',    href: 'https://web-production-ef44a.up.railway.app/', primary: true },
+      { label: 'Código fuente',   href: 'https://github.com/dev-deivis/hackathon-events' },
     ],
   },
   {
+    index: '02',
     id: 'voces',
-    title: 'Voces Indígenas — Preservación Lingüística',
-    desc: 'Plataforma web educativa para la documentación y preservación de 6 lenguas indígenas mexicanas en peligro de extinción. Incluye mapa interactivo y análisis de crisis.',
+    title: 'Voces Indígenas',
+    desc: 'Plataforma web educativa para la documentación y preservación de 6 lenguas indígenas mexicanas. Incluye mapa interactivo con Leaflet.js y análisis de crisis lingüística.',
+    tech: ['HTML5', 'CSS3', 'JavaScript', 'Leaflet.js'],
+    thumb: '/assets/images/projects/voces-1.png',
+    status: 'live',
     note: 'Presentado en exposición de preservación de lenguas indígenas',
-    tech: ['HTML5', 'CSS3', 'JavaScript', 'Leaflet.js', 'Responsive'],
     links: [
-      { label: 'Ver Página', href: 'https://dev-deivis.github.io/voces_indigenas/', primary: true },
-      { label: 'Ver Código', href: 'https://github.com/dev-deivis/voces_indigenas' },
-    ],
-    slides: [
-      { type: 'img', src: '/assets/images/projects/voces-1.png', alt: 'Home' },
-      { type: 'img', src: '/assets/images/projects/voces-2.png', alt: 'Mapa' },
-      { type: 'img', src: '/assets/images/projects/voces-3.png', alt: 'Perfiles' },
-      { type: 'img', src: '/assets/images/projects/voces-4.png', alt: 'Crisis' },
+      { label: 'Ver página',  href: 'https://dev-deivis.github.io/voces_indigenas/', primary: true },
+      { label: 'Ver código',  href: 'https://github.com/dev-deivis/voces_indigenas' },
     ],
   },
   {
+    index: '03',
     id: 'medibot',
-    wip: true,
-    title: 'MediBot — Asistente de Salud con IA',
-    desc: 'App móvil de salud inteligente con asistente conversacional basado en IA. Orientada a facilitar el acceso a información médica básica.',
-    tech: ['Flutter', 'Dart', 'AI'],
+    title: 'MediBot',
+    desc: 'App móvil de salud inteligente con asistente conversacional basado en IA. Orientada a facilitar el acceso a información médica básica para poblaciones con acceso limitado a servicios de salud.',
+    tech: ['Flutter', 'Dart', 'IA'],
+    status: 'wip',
     links: [],
-    slides: [],
   },
 ];
 ---
 
-<section id="projects" class="projects reveal-section">
-  <div class="container-wide">
-    <h2 class="section-title">Portafolio de Proyectos</h2>
+<section id="projects" class="projects">
+  <div class="projects-container">
 
-    <div class="grid">
+    <!-- Encabezado -->
+    <div class="projects-header project-card">
+      <span class="section-label">Proyectos</span>
+      <h2 class="projects-title">
+        Lo que he<br />construido
+      </h2>
+    </div>
+
+    <!-- Lista de proyectos -->
+    <div class="projects-list">
       {projects.map((p) => (
-        <article
-          class={`glass-card project-card ${p.featured ? 'featured' : ''} ${p.wip ? 'wip-card' : ''}`}
-          data-project-id={p.id}
-        >
-          {p.featured && <div class="badge">★ DESTACADO</div>}
-          {p.wip      && <div class="badge badge-wip">EN DESARROLLO</div>}
+        <article class={`project-card project-row${p.status === 'wip' ? ' project-row--wip' : ''}`} id={`project-${p.id}`}>
 
-          {/* Carrusel — solo si hay slides */}
-          {p.slides.length > 0 ? (
-            <div class="carousel">
-              <div class="track">
-                {p.slides.map((s, i) => (
-                  <div class={`slide ${i === 0 ? 'active' : ''}`}>
-                    {s.type === 'video'
-                      ? <video src={import.meta.env.BASE_URL + s.src.slice(1)} autoplay muted loop playsinline></video>
-                      : <img src={import.meta.env.BASE_URL + s.src.slice(1)} alt={s.alt ?? p.title} loading="lazy" />
-                    }
+          <!-- Separador superior -->
+          <div class="row-divider" aria-hidden="true"></div>
+
+          <div class="row-inner">
+            <!-- Número de índice -->
+            <span class="project-index" aria-hidden="true">{p.index}</span>
+
+            <!-- Cuerpo del proyecto -->
+            <div class="project-body">
+              <div class="project-top">
+                <div class="project-meta">
+                  <!-- Status badge -->
+                  {p.status === 'live' && (
+                    <span class="status-badge status-live">
+                      <span class="status-dot" aria-hidden="true"></span>
+                      Live
+                    </span>
+                  )}
+                  {p.status === 'wip' && (
+                    <span class="status-badge status-wip">En desarrollo</span>
+                  )}
+                  {p.note && (
+                    <span class="project-note">{p.note}</span>
+                  )}
+                </div>
+
+                <!-- Thumbnail — solo si hay imagen y no es WIP -->
+                {p.thumb && p.status !== 'wip' && (
+                  <div class="project-thumb" aria-hidden="true">
+                    <img
+                      src={import.meta.env.BASE_URL + p.thumb.slice(1)}
+                      alt=""
+                      loading="lazy"
+                    />
                   </div>
-                ))}
+                )}
               </div>
-              <button class="car-btn prev" aria-label="Anterior">‹</button>
-              <button class="car-btn next" aria-label="Siguiente">›</button>
-              <div class="dots"></div>
+
+              <h3 class="project-title">{p.title}</h3>
+              <p class="project-desc">{p.desc}</p>
+
+              <!-- Tags de stack -->
+              <ul class="tech-pills" aria-label="Stack tecnológico">
+                {p.tech.map((t) => <li class="tech-pill">{t}</li>)}
+              </ul>
+
+              <!-- Links -->
+              {p.links.length > 0 && (
+                <div class="project-links">
+                  {p.links.map(({ label, href, primary }) => (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class={primary ? 'proj-link proj-link--primary' : 'proj-link'}
+                    >
+                      {label}
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                        <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
-          ) : (
-            <div class="wip-placeholder">
-              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
-                <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
-                <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
-              </svg>
-              <span>En construcción</span>
-            </div>
-          )}
-
-          {/* Info */}
-          <div class="info">
-            <h3 class="project-title">{p.title}</h3>
-            <p class="project-desc">{p.desc}</p>
-
-            {p.metrics && (
-              <div class="metrics">
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                {p.metrics}
-              </div>
-            )}
-
-            {p.note && (
-              <div class="note">
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-                {p.note}
-              </div>
-            )}
-
-            <ul class="tech-list" aria-label="Tecnologías">
-              {p.tech.map((t) => <li>{t}</li>)}
-            </ul>
-            {p.links.length > 0 && (
-              <div class="project-btns">
-                {p.links.map(({ label, href, primary }) => (
-                  <a
-                    href={href}
-                    target={href.startsWith('http') ? '_blank' : undefined}
-                    rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    class={primary ? 'btn-project-primary' : 'btn-project-secondary'}
-                  >
-                    {label}
-                  </a>
-                ))}
-              </div>
-            )}
           </div>
+
         </article>
       ))}
+
+      <!-- Separador final -->
+      <div class="row-divider" aria-hidden="true"></div>
     </div>
+
   </div>
 </section>
 
 <style>
-  .projects { background: rgba(0, 0, 0, 0.1); }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    margin-top: 3rem;
+  /* ── Sección ── */
+  .projects {
+    padding: 8rem 4rem;
+    content-visibility: visible;
   }
 
-  .project-card {
-    overflow: hidden;
-    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
-    padding: 0;
-    position: relative;
-  }
-  .project-card:hover {
-    transform: translateY(-10px);
-    border-color: rgba(108, 99, 255, 0.4);
-    box-shadow: 0 24px 70px rgba(108, 99, 255, 0.18);
-  }
-  .project-card.featured {
-    grid-column: span 2;
+  .projects-container {
+    max-width: 960px;
+    margin: 0 auto;
   }
 
-  /* Badge */
-  .badge {
-    position: absolute;
-    top: 1.2rem;
-    right: 1.2rem;
-    z-index: 10;
-    background: linear-gradient(135deg, #00E5FF, #00FFA3);
-    color: var(--bg);
-    padding: 0.38rem 1.1rem;
-    border-radius: 20px;
-    font-size: 0.7rem;
+  /* ── Encabezado ── */
+  .projects-header {
+    margin-bottom: 5rem;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 1.2rem;
+  }
+
+  .projects-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5vw, 4rem);
     font-weight: 700;
-    letter-spacing: 0.08em;
-    box-shadow: 0 4px 16px rgba(0, 255, 163, 0.4);
-    animation: badgePulse 2.5s infinite;
-  }
-  @keyframes badgePulse {
-    0%, 100% { box-shadow: 0 4px 16px rgba(0, 255, 163, 0.3); }
-    50%       { box-shadow: 0 4px 28px rgba(0, 255, 163, 0.6); }
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text);
   }
 
-  /* Badge WIP */
-  .badge-wip {
-    background: linear-gradient(135deg, #f59e0b, #f97316);
-    box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4);
-    animation: wipPulse 2.5s infinite;
-  }
-  @keyframes wipPulse {
-    0%, 100% { box-shadow: 0 4px 16px rgba(245,158,11,0.3); }
-    50%       { box-shadow: 0 4px 28px rgba(245,158,11,0.6); }
+  /* ── Fila de proyecto ── */
+  .row-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
   }
 
-  /* Tarjeta WIP */
-  .wip-card {
-    border: 1.5px dashed rgba(245, 158, 11, 0.4) !important;
+  .project-row {
+    padding: 3rem 0;
+    transition: background 0.25s ease;
   }
-  .wip-card:hover {
-    border-color: rgba(245, 158, 11, 0.7) !important;
-    box-shadow: 0 24px 70px rgba(245, 158, 11, 0.12) !important;
+  .project-row:hover {
+    background: rgba(45, 92, 255, 0.03);
   }
 
-  /* Placeholder WIP */
-  .wip-placeholder {
-    width: 100%;
-    height: 220px;
+  .row-inner {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.8rem;
-    background: rgba(245, 158, 11, 0.04);
-    border-bottom: 1px dashed rgba(245, 158, 11, 0.2);
-    color: rgba(245, 158, 11, 0.5);
-    font-family: var(--mono);
-    font-size: 0.78rem;
-    letter-spacing: 0.08em;
+    gap: 3rem;
+    align-items: flex-start;
   }
 
-  /* Métricas */
-  .metrics {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    background: rgba(0, 229, 255, 0.08);
-    border: 1px solid rgba(0, 229, 255, 0.25);
-    border-radius: 20px;
-    padding: 0.35rem 0.9rem;
-    font-size: 0.78rem;
+  /* Número de índice */
+  .project-index {
+    font-family: var(--mono);
+    font-size: 0.75rem;
     font-weight: 600;
-    color: var(--c-cyan);
-    margin-bottom: 0.9rem;
-    font-family: var(--mono);
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    padding-top: 0.3rem;
+    flex-shrink: 0;
+    width: 2rem;
+    opacity: 0.5;
+    transition: color 0.25s ease, opacity 0.25s ease;
   }
-  .metrics svg { flex-shrink: 0; }
+  .project-row:hover .project-index {
+    color: var(--accent);
+    opacity: 1;
+  }
 
-  /* Nota */
-  .note {
+  /* Cuerpo */
+  .project-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Top row: meta + thumbnail */
+  .project-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  /* Status badges */
+  .status-badge {
     display: inline-flex;
     align-items: center;
-    gap: 0.45rem;
-    font-size: 0.8rem;
+    gap: 0.4rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.7rem;
+    border-radius: 50px;
+  }
+
+  .status-live {
+    color: #4ade80;
+    background: rgba(74, 222, 128, 0.08);
+    border: 1px solid rgba(74, 222, 128, 0.25);
+  }
+
+  .status-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #4ade80;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.4; }
+  }
+
+  .status-wip {
+    color: #f59e0b;
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+  }
+
+  /* Nota del proyecto */
+  .project-note {
+    font-size: 0.75rem;
     color: var(--text-muted);
     font-style: italic;
-    margin-bottom: 0.9rem;
-    padding: 0.3rem 0;
-    border-left: 2px solid rgba(108, 99, 255, 0.4);
-    padding-left: 0.75rem;
   }
-  .note svg { flex-shrink: 0; color: var(--c-purple); }
 
-  /* Carousel */
-  .carousel {
-    position: relative;
-    width: 100%;
-    height: 300px;
+  /* Thumbnail */
+  .project-thumb {
+    width: 100px;
+    height: 66px;
+    border-radius: 6px;
     overflow: hidden;
-    border-radius: 23px 23px 0 0;
-    background: rgba(8, 8, 18, 0.85);
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    opacity: 0.7;
+    transition: opacity 0.25s ease;
   }
-  .project-card.featured .carousel { height: 420px; }
-
-  .track { position: relative; width: 100%; height: 100%; }
-
-  .slide {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-  }
-  .slide.active {
+  .project-row:hover .project-thumb {
     opacity: 1;
-    z-index: 1;
   }
-  .slide img {
+  .project-thumb img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    object-position: top center;
-  }
-  .slide video {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    object-fit: cover;
+    object-position: top;
   }
 
-  .car-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 229, 255, 0.22);
-    border: 2px solid var(--c-cyan);
-    color: var(--text);
-    font-size: 1.6rem;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(8px);
-    transition: all var(--ease);
-  }
-  .car-btn:hover {
-    background: var(--c-cyan);
-    color: var(--bg);
-    transform: translateY(-50%) scale(1.1);
-  }
-  .prev { left: 0.7rem; }
-  .next { right: 0.7rem; }
-
-  .dots {
-    position: absolute;
-    bottom: 0.6rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 6px;
-    z-index: 5;
-  }
-
-  /* Info */
-  .info { padding: 1.8rem; }
-
+  /* Título */
   .project-title {
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 0.7rem;
-    line-height: 1.3;
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.75rem;
+    line-height: 1.15;
+    transition: color 0.25s ease;
   }
-  .project-card.featured .project-title { font-size: 1.55rem; }
+  .project-row:hover .project-title {
+    color: #fff;
+  }
 
-  .project-desc {
+  /* WIP — título muted */
+  .project-row--wip .project-title {
     color: var(--text-muted);
-    line-height: 1.7;
-    margin-bottom: 1rem;
-    font-size: 0.92rem;
   }
 
-  .tech-list {
+  /* Descripción */
+  .project-desc {
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: var(--text-muted);
+    margin-bottom: 1.2rem;
+    max-width: 600px;
+  }
+
+  /* Pills de stack */
+  .tech-pills {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.45rem;
-    margin-bottom: 1.2rem;
+    gap: 0.4rem;
+    margin-bottom: 1.4rem;
   }
-  .tech-list li {
-    padding: 0.28rem 0.8rem;
-    background: rgba(108, 99, 255, 0.16);
-    border: 1px solid rgba(108, 99, 255, 0.4);
-    border-radius: 20px;
-    font-size: 0.72rem;
-    color: var(--c-purple);
-    font-weight: 600;
+
+  .tech-pill {
     font-family: var(--mono);
+    font-size: 0.67rem;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.7rem;
+    border-radius: 4px;
+    background: rgba(45, 92, 255, 0.08);
+    border: 1px solid rgba(45, 92, 255, 0.22);
+    color: rgba(180, 195, 255, 0.85);
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .project-row:hover .tech-pill {
+    background: rgba(45, 92, 255, 0.13);
+    border-color: rgba(45, 92, 255, 0.38);
   }
 
-  .project-btns {
+  /* Links */
+  .project-links {
     display: flex;
-    gap: 0.8rem;
+    gap: 1.2rem;
     flex-wrap: wrap;
+    align-items: center;
   }
 
-  /* Responsive */
-  @media (max-width: 700px) {
-    .grid { grid-template-columns: 1fr; }
-    .project-card.featured { grid-column: span 1; }
+  .proj-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .proj-link:hover {
+    color: var(--text);
+  }
+
+  .proj-link--primary {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .proj-link--primary:hover {
+    color: #6b8fff;
+  }
+
+  /* WIP — borde dashed sutil */
+  .project-row--wip {
+    opacity: 0.7;
+  }
+
+  /* Estado inicial para animación GSAP */
+  .project-card {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .projects { padding: 6rem 2rem; }
+    .row-inner { gap: 1.5rem; }
+    .project-thumb { width: 80px; height: 52px; }
+  }
+
+  @media (max-width: 600px) {
+    .projects { padding: 5rem 1.5rem; }
+    .projects-header { margin-bottom: 3rem; }
+    .project-index { display: none; }
+    .row-inner { gap: 0; }
+    .project-thumb { display: none; }
+    .project-row { padding: 2rem 0; }
   }
 </style>
-
-<script>
-  /* Carousel universal: cada .carousel es independiente */
-  document.querySelectorAll<HTMLElement>('.carousel').forEach((carousel) => {
-    const slides    = carousel.querySelectorAll<HTMLElement>('.slide');
-    const dotsEl    = carousel.querySelector<HTMLElement>('.dots')!;
-    const prevBtn   = carousel.querySelector<HTMLButtonElement>('.prev')!;
-    const nextBtn   = carousel.querySelector<HTMLButtonElement>('.next')!;
-    let   current   = 0;
-    let   timer: ReturnType<typeof setInterval>;
-
-    /* Crear dots dinámicamente */
-    slides.forEach((_, i) => {
-      const dot = document.createElement('span');
-      dot.className = i === 0 ? 'dot active' : 'dot';
-      dot.addEventListener('click', () => go(i));
-      dotsEl.appendChild(dot);
-    });
-
-    const getDots = () => dotsEl.querySelectorAll<HTMLElement>('.dot');
-
-    function go(n: number) {
-      slides[current].classList.remove('active');
-      getDots()[current].classList.remove('active');
-      current = (n + slides.length) % slides.length;
-      slides[current].classList.add('active');
-      getDots()[current].classList.add('active');
-    }
-
-    function startAuto() {
-      timer = setInterval(() => go(current + 1), 5000);
-    }
-    function resetAuto() {
-      clearInterval(timer);
-      startAuto();
-    }
-
-    prevBtn.addEventListener('click', () => { go(current - 1); resetAuto(); });
-    nextBtn.addEventListener('click', () => { go(current + 1); resetAuto(); });
-
-    startAuto();
-  });
-
-  /* Estilos de los dots (scoped no alcanza a elementos dinámicos) */
-  const style = document.createElement('style');
-  style.textContent = `
-    .dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: rgba(255,255,255,0.25);
-      border: 1.5px solid rgba(255,255,255,0.4);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: inline-block;
-    }
-    .dot.active {
-      background: #00E5FF;
-      border-color: #00E5FF;
-      box-shadow: 0 0 8px rgba(0,229,255,0.7);
-    }
-  `;
-  document.head.appendChild(style);
-</script>

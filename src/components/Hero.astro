@@ -1,130 +1,209 @@
 ---
-const stack = 'Laravel • Spring Boot • React • Flutter • PostgreSQL • MySQL • Node.js • APIs REST • Docker • AWS';
+// Hero — devdeivis
+// Paleta negro + azul eléctrico (rediseño 2026)
+// Sin gradientes en texto, sin canvas de ondas en este componente
 ---
 
 <section id="home" class="hero">
-  <div class="hero-content">
-    <p class="eyebrow">Hola, soy</p>
+  <div class="hero-inner">
 
-    <h1 class="hero-title">
-      Desarrollador Full Stack<br />
-      &amp; Freelancer
+    <!-- Indicador de disponibilidad -->
+    <div class="avail-badge" aria-label="Estado: disponible para proyectos">
+      <span class="avail-dot" aria-hidden="true"></span>
+      <span class="avail-label">Disponible para proyectos</span>
+    </div>
+
+    <!-- Handle / marca personal -->
+    <p class="hero-handle">devdeivis</p>
+
+    <!-- Nombre y rol — el corazón del Hero -->
+    <h1 class="hero-name">
+      David<br />Almaraz
     </h1>
 
-    <p class="hero-name">David Almaraz — Software Developer</p>
+    <p class="hero-role">
+      Desarrollador Full Stack &amp; Freelancer
+    </p>
 
-    <p class="hero-stack">{stack}</p>
-
+    <!-- CTA -->
     <div class="hero-btns">
-      <a href="#projects" class="btn btn-primary">
-        Ver Proyectos<span class="btn-glow"></span>
-      </a>
-      <a href="#contact" class="btn btn-secondary">
-        Contratar<span class="btn-glow"></span>
-      </a>
+      <a href="#projects" class="btn btn-primary">Ver proyectos</a>
+      <a href="#contact" class="btn btn-secondary">Hablemos</a>
     </div>
 
-    <div class="scroll-hint">
-      <span>Scroll para explorar</span>
-      <div class="arrow">↓</div>
+    <!-- Indicador de scroll -->
+    <div class="scroll-hint" aria-hidden="true">
+      <span class="scroll-line"></span>
+      <span class="scroll-text">scroll</span>
     </div>
+
   </div>
 </section>
 
 <style>
+  /* ── Sección ── */
   .hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 100px 4rem 4rem;
+    /* padding-top compensa la navbar fija */
+    padding: 120px 4rem 6rem;
+    position: relative;
   }
 
-  .hero-content {
-    text-align: center;
-    max-width: 900px;
+  .hero-inner {
+    max-width: 760px;
+    /* Alineado a la izquierda — rompe el look genérico centrado */
+    margin: 0 0 0 6vw;
   }
 
-  .eyebrow {
+  /* ── Badge de disponibilidad ── */
+  .avail-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--accent-dim);
+    border: 1px solid var(--accent);
+    border-radius: 50px;
+    padding: 0.35rem 1rem 0.35rem 0.75rem;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.1s forwards;
+  }
+
+  .avail-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    /* Pulso suave — sin shadowBlur, solo escala + opacidad */
+    animation: pulse 2.2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  .avail-label {
     font-family: var(--mono);
-    font-size: 1rem;
-    letter-spacing: 0.2em;
-    color: var(--c-green);
-    margin-bottom: 1rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.2s forwards;
-  }
-
-  .hero-title {
-    font-size: clamp(2.4rem, 6vw, 5rem);
-    font-weight: 800;
-    line-height: 1.15;
-    margin-bottom: 1.5rem;
-    color: #ffffff;
-    text-shadow:
-      0 2px 20px rgba(0,0,0,0.6),
-      0 0 60px rgba(255,255,255,0.08);
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.4s forwards;
-  }
-
-  .hero-name {
-    font-size: 1.15rem;
-    font-weight: 600;
+    font-size: 0.72rem;
     letter-spacing: 0.08em;
-    background: linear-gradient(135deg, var(--c-purple), var(--c-cyan), var(--c-green));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.6s forwards;
+    color: var(--accent);
+    text-transform: uppercase;
   }
 
-  .hero-stack {
-    font-size: 1rem;
+  /* ── Handle ── */
+  .hero-handle {
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.25s forwards;
+  }
+
+  /* ── Nombre — protagonista absoluto ── */
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(5.5rem, 16vw, 14rem);
+    font-weight: 800;
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.4s forwards;
+  }
+
+  /* ── Rol ── */
+  .hero-role {
+    font-family: var(--font);
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    font-weight: 400;
     color: var(--text-muted);
     margin-bottom: 3rem;
-    line-height: 1.8;
+    line-height: 1.5;
     opacity: 0;
-    animation: fadeUp 0.8s ease 0.8s forwards;
+    animation: fadeUp 0.6s ease 0.6s forwards;
   }
 
+  /* ── Botones ── */
   .hero-btns {
     display: flex;
-    gap: 1.5rem;
-    justify-content: center;
-    margin-bottom: 4rem;
+    gap: 1.2rem;
+    flex-wrap: wrap;
     opacity: 0;
-    animation: fadeUp 0.8s ease 1s forwards;
+    animation: fadeUp 0.6s ease 0.8s forwards;
   }
 
+  /* ── Scroll hint ── */
   .scroll-hint {
+    position: absolute;
+    bottom: 3rem;
+    left: calc(6vw + 4px); /* alineado con el borde del contenido */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
     opacity: 0;
-    animation: fadeUp 0.8s ease 1.2s forwards;
-  }
-  .scroll-hint span {
-    display: block;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    margin-bottom: 0.7rem;
-  }
-  .arrow {
-    font-size: 1.8rem;
-    animation: bounce 2s infinite;
+    animation: fadeUp 0.6s ease 1.1s forwards;
   }
 
+  .scroll-line {
+    display: block;
+    width: 1px;
+    height: 48px;
+    background: var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Línea animada que baja — simulada con pseudo-elemento */
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--accent);
+    animation: lineDown 1.8s ease-in-out infinite;
+  }
+
+  .scroll-text {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+  }
+
+  /* ── Keyframes ── */
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
+    from { opacity: 0; transform: translateY(24px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50%       { transform: translateY(-10px); }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1);   opacity: 1; }
+    50%       { transform: scale(1.5); opacity: 0.6; }
+  }
+
+  @keyframes lineDown {
+    0%   { top: -100%; }
+    100% { top:  100%; }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .hero { padding: 110px 2rem 5rem; }
+    .hero-inner { margin: 0; }
+    .scroll-hint { left: 2rem; }
   }
 
   @media (max-width: 600px) {
-    .hero { padding: 90px 1.5rem 3rem; }
-    .hero-btns { flex-direction: column; align-items: center; }
+    .hero { padding: 100px 1.5rem 4rem; }
+    .hero-name { line-height: 1; }
+    .hero-btns { flex-direction: column; }
+    .scroll-hint { display: none; }
   }
 </style>
