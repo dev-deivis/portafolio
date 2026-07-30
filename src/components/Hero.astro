@@ -263,34 +263,72 @@ const heroPhotoSrc = `${import.meta.env.BASE_URL}assets/images/projects/foto-her
   }
 
   /* ── Responsive ── */
-  @media (max-width: 1200px) {
+  @media (max-width: 1100px) {
     .hero-photo-wrap {
-      width: min(480px, 42vw);
+      width: min(500px, 42vw);
       right: 1vw;
     }
   }
 
-  @media (max-width: 900px) {
-    .hero { padding: 110px 2rem 5rem; }
-    .hero-inner { margin: 0; }
-    .scroll-hint { left: 2rem; }
-    .hero-photo-wrap {
+  @media (max-width: 960px) {
+    .hero {
+      padding: 110px 1.5rem 4rem;
       position: relative;
-      right: auto;
-      bottom: auto;
-      width: min(340px, 75vw);
-      margin: 2.5rem auto 0;
+    }
+    .hero-inner {
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-name {
+      font-size: clamp(3.2rem, 11vw, 4.8rem);
+      line-height: 0.95;
+      max-width: 62%; /* Deja espacio a la derecha para la foto */
+    }
+    .hero-photo-wrap {
+      position: absolute;
+      right: 35px;
+      top: 255px; /* Un poco más abajo y más a la izquierda */
+      width: min(180px, 38vw);
+      max-width: 180px;
+      margin: 0;
+      z-index: 1;
+    }
+    .hero-photo-img {
+      max-height: 260px;
+      object-fit: cover;
+      object-position: top center;
+    }
+    .scroll-hint {
+      left: 1.5rem;
     }
   }
 
   @media (max-width: 600px) {
-    .hero { padding: 100px 1.5rem 4rem; }
-    .hero-name { line-height: 1; }
-    .hero-btns { flex-direction: column; }
-    .hero-photo-wrap {
-      width: 260px;
-      margin: 1.5rem auto 0;
+    .hero {
+      padding: 100px 1.25rem 4rem;
     }
-    .scroll-hint { display: none; }
+    .hero-name {
+      font-size: clamp(2.8rem, 11vw, 4rem);
+      line-height: 0.95;
+      max-width: 60%;
+    }
+    .hero-btns {
+      flex-direction: column;
+    }
+    .hero-photo-wrap {
+      right: 20px; /* Desplazada más hacia la izquierda */
+      top: 245px;  /* Un poco más abajo */
+      width: 160px;
+    }
+    .hero-photo-img {
+      max-height: 230px;
+      object-position: top center;
+    }
+    .scroll-hint {
+      display: none;
+    }
   }
 </style>
