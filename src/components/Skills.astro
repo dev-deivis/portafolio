@@ -1,66 +1,61 @@
 ---
+// Skills.astro — De la Idea al Producto + Stack Tecnológico
+// Paleta unificada: --accent azul eléctrico. Sin morado/cian/verde/menta.
+
 const steps = [
   {
-    num: '01',
+    num:   '01',
     title: 'Análisis',
-    desc: 'Entiendo tu idea, el problema que resuelve y a quién va dirigido.',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>`,
-    cls: 'purple',
+    desc:  'Entiendo tu idea, el problema que resuelve y a quién va dirigido.',
+    icon:  `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>`,
   },
   {
-    num: '02',
+    num:   '02',
     title: 'Diseño & Arquitectura',
-    desc: 'Propongo la solución técnica más simple y escalable para tu caso.',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>`,
-    cls: 'indigo',
+    desc:  'Propongo la solución técnica más simple y escalable para tu caso.',
+    icon:  `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>`,
   },
   {
-    num: '03',
+    num:   '03',
     title: 'Desarrollo',
-    desc: 'Construyo el producto con código limpio siguiendo buenas prácticas.',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
-    cls: 'cyan',
+    desc:  'Construyo el producto con código limpio siguiendo buenas prácticas.',
+    icon:  `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
   },
   {
-    num: '04',
+    num:   '04',
     title: 'Deploy & Soporte',
-    desc: 'Lanzo tu aplicación y te acompaño las primeras semanas.',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>`,
-    cls: 'green',
+    desc:  'Lanzo tu aplicación y te acompaño las primeras semanas.',
+    icon:  `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>`,
   },
 ];
 
 const techGroups = [
   {
     label: 'Frontend',
-    cls: 'tcyan',
     techs: [
-      { name: 'React',   icon: 'react' },
-      { name: 'Next.js', icon: 'nextjs' },
+      { name: 'React',   icon: 'react'   },
+      { name: 'Next.js', icon: 'nextjs'  },
     ],
   },
   {
     label: 'Backend',
-    cls: 'tpurple',
     techs: [
       { name: 'Laravel', icon: 'laravel' },
-      { name: 'Node.js', icon: 'nodejs' },
+      { name: 'Node.js', icon: 'nodejs'  },
     ],
   },
   {
     label: 'Bases de datos',
-    cls: 'tamber',
     techs: [
-      { name: 'MySQL',      icon: 'mysql' },
+      { name: 'MySQL',      icon: 'mysql'      },
       { name: 'PostgreSQL', icon: 'postgresql' },
     ],
   },
   {
     label: 'Herramientas',
-    cls: 'tgreen',
     techs: [
       { name: 'Docker', icon: 'docker' },
-      { name: 'Git',    icon: 'git' },
+      { name: 'Git',    icon: 'git'    },
     ],
   },
 ];
@@ -68,31 +63,38 @@ const techGroups = [
 
 <section id="skills" class="skills reveal-section">
   <div class="container">
-    <h2 class="section-title">De la Idea al Producto</h2>
-    <p class="section-subtitle">Cómo convierto tu visión en software que funciona</p>
 
-    <!-- Proceso: 4 tarjetas en fila -->
+    <!-- Encabezado — mismo patrón que Proyectos / Servicios / Historia -->
+    <div class="skills-header">
+      <span class="section-label">Proceso & Stack</span>
+      <h2 class="skills-title">
+        De la Idea<br />al Producto
+      </h2>
+      <p class="skills-sub">Cómo convierto tu visión en software que funciona</p>
+    </div>
+
+    <!-- Proceso: 4 tarjetas -->
     <div class="steps-grid">
       {steps.map((s) => (
-        <div class={`glass-card step-card skill-card sc-${s.cls}`}>
+        <div class="glass-card step-card skill-card">
+          <div class="step-bar" aria-hidden="true"></div>
           <div class="step-top">
             <span class="step-num">{s.num}</span>
             <div class="step-icon" set:html={s.icon} />
           </div>
           <h3 class="step-title">{s.title}</h3>
           <p class="step-desc">{s.desc}</p>
-          <div class="step-bar" />
         </div>
       ))}
     </div>
 
     <!-- Stack tecnológico -->
     <div class="tech-wrap">
-      <span class="tech-eyebrow">STACK TECNOLÓGICO</span>
+      <span class="tech-eyebrow">Stack tecnológico</span>
 
       <div class="tech-grid">
         {techGroups.map((g) => (
-          <div class={`tech-col tc-${g.cls}`}>
+          <div class="tech-col">
             <span class="col-label">{g.label}</span>
             <div class="col-items">
               {g.techs.map((t) => (
@@ -100,8 +102,8 @@ const techGroups = [
                   <img
                     src={`https://skillicons.dev/icons?i=${t.icon}&theme=dark`}
                     alt={t.name}
-                    width="26"
-                    height="26"
+                    width="24"
+                    height="24"
                     loading="lazy"
                   />
                   <span>{t.name}</span>
@@ -116,15 +118,46 @@ const techGroups = [
 </section>
 
 <style>
-  .skills { background: rgba(0,0,0,0.15); }
+  .skills { background: rgba(0, 0, 0, 0.15); }
 
-  /* ── PROCESO ─────────────────────────────────────────────────────── */
+  /* ── Encabezado — mismo patrón que Proyectos / Servicios / Historia ── */
+  .skills-header {
+    margin-bottom: 4rem;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 1.2rem;
+  }
+
+  .skills-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  .skills-sub {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 420px;
+  }
+
+  /* ── Proceso ── */
   .steps-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
     margin-top: 3rem;
-    position: relative;
   }
 
   .step-card {
@@ -134,79 +167,75 @@ const techGroups = [
     gap: 0.75rem;
     position: relative;
     overflow: hidden;
-    transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .step-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(45, 92, 255, 0.4);
   }
 
-  /* Barra superior por color */
+  /* Barra superior — azul eléctrico para todos */
   .step-bar {
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 3px;
-    border-radius: 24px 24px 0 0;
-    opacity: .7;
-    transition: opacity .3s;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0.5;
+    transition: opacity 0.3s;
   }
   .step-card:hover .step-bar { opacity: 1; }
-
-  .sc-purple .step-bar { background: linear-gradient(90deg, #6C63FF, transparent); }
-  .sc-indigo .step-bar { background: linear-gradient(90deg, #818cf8, transparent); }
-  .sc-cyan   .step-bar { background: linear-gradient(90deg, #00E5FF, transparent); }
-  .sc-green  .step-bar { background: linear-gradient(90deg, #00FFA3, transparent); }
-
-  .sc-purple:hover { border-color: rgba(108,99,255,.45); box-shadow: 0 20px 50px rgba(108,99,255,.15); }
-  .sc-indigo:hover { border-color: rgba(129,140,248,.45); box-shadow: 0 20px 50px rgba(129,140,248,.15); }
-  .sc-cyan:hover   { border-color: rgba(0,229,255,.45);  box-shadow: 0 20px 50px rgba(0,229,255,.15); }
-  .sc-green:hover  { border-color: rgba(0,255,163,.45);  box-shadow: 0 20px 50px rgba(0,255,163,.15); }
-  .step-card:hover { transform: translateY(-10px); }
 
   .step-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: .3rem;
+    margin-bottom: 0.3rem;
   }
 
+  /* Número — azul eléctrico unificado */
   .step-num {
-    width: 36px; height: 36px;
+    width: 34px; height: 34px;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     font-family: var(--mono);
-    font-size: .72rem; font-weight: 700;
-    position: relative; z-index: 1;
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: rgba(45, 92, 255, 0.1);
+    border: 1.5px solid rgba(45, 92, 255, 0.35);
+    color: var(--accent);
   }
-  .sc-purple .step-num { background: rgba(108,99,255,.15); border: 1.5px solid rgba(108,99,255,.45); color: #6C63FF; }
-  .sc-indigo .step-num { background: rgba(129,140,248,.15); border: 1.5px solid rgba(129,140,248,.45); color: #818cf8; }
-  .sc-cyan   .step-num { background: rgba(0,229,255,.12); border: 1.5px solid rgba(0,229,255,.4); color: #00E5FF; }
-  .sc-green  .step-num { background: rgba(0,255,163,.12); border: 1.5px solid rgba(0,255,163,.4); color: #00FFA3; }
 
+  /* Icono — azul eléctrico unificado */
   .step-icon {
-    width: 40px; height: 40px;
-    border-radius: 12px;
+    width: 38px; height: 38px;
+    border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    transition: background .3s;
+    background: rgba(45, 92, 255, 0.08);
+    border: 1px solid rgba(45, 92, 255, 0.2);
+    color: var(--accent);
+    transition: background 0.3s;
   }
-  .sc-purple .step-icon { background: rgba(108,99,255,.12); border: 1px solid rgba(108,99,255,.25); color: #6C63FF; }
-  .sc-indigo .step-icon { background: rgba(129,140,248,.12); border: 1px solid rgba(129,140,248,.25); color: #818cf8; }
-  .sc-cyan   .step-icon { background: rgba(0,229,255,.10); border: 1px solid rgba(0,229,255,.22); color: #00E5FF; }
-  .sc-green  .step-icon { background: rgba(0,255,163,.10); border: 1px solid rgba(0,255,163,.22); color: #00FFA3; }
+  .step-card:hover .step-icon {
+    background: rgba(45, 92, 255, 0.15);
+  }
 
-  .step-title { font-size: 1rem; font-weight: 700; line-height: 1.3; }
-  .step-desc  { font-size: .86rem; color: var(--text-muted); line-height: 1.7; flex: 1; }
+  .step-title { font-size: 0.98rem; font-weight: 700; line-height: 1.3; }
+  .step-desc  { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; flex: 1; }
 
-  /* ── STACK TECNOLÓGICO ───────────────────────────────────────────── */
+  /* ── Stack tecnológico ── */
   .tech-wrap {
     margin-top: 4.5rem;
     padding-top: 3rem;
-    border-top: 1px solid rgba(255,255,255,.06);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .tech-eyebrow {
     display: block;
-    text-align: center;
     font-family: var(--mono);
-    font-size: .65rem;
-    letter-spacing: .22em;
-    color: var(--text-muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
     margin-bottom: 2rem;
   }
 
@@ -216,67 +245,60 @@ const techGroups = [
     gap: 1.2rem;
   }
 
+  /* Columna — borde superior azul para todas */
   .tech-col {
-    background: rgba(255,255,255,.03);
-    border: 1px solid rgba(255,255,255,.07);
-    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-top: 2px solid rgba(45, 92, 255, 0.4);
+    border-radius: 12px;
     padding: 1.4rem 1.2rem;
-    transition: background .3s, border-color .3s;
+    transition: background 0.3s, border-color 0.3s;
   }
-
-  .tc-tcyan   { border-top: 2px solid rgba(0,229,255,.5); }
-  .tc-tpurple { border-top: 2px solid rgba(108,99,255,.5); }
-  .tc-tamber  { border-top: 2px solid rgba(245,158,11,.5); }
-  .tc-tgreen  { border-top: 2px solid rgba(0,255,163,.5); }
-
-  .tc-tcyan:hover   { background: rgba(0,229,255,.05); border-color: rgba(0,229,255,.3); }
-  .tc-tpurple:hover { background: rgba(108,99,255,.05); border-color: rgba(108,99,255,.3); }
-  .tc-tamber:hover  { background: rgba(245,158,11,.05); border-color: rgba(245,158,11,.3); }
-  .tc-tgreen:hover  { background: rgba(0,255,163,.05); border-color: rgba(0,255,163,.3); }
+  .tech-col:hover {
+    background: rgba(45, 92, 255, 0.04);
+    border-color: rgba(45, 92, 255, 0.3);
+    border-top-color: var(--accent);
+  }
 
   .col-label {
     display: block;
     font-family: var(--mono);
-    font-size: .65rem;
+    font-size: 0.65rem;
     font-weight: 700;
-    letter-spacing: .14em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
+    color: var(--accent);
     margin-bottom: 1rem;
   }
-  .tc-tcyan   .col-label { color: #00E5FF; }
-  .tc-tpurple .col-label { color: #6C63FF; }
-  .tc-tamber  .col-label { color: #f59e0b; }
-  .tc-tgreen  .col-label { color: #00FFA3; }
 
   .col-items {
     display: flex;
     flex-direction: column;
-    gap: .55rem;
+    gap: 0.5rem;
   }
 
   .tech-item {
     display: flex;
     align-items: center;
-    gap: .65rem;
-    padding: .55rem .8rem;
-    border-radius: 10px;
-    background: rgba(255,255,255,.04);
-    border: 1px solid rgba(255,255,255,.07);
-    transition: background .25s, transform .25s;
+    gap: 0.65rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: background 0.2s, transform 0.2s;
     cursor: default;
   }
-  .tc-tcyan   .tech-item:hover { background: rgba(0,229,255,.1); transform: translateX(4px); }
-  .tc-tpurple .tech-item:hover { background: rgba(108,99,255,.1); transform: translateX(4px); }
-  .tc-tamber  .tech-item:hover { background: rgba(245,158,11,.1); transform: translateX(4px); }
-  .tc-tgreen  .tech-item:hover { background: rgba(0,255,163,.1); transform: translateX(4px); }
+  .tech-item:hover {
+    background: rgba(45, 92, 255, 0.08);
+    transform: translateX(4px);
+  }
 
-  .tech-item img  { width: 26px; height: 26px; border-radius: 5px; flex-shrink: 0; }
-  .tech-item span { font-size: .9rem; font-weight: 500; color: var(--text); }
+  .tech-item img  { width: 24px; height: 24px; border-radius: 4px; flex-shrink: 0; }
+  .tech-item span { font-size: 0.88rem; font-weight: 500; color: var(--text); }
 
   /* ── Responsive ── */
   @media (max-width: 1100px) {
     .steps-grid { grid-template-columns: repeat(2, 1fr); }
-    .steps-grid::after { display: none; }
     .tech-grid  { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 600px) {

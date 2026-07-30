@@ -1,48 +1,57 @@
 ---
+// Contact.astro — Formulario + redes
+// Paleta azul eléctrico, sin gradientes, sin cian/verde
+
 const socials = [
   {
     label: 'GitHub',
-    href: 'https://github.com/dev-deivis',
-    icon: 'M16 2a14 14 0 00-4.43 27.28c.7.13.96-.3.96-.67v-2.38c-3.89.84-4.71-1.88-4.71-1.88a3.71 3.71 0 00-1.56-2.05c-1.27-.87.1-.85.1-.85a2.94 2.94 0 012.14 1.45 3 3 0 004.08 1.16 2.93 2.93 0 01.88-1.87c-3.1-.36-6.37-1.56-6.37-6.92a5.4 5.4 0 011.44-3.76 5 5 0 01.14-3.7s1.17-.38 3.85 1.43a13.3 13.3 0 017 0c2.67-1.81 3.84-1.43 3.84-1.43a5 5 0 01.14 3.7 5.4 5.4 0 011.44 3.76c0 5.38-3.27 6.56-6.39 6.91a3.33 3.33 0 01.95 2.59v3.84c0 .46.25.81.96.67A14 14 0 0016 2z',
+    href:  'https://github.com/dev-deivis',
+    icon:  'M16 2a14 14 0 00-4.43 27.28c.7.13.96-.3.96-.67v-2.38c-3.89.84-4.71-1.88-4.71-1.88a3.71 3.71 0 00-1.56-2.05c-1.27-.87.1-.85.1-.85a2.94 2.94 0 012.14 1.45 3 3 0 004.08 1.16 2.93 2.93 0 01.88-1.87c-3.1-.36-6.37-1.56-6.37-6.92a5.4 5.4 0 011.44-3.76 5 5 0 01.14-3.7s1.17-.38 3.85 1.43a13.3 13.3 0 017 0c2.67-1.81 3.84-1.43 3.84-1.43a5 5 0 01.14 3.7 5.4 5.4 0 011.44 3.76c0 5.38-3.27 6.56-6.39 6.91a3.33 3.33 0 01.95 2.59v3.84c0 .46.25.81.96.67A14 14 0 0016 2z',
   },
   {
     label: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/alonso-david-almaraz-vásquez-87056334b',
-    icon: 'M27.26 27.27h-4.74v-7.42c0-1.77 0-4-2.46-4s-2.84 1.92-2.84 3.92v7.5H12.5V12h4.55v2.08h.06a5 5 0 014.48-2.46c4.8 0 5.67 3.15 5.67 7.25zM7.12 9.86a2.75 2.75 0 110-5.5 2.75 2.75 0 010 5.5zm2.37 17.41H4.75V12h4.74z',
-  },
-  {
-    label: 'davidalmara8@gmail.com',
-    href: 'mailto:davidalmara8@gmail.com',
-    icon: null,
-    isEmail: true,
+    href:  'https://www.linkedin.com/in/alonso-david-almaraz-vásquez-87056334b',
+    icon:  'M27.26 27.27h-4.74v-7.42c0-1.77 0-4-2.46-4s-2.84 1.92-2.84 3.92v7.5H12.5V12h4.55v2.08h.06a5 5 0 014.48-2.46c4.8 0 5.67 3.15 5.67 7.25zM7.12 9.86a2.75 2.75 0 110-5.5 2.75 2.75 0 010 5.5zm2.37 17.41H4.75V12h4.74z',
   },
   {
     label: 'WhatsApp',
-    href: 'https://wa.me/529513566225',
-    icon: 'M16 2C8.27 2 2 8.27 2 16c0 2.47.65 4.79 1.78 6.8L2 30l7.45-1.73A13.94 13.94 0 0016 30c7.73 0 14-6.27 14-14S23.73 2 16 2zm6.58 18.36c-.27.76-1.58 1.44-2.18 1.53-.58.08-1.33.1-2.15-.14-.5-.14-1.14-.33-1.96-.65-3.45-1.37-5.7-4.87-5.87-5.09-.17-.22-1.4-1.86-1.4-3.55s.89-2.52 1.2-2.86c.32-.34.69-.43.92-.43h.66c.21 0 .5-.08.78.59.29.68.99 2.41 1.08 2.58.09.17.15.37.03.6-.12.22-.18.36-.36.55-.18.19-.37.42-.53.57-.18.17-.37.36-.16.7.21.35.93 1.53 2 2.48 1.37 1.22 2.53 1.6 2.89 1.78.35.18.56.15.77-.09.21-.24.9-1.05 1.14-1.41.24-.36.48-.3.81-.18.33.12 2.1.99 2.46 1.17.36.18.6.27.69.42.09.15.09.86-.18 1.62z',
+    href:  'https://wa.me/529513566225',
+    icon:  'M16 2C8.27 2 2 8.27 2 16c0 2.47.65 4.79 1.78 6.8L2 30l7.45-1.73A13.94 13.94 0 0016 30c7.73 0 14-6.27 14-14S23.73 2 16 2zm6.58 18.36c-.27.76-1.58 1.44-2.18 1.53-.58.08-1.33.1-2.15-.14-.5-.14-1.14-.33-1.96-.65-3.45-1.37-5.7-4.87-5.87-5.09-.17-.22-1.4-1.86-1.4-3.55s.89-2.52 1.2-2.86c.32-.34.69-.43.92-.43h.66c.21 0 .5-.08.78.59.29.68.99 2.41 1.08 2.58.09.17.15.37.03.6-.12.22-.18.36-.36.55-.18.19-.37.42-.53.57-.18.17-.37.36-.16.7.21.35.93 1.53 2 2.48 1.37 1.22 2.53 1.6 2.89 1.78.35.18.56.15.77-.09.21-.24.9-1.05 1.14-1.41.24-.36.48-.3.81-.18.33.12 2.1.99 2.46 1.17.36.18.6.27.69.42.09.15.09.86-.18 1.62z',
+  },
+  {
+    label: 'davidalmara8@gmail.com',
+    href:  'mailto:davidalmara8@gmail.com',
+    isEmail: true,
   },
 ];
 ---
 
-<section id="contact" class="contact reveal-section">
-  <div class="container">
-    <h2 class="section-title gradient-text">Construyamos algo juntos</h2>
-    <p class="section-subtitle">
-      ¿Listo para innovar? Discutamos tu próximo proyecto. Estoy listo para colaborar.
-    </p>
+<section id="contact" class="contact">
+  <div class="contact-container">
 
-    <div class="grid">
+    <!-- Encabezado -->
+    <div class="contact-header contact-block">
+      <span class="section-label">Contacto</span>
+      <h2 class="contact-title">
+        Construyamos<br />algo juntos
+      </h2>
+      <p class="contact-sub">
+        ¿Tienes un proyecto en mente? Cuéntame qué quieres construir.
+      </p>
+    </div>
+
+    <div class="contact-grid">
 
       <!-- Formulario -->
-      <div class="glass-card form-wrap">
+      <div class="form-wrap contact-block">
         <form id="contact-form" action="https://formspree.io/f/xwvpjlzj" method="POST" novalidate>
           <div class="field">
             <input type="text"  id="c-name"    name="name"    class="input" placeholder=" " required />
-            <label for="c-name">Tu Nombre</label>
+            <label for="c-name">Tu nombre</label>
           </div>
           <div class="field">
             <input type="email" id="c-email"   name="email"   class="input" placeholder=" " required />
-            <label for="c-email">Correo Electrónico</label>
+            <label for="c-email">Correo electrónico</label>
           </div>
           <div class="field">
             <input type="text"  id="c-subject" name="subject" class="input" placeholder=" " required />
@@ -52,21 +61,24 @@ const socials = [
             <textarea id="c-msg" name="message" rows="5" class="input" placeholder=" " required></textarea>
             <label for="c-msg" class="ta-label">Mensaje</label>
           </div>
-          <button type="submit" class="btn btn-primary">
-            Enviar Mensaje<span class="btn-glow"></span>
+          <button type="submit" class="btn btn-primary submit-btn">
+            Enviar mensaje
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </button>
         </form>
 
         <div id="form-success" class="success hidden">
-          <div class="success-icon">✓</div>
-          <h3>¡Mensaje Enviado!</h3>
-          <p>Gracias por contactar. Te responderé en menos de 24 horas.</p>
+          <div class="success-check" aria-hidden="true">✓</div>
+          <h3>¡Mensaje enviado!</h3>
+          <p>Te respondo en menos de 24 horas.</p>
         </div>
       </div>
 
-      <!-- Redes sociales -->
-      <div class="glass-card info-wrap">
-        <h3>Conecta conmigo</h3>
+      <!-- Redes / info de contacto -->
+      <div class="info-wrap contact-block">
+        <p class="info-label">También puedes escribirme por:</p>
         <ul class="socials">
           {socials.map(({ label, href, icon, isEmail }) => (
             <li>
@@ -77,15 +89,18 @@ const socials = [
                 class="social-link"
               >
                 {icon ? (
-                  <svg width="26" height="26" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
                     <path d={icon}/>
                   </svg>
                 ) : (
-                  <svg width="26" height="26" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path d="M4 8l12 8 12-8M4 24h24V8H4z"/>
                   </svg>
                 )}
                 <span>{label}</span>
+                <svg class="link-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                  <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </a>
             </li>
           ))}
@@ -95,144 +110,248 @@ const socials = [
     </div>
   </div>
 
-  <footer>
-    <p>© 2025 David Almaraz · Desarrollador Freelance · Todos los derechos reservados.</p>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>© 2026 David Almaraz · devdeivis · Todos los derechos reservados.</p>
   </footer>
 </section>
 
 <style>
-  .contact { background: rgba(0, 0, 0, 0.1); }
-
-  .grid {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 3rem;
-    margin-top: 3rem;
+  /* ── Sección ── */
+  .contact {
+    padding: 8rem 4rem 0;
+    content-visibility: visible;
   }
 
-  /* Formulario */
-  .form-wrap { padding: 2.5rem; }
+  .contact-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding-bottom: 8rem;
+  }
+
+  /* ── Encabezado ── */
+  .contact-header {
+    margin-bottom: 5rem;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 1.2rem;
+  }
+
+  .contact-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  .contact-sub {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 420px;
+  }
+
+  /* ── Grid formulario + redes ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  /* ── Formulario ── */
+  .form-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
 
   form {
     display: flex;
     flex-direction: column;
-    gap: 1.6rem;
+    gap: 1.5rem;
   }
 
   .field { position: relative; }
 
   .input {
     width: 100%;
-    padding: 1rem 1.3rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px solid transparent;
-    border-radius: 14px;
+    padding: 0.9rem 1.1rem;
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: 8px;
     color: var(--text);
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-family: var(--font);
-    transition: all var(--ease);
+    transition: border-color 0.2s ease, background 0.2s ease;
   }
   .input:focus {
     outline: none;
-    background: rgba(255, 255, 255, 0.08);
-    border-color: var(--c-cyan);
+    border-color: var(--accent);
+    background: rgba(45, 92, 255, 0.04);
   }
 
   label {
     position: absolute;
-    left: 1.3rem;
+    left: 1.1rem;
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-muted);
     pointer-events: none;
-    transition: all var(--ease);
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
     background: transparent;
-    padding: 0 0.3rem;
-    font-size: 0.95rem;
+    padding: 0 0.25rem;
   }
   .ta-label { top: 1rem; transform: none; }
 
   .input:focus + label,
   .input:not(:placeholder-shown) + label {
-    top: -0.55rem;
-    font-size: 0.78rem;
-    color: var(--c-cyan);
+    top: -0.5rem;
+    font-size: 0.72rem;
+    color: var(--accent);
     background: var(--bg);
     transform: none;
   }
-  /* textarea label fix */
   .input:focus + .ta-label,
   .input:not(:placeholder-shown) + .ta-label {
-    top: -0.55rem;
+    top: -0.5rem;
     transform: none;
   }
 
-  textarea.input { resize: vertical; min-height: 120px; }
+  textarea.input {
+    resize: vertical;
+    min-height: 110px;
+  }
 
-  /* Success */
+  .submit-btn {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Estado de éxito */
   .success {
     text-align: center;
     padding: 3rem 2rem;
-    background: rgba(0, 255, 163, 0.07);
-    border: 2px solid var(--c-green);
-    border-radius: 20px;
+    background: rgba(45, 92, 255, 0.05);
+    border: 1px solid rgba(45, 92, 255, 0.25);
+    border-radius: 12px;
   }
-  .success-icon {
-    width: 68px; height: 68px;
-    background: var(--c-green);
-    color: var(--bg);
+  .success-check {
+    width: 56px;
+    height: 56px;
+    background: var(--accent);
+    color: #fff;
     border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 2.4rem;
-    margin: 0 auto 1.2rem;
-    animation: popIn 0.6s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin: 0 auto 1rem;
+    animation: popIn 0.5s ease;
   }
   @keyframes popIn {
     0%   { transform: scale(0); }
-    60%  { transform: scale(1.2); }
+    60%  { transform: scale(1.15); }
     100% { transform: scale(1); }
   }
-  .success h3 { color: var(--c-green); margin-bottom: 0.5rem; }
-  .success p  { color: var(--text-muted); }
+  .success h3 { color: var(--text); margin-bottom: 0.4rem; }
+  .success p  { color: var(--text-muted); font-size: 0.9rem; }
 
-  /* Social links */
-  .info-wrap { padding: 2.5rem; }
-  .info-wrap h3 { font-size: 1.3rem; margin-bottom: 1.5rem; }
+  /* ── Redes ── */
+  .info-wrap {
+    padding-top: 0.5rem;
+  }
 
-  .socials { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+  .info-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .socials { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
 
   .social-link {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 0.85rem 1.1rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 14px;
+    gap: 0.9rem;
+    padding: 0.8rem 1rem;
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: 8px;
     color: var(--text);
     text-decoration: none;
-    font-size: 0.9rem;
-    transition: all var(--ease);
-  }
-  .social-link svg { color: var(--c-cyan); flex-shrink: 0; }
-  .social-link:hover {
-    transform: translateX(8px);
-    background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(0, 229, 255, 0.3);
-  }
-
-  /* Footer */
-  footer {
-    text-align: center;
-    margin-top: 5rem;
-    padding-top: 2.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    color: var(--text-muted);
     font-size: 0.88rem;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  }
+  .social-link svg:first-child {
+    color: var(--text-muted);
+    flex-shrink: 0;
+    transition: color 0.2s ease;
+  }
+  .social-link:hover {
+    border-color: rgba(45, 92, 255, 0.4);
+    background: rgba(45, 92, 255, 0.04);
+    color: var(--text);
+  }
+  .social-link:hover svg:first-child {
+    color: var(--accent);
   }
 
+  .link-arrow {
+    margin-left: auto;
+    color: var(--line);
+    flex-shrink: 0;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+  .social-link:hover .link-arrow {
+    color: var(--accent);
+    transform: translate(2px, -2px);
+  }
+
+  /* ── Footer ── */
+  .site-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 2rem 4rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    max-width: 100%;
+  }
+
+  /* Estado inicial para animación GSAP */
+  .contact-block {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  /* ── Responsive ── */
   @media (max-width: 900px) {
-    .grid { grid-template-columns: 1fr; }
+    .contact { padding: 6rem 2rem 0; }
+    .contact-container { padding-bottom: 6rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .site-footer { padding: 2rem; }
+  }
+
+  @media (max-width: 600px) {
+    .contact { padding: 5rem 1.5rem 0; }
+    .contact-header { margin-bottom: 3rem; }
   }
 </style>
 

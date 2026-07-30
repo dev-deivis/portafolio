@@ -5,21 +5,33 @@
 
 /* ── Variables ── */
 :root {
-  --bg:           #0d0e15;
-  --bg-alt:       #111320;
-  --c-purple:     #6C63FF;
-  --c-cyan:       #00E5FF;
-  --c-green:      #00FFA3;
+  /* Paleta nueva (rediseño 2026) */
+  --bg:           #0a0a0c;   /* negro casi puro */
+  --bg-raised:    #131316;   /* cards y superficies elevadas */
+  --text:         #F2F1ED;   /* blanco roto */
+  --text-muted:   #8b8b93;
+  --accent:       #2D5CFF;   /* azul eléctrico — el único acento */
+  --accent-dim:   #17245c;   /* mismo azul para fondos/bordes sutiles */
+  --line:         #232327;   /* separadores y bordes finos */
+
+  /* Aliases de compatibilidad — se eliminan cuando se rediseñen las secciones restantes */
+  --bg-alt:       #131316;
+  --c-purple:     #2D5CFF;
+  --c-cyan:       #2D5CFF;
+  --c-green:      #2D5CFF;
   --c-red:        #FF6B6B;
-  --text:         #EAEAF0;
-  --text-muted:   #8892a4;
-  --border:       rgba(108, 99, 255, 0.2);
-  --grad-main:    linear-gradient(135deg, #6C63FF, #00E5FF);
-  --grad-cta:     linear-gradient(135deg, #00E5FF, #00FFA3);
+  --border:       #232327;
+  --grad-main:    linear-gradient(135deg, #2D5CFF, #1a3bbf);
+  --grad-cta:     linear-gradient(135deg, #2D5CFF, #1a3bbf);
+
+  /* Tipografía */
   --font:         'Inter', sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', sans-serif;
   --mono:         'JetBrains Mono', monospace;
+
+  /* Utilidades */
   --ease:         0.3s ease;
-  --radius:       24px;
+  --radius:       16px;
 }
 
 /* ── Reset ── */
@@ -32,7 +44,7 @@
 html {
   scroll-behavior: smooth;
   scrollbar-width: thin;
-  scrollbar-color: var(--c-purple) var(--bg);
+  scrollbar-color: var(--accent) var(--bg);
 }
 
 body {
@@ -97,37 +109,38 @@ body {
 }
 
 .btn-primary {
-  background: var(--grad-main);
-  color: var(--bg);
+  background: var(--accent);
+  color: #fff;
 }
 .btn-primary:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 35px rgba(108, 99, 255, 0.45);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(45, 92, 255, 0.45);
+  background: #3d6aff;
 }
 
 .btn-secondary {
   background: transparent;
-  color: var(--c-cyan);
-  border: 2px solid var(--c-cyan);
+  color: var(--text);
+  border: 1px solid var(--line);
 }
 .btn-secondary:hover {
-  background: var(--c-cyan);
-  color: var(--bg);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(0, 229, 255, 0.35);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-3px);
 }
 
 .btn-large {
   padding: 1.1rem 2.8rem;
   font-size: 1.1rem;
-  background: var(--grad-cta);
-  color: var(--bg);
+  background: var(--accent);
+  color: #fff;
   font-weight: 700;
-  box-shadow: 0 8px 35px rgba(0, 229, 255, 0.35);
+  box-shadow: 0 8px 30px rgba(45, 92, 255, 0.35);
 }
 .btn-large:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 14px 45px rgba(0, 229, 255, 0.5);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(45, 92, 255, 0.5);
+  background: #3d6aff;
 }
 
 .btn-glow {

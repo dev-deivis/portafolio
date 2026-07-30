@@ -1,15 +1,15 @@
 ---
 const links = [
   { href: '#home',     label: 'Inicio'    },
+  { href: '#historia', label: 'Historia'  },
   { href: '#projects', label: 'Proyectos' },
   { href: '#services', label: 'Servicios' },
-  { href: '#about',    label: 'Acerca'    },
   { href: '#contact',  label: 'Contacto'  },
 ];
 ---
 
 <nav class="navbar" id="navbar">
-  <a href="#home" class="nav-logo" aria-label="Inicio">DEV.IO</a>
+  <a href="#home" class="nav-logo" aria-label="Inicio">devdeivis</a>
 
   <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
     <span></span>
@@ -54,14 +54,15 @@ const links = [
 
   .nav-logo {
     font-family: var(--mono);
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    background: var(--grad-main);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--text);
     text-decoration: none;
+    transition: color var(--ease);
+  }
+  .nav-logo:hover {
+    color: var(--accent);
   }
 
   .nav-links {
@@ -85,7 +86,7 @@ const links = [
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--grad-main);
+    background: var(--accent);
     transition: width var(--ease);
     border-radius: 4px;
   }
@@ -101,8 +102,8 @@ const links = [
   .btn-resume {
     padding: 0.55rem 1.4rem;
     background: transparent;
-    color: var(--c-cyan);
-    border: 2px solid var(--c-cyan);
+    color: var(--accent);
+    border: 2px solid var(--accent);
     border-radius: 30px;
     font-weight: 600;
     font-size: 0.9rem;
@@ -111,9 +112,9 @@ const links = [
     white-space: nowrap;
   }
   .btn-resume:hover {
-    background: var(--c-cyan);
-    color: var(--bg);
-    box-shadow: 0 4px 20px rgba(0, 229, 255, 0.4);
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(45, 92, 255, 0.4);
     transform: translateY(-2px);
   }
 
