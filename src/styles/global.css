@@ -91,6 +91,12 @@ body {
   transform: translateY(0);
 }
 
+/* ── Word reveal utility ── */
+.word-span {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
 /* ── Buttons ── */
 .btn {
   padding: 0.9rem 2.2rem;

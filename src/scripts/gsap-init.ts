@@ -3,7 +3,118 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/**
+ * Dividir texto en palabras dentro de spans individuales sin afectar el layout.
+ * Respeta etiquetas <br /> y elementos anidados con formato.
+ */
+function splitTextIntoWords(element: HTMLElement): HTMLElement[] {
+  const wordSpans: HTMLElement[] = [];
+
+  function processNode(node: Node): Node[] {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const text = node.textContent || '';
+      if (!text.trim()) {
+        return [document.createTextNode(text)];
+      }
+
+      const tokens = text.split(/(\s+)/);
+      const resultNodes: Node[] = [];
+
+      tokens.forEach(token => {
+        if (!token) return;
+        if (/^\s+$/.test(token)) {
+          resultNodes.push(document.createTextNode(' '));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-span';
+          span.textContent = token;
+          wordSpans.push(span);
+          resultNodes.push(span);
+        }
+      });
+
+      return resultNodes;
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      const el = node as HTMLElement;
+      if (el.tagName === 'BR') {
+        return [el.cloneNode(true)];
+      }
+      const clone = el.cloneNode(false) as HTMLElement;
+      Array.from(el.childNodes).forEach(child => {
+        const processed = processNode(child);
+        processed.forEach(p => clone.appendChild(p));
+      });
+      return [clone];
+    }
+    return [node.cloneNode(true)];
+  }
+
+  const finalNodes: Node[] = [];
+  Array.from(element.childNodes).forEach(child => {
+    const processed = processNode(child);
+    processed.forEach(p => finalNodes.push(p));
+  });
+
+  element.innerHTML = '';
+  finalNodes.forEach(child => element.appendChild(child));
+
+  return wordSpans;
+}
+
 export function initGSAP() {
+
+  /* ── 1. Hero text reveal (al cargar la página en window.load) ── */
+  const heroTitle = document.querySelector<HTMLElement>('.hero-name');
+  if (heroTitle) {
+    const spans = splitTextIntoWords(heroTitle);
+    gsap.set(spans, { opacity: 0, y: 20 });
+
+    const animateHero = () => {
+      gsap.to(spans, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.07,
+        ease: 'power3.out',
+      });
+    };
+
+    if (document.readyState === 'complete') {
+      animateHero();
+    } else {
+      window.addEventListener('load', animateHero, { once: true });
+    }
+  }
+
+  /* ── 2. Secciones text reveal (al entrar al viewport en scroll) ── */
+  const sectionTitleSelectors = [
+    '#historia .historia-title',
+    '#projects .projects-title',
+    '#services .services-title',
+    '#about .declaration',
+    '#contact .contact-title',
+  ];
+
+  sectionTitleSelectors.forEach(selector => {
+    const titleEl = document.querySelector<HTMLElement>(selector);
+    if (!titleEl) return;
+
+    const spans = splitTextIntoWords(titleEl);
+    gsap.set(spans, { opacity: 0, y: 20 });
+
+    gsap.to(spans, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      stagger: 0.06,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: titleEl,
+        start: 'top 85%',
+        once: true,
+      },
+    });
+  });
 
   /* ── Reveal sections — IntersectionObserver (nativo, ligero) ── */
   const io = new IntersectionObserver(
