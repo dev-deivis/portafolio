@@ -3,7 +3,118 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/**
+ * Dividir texto en palabras dentro de spans individuales sin afectar el layout.
+ * Respeta etiquetas <br /> y elementos anidados con formato.
+ */
+function splitTextIntoWords(element: HTMLElement): HTMLElement[] {
+  const wordSpans: HTMLElement[] = [];
+
+  function processNode(node: Node): Node[] {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const text = node.textContent || '';
+      if (!text.trim()) {
+        return [document.createTextNode(text)];
+      }
+
+      const tokens = text.split(/(\s+)/);
+      const resultNodes: Node[] = [];
+
+      tokens.forEach(token => {
+        if (!token) return;
+        if (/^\s+$/.test(token)) {
+          resultNodes.push(document.createTextNode(' '));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-span';
+          span.textContent = token;
+          wordSpans.push(span);
+          resultNodes.push(span);
+        }
+      });
+
+      return resultNodes;
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      const el = node as HTMLElement;
+      if (el.tagName === 'BR') {
+        return [el.cloneNode(true)];
+      }
+      const clone = el.cloneNode(false) as HTMLElement;
+      Array.from(el.childNodes).forEach(child => {
+        const processed = processNode(child);
+        processed.forEach(p => clone.appendChild(p));
+      });
+      return [clone];
+    }
+    return [node.cloneNode(true)];
+  }
+
+  const finalNodes: Node[] = [];
+  Array.from(element.childNodes).forEach(child => {
+    const processed = processNode(child);
+    processed.forEach(p => finalNodes.push(p));
+  });
+
+  element.innerHTML = '';
+  finalNodes.forEach(child => element.appendChild(child));
+
+  return wordSpans;
+}
+
 export function initGSAP() {
+
+  /* ── 1. Hero text reveal (al cargar la página en window.load) ── */
+  const heroTitle = document.querySelector<HTMLElement>('.hero-name');
+  if (heroTitle) {
+    const spans = splitTextIntoWords(heroTitle);
+    gsap.set(spans, { opacity: 0, y: 20 });
+
+    const animateHero = () => {
+      gsap.to(spans, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.07,
+        ease: 'power3.out',
+      });
+    };
+
+    if (document.readyState === 'complete') {
+      animateHero();
+    } else {
+      window.addEventListener('load', animateHero, { once: true });
+    }
+  }
+
+  /* ── 2. Secciones text reveal (al entrar al viewport en scroll) ── */
+  const sectionTitleSelectors = [
+    '#historia .historia-title',
+    '#projects .projects-title',
+    '#services .services-title',
+    '#about .declaration',
+    '#contact .contact-title',
+  ];
+
+  sectionTitleSelectors.forEach(selector => {
+    const titleEl = document.querySelector<HTMLElement>(selector);
+    if (!titleEl) return;
+
+    const spans = splitTextIntoWords(titleEl);
+    gsap.set(spans, { opacity: 0, y: 20 });
+
+    gsap.to(spans, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      stagger: 0.06,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: titleEl,
+        start: 'top 85%',
+        once: true,
+      },
+    });
+  });
 
   /* ── Reveal sections — IntersectionObserver (nativo, ligero) ── */
   const io = new IntersectionObserver(
@@ -38,6 +149,50 @@ export function initGSAP() {
   enterFrom('.skill-card',    { opacity: 0, scale: 0.94 }, { ease: 'back.out(1.3)' }, 0.06);
   enterFrom('.service-card',  { opacity: 0, y: 28 }, {}, 0.07);
   enterFrom('.contact-block', { opacity: 0, y: 28 }, {}, 0.08);
+
+  /* ── Parallax Bridge — transición Hero → Historia ─────────────────
+     Tres capas (fondo, media, frente) se mueven a velocidades distintas
+     con scrollTrigger scrub. SIN pin: scroll natural a través de la franja.
+     start/end cubren la sección completa (entrada desde abajo hasta salida por arriba).
+     ease: 'none' → movimiento lineal 1:1 con el scroll (scrub hace lo demás).
+  ─────────────────────────────────────────────────────────────────── */
+  const bridge = document.querySelector<HTMLElement>('#parallax-bridge');
+  if (bridge) {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#parallax-bridge',
+        start: 'top bottom',   // cuando el top de la sección llega al bottom del viewport
+        end: 'bottom top',     // cuando el bottom sale por el top del viewport
+        scrub: 0.5,            // suavizado ligero sin lag excesivo
+      },
+    });
+
+    /* Cada capa mueve el div completo (que llena la sección).
+       y positivo = capa arranca más abajo → entra desde abajo conforme subes.
+       Las capas más lejanas (bg) se mueven menos → sensación de profundidad. */
+    /* Lógica de separación vertical:
+       - bg:    centrado en sección, rango ±10vh  → muy lento (lejos)
+       - mid:   CSS lo posiciona a 22vh del top (zona alta de la sección).
+                Rango ±14vh → llega a su zona alta cuando la sección
+                está centrada en el viewport, sin solaparse con el título.
+       - front: centrado en sección, rango ±40vh → entra dramáticamente
+                desde abajo y sale hacia arriba. */
+    tl.fromTo('.pb-layer--bg',
+        { y: '10vh' },
+        { y: '-10vh', ease: 'none' },
+        0
+      )
+      .fromTo('.pb-layer--mid',
+        { y: '14vh' },
+        { y: '-14vh', ease: 'none' },
+        0
+      )
+      .fromTo('.pb-layer--front',
+        { y: '40vh' },
+        { y: '-40vh', ease: 'none' },
+        0
+      );
+  }
 
   /* ── Historia — responsive via matchMedia ──────────────────────────
      Desktop (≥ 768px): sección pineada + track horizontal con scrub
