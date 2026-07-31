@@ -150,6 +150,50 @@ export function initGSAP() {
   enterFrom('.service-card',  { opacity: 0, y: 28 }, {}, 0.07);
   enterFrom('.contact-block', { opacity: 0, y: 28 }, {}, 0.08);
 
+  /* ── Parallax Bridge — transición Hero → Historia ─────────────────
+     Tres capas (fondo, media, frente) se mueven a velocidades distintas
+     con scrollTrigger scrub. SIN pin: scroll natural a través de la franja.
+     start/end cubren la sección completa (entrada desde abajo hasta salida por arriba).
+     ease: 'none' → movimiento lineal 1:1 con el scroll (scrub hace lo demás).
+  ─────────────────────────────────────────────────────────────────── */
+  const bridge = document.querySelector<HTMLElement>('#parallax-bridge');
+  if (bridge) {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#parallax-bridge',
+        start: 'top bottom',   // cuando el top de la sección llega al bottom del viewport
+        end: 'bottom top',     // cuando el bottom sale por el top del viewport
+        scrub: 0.5,            // suavizado ligero sin lag excesivo
+      },
+    });
+
+    /* Cada capa mueve el div completo (que llena la sección).
+       y positivo = capa arranca más abajo → entra desde abajo conforme subes.
+       Las capas más lejanas (bg) se mueven menos → sensación de profundidad. */
+    /* Lógica de separación vertical:
+       - bg:    centrado en sección, rango ±10vh  → muy lento (lejos)
+       - mid:   CSS lo posiciona a 22vh del top (zona alta de la sección).
+                Rango ±14vh → llega a su zona alta cuando la sección
+                está centrada en el viewport, sin solaparse con el título.
+       - front: centrado en sección, rango ±40vh → entra dramáticamente
+                desde abajo y sale hacia arriba. */
+    tl.fromTo('.pb-layer--bg',
+        { y: '10vh' },
+        { y: '-10vh', ease: 'none' },
+        0
+      )
+      .fromTo('.pb-layer--mid',
+        { y: '14vh' },
+        { y: '-14vh', ease: 'none' },
+        0
+      )
+      .fromTo('.pb-layer--front',
+        { y: '40vh' },
+        { y: '-40vh', ease: 'none' },
+        0
+      );
+  }
+
   /* ── Historia — responsive via matchMedia ──────────────────────────
      Desktop (≥ 768px): sección pineada + track horizontal con scrub
      Mobile  (< 768px): fade-in vertical, sin pin

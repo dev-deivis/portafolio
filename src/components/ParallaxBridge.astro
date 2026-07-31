@@ -1,0 +1,130 @@
+---
+// ParallaxBridge.astro — Franja de transición parallax entre Hero e Historia.
+// Tres capas se mueven a velocidades distintas con ScrollTrigger scrub,
+// sin pin: el usuario scrollea normalmente y el efecto ocurre al pasar.
+// aria-hidden: puramente decorativo; el contenido real está en Historia.
+---
+
+<section id="parallax-bridge" aria-hidden="true">
+
+  <!-- Capa 0 (profundidad): texto de año enorme y muy tenue -->
+  <div class="pb-layer pb-layer--bg">
+    <p class="pb-bg-text">2021 → 2026</p>
+  </div>
+
+  <!-- Capa 1 (media): eyebrow "MI HISTORIA" -->
+  <div class="pb-layer pb-layer--mid">
+    <p class="pb-eyebrow">MI HISTORIA</p>
+  </div>
+
+  <!-- Capa 2 (frente): título principal -->
+  <div class="pb-layer pb-layer--front">
+    <p class="pb-front-title">Cómo llegué<br />hasta aquí</p>
+  </div>
+
+</section>
+
+<style>
+  #parallax-bridge {
+    position: relative;
+    height: 70vh;
+    overflow: hidden;
+    background: var(--bg);
+    /* Decorativo: sin interacción con el usuario */
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Degradados de fusión: el hero y la historia no tienen corte visual brusco */
+  #parallax-bridge::before,
+  #parallax-bridge::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 28%;
+    z-index: 20;
+    pointer-events: none;
+  }
+  #parallax-bridge::before {
+    top: 0;
+    background: linear-gradient(to bottom, var(--bg), transparent);
+  }
+  #parallax-bridge::after {
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg), transparent);
+  }
+
+  /* Cada capa llena la sección — GSAP la desplaza verticalmente como bloque.
+     El centrado del contenido es por flexbox, no por transform CSS,
+     para que GSAP pueda animar `y` sin colisión de transforms. */
+  .pb-layer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pb-layer--bg    { z-index: 1; }
+
+  /* El eyebrow vive en la zona ALTA de la sección (no en el centro).
+     Así, cuando la sección está centrada en el viewport, el eyebrow
+     aparece arriba del título sin solaparse nunca. */
+  .pb-layer--mid {
+    z-index: 2;
+    align-items: flex-start;
+    padding-top: 22vh;
+  }
+
+  .pb-layer--front { z-index: 3; }
+
+  /* ── Estilos por capa ── */
+
+  /* Texto de año — aplastante y casi invisible: sensación de pasado lejano */
+  .pb-bg-text {
+    font-family: var(--font-display);
+    font-size: clamp(4.5rem, 18vw, 16rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    opacity: 0.07;
+    white-space: nowrap;
+    line-height: 1;
+    margin: 0;
+    will-change: transform;
+  }
+
+  /* Eyebrow — mono con acento: etiqueta de sección */
+  .pb-eyebrow {
+    font-family: var(--mono);
+    font-size: clamp(0.8rem, 2vw, 1.25rem);
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.85;
+    white-space: nowrap;
+    margin: 0;
+    will-change: transform;
+  }
+
+  /* Título frontal — display grande, el más visible */
+  .pb-front-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5.2vw, 4.8rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 0.93;
+    color: var(--text);
+    text-align: center;
+    margin: 0;
+    will-change: transform;
+  }
+
+  /* En mobile la altura se reduce un poco para no alargar el scroll */
+  @media (max-width: 768px) {
+    #parallax-bridge {
+      height: 55vh;
+    }
+  }
+</style>
