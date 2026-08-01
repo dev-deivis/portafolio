@@ -1,55 +1,99 @@
 ---
-// Projects.astro — Grid numerado 01 / 02 / 03
+// Projects.astro — Grid numerado 01–06
 // Rediseño 2026: formato editorial estilo heynesh.com
 // Animación: GSAP ScrollTrigger en .project-card (registrado en gsap-init.ts)
 
 interface Project {
-  index:     string;       // "01", "02", "03"
-  id:        string;
-  title:     string;
-  desc:      string;
-  tech:      string[];
-  thumb?:    string;       // imagen de preview (primera slide del proyecto)
-  links:     { label: string; href: string; primary?: boolean }[];
-  status?:   'live' | 'wip';
-  note?:     string;
+  index:      string;       // "01" … "06"
+  id:         string;
+  title:      string;
+  desc:       string;
+  impact:     string;       // "Qué resolví" — debajo del desc, antes de los tags
+  tech:       string[];
+  thumb?:     string;       // imagen de preview (primera slide del proyecto)
+  accentRGB:  string;       // "R,G,B" para el placeholder cuando no hay thumb
+  links:      { label: string; href: string; primary?: boolean }[];
+  status?:    'live' | 'wip';
+  note?:      string;
 }
 
 const projects: Project[] = [
   {
     index: '01',
-    id: 'hackathon',
-    title: 'Gestión de Hackathones',
-    desc: 'Sistema completo para gestionar eventos de hackathones — registro de equipos, evaluación de proyectos y generación automática de constancias en PDF. Más de 50 equipos y 20 eventos gestionados.',
-    tech: ['Laravel 11', 'PostgreSQL', 'Supabase', 'TailwindCSS', 'Alpine.js', 'Railway'],
-    thumb: '/assets/images/projects/hackathon-home.png',
+    id: 'lunisa',
+    title: 'Lunisa',
+    desc: 'App offline de IA que analiza fotos de parcela y datos climáticos de 68 municipios para recomendar el cultivo óptimo a agricultores zapotecos de Oaxaca.',
+    impact: 'Permite tomar decisiones de siembra basadas en datos, sin depender de conexión a internet, en comunidades con acceso limitado.',
+    tech: ['HTML', 'Python', 'Computer Vision', 'Flutter'],
+    accentRGB: '108,99,255',
     status: 'live',
     links: [
-      { label: 'Demo en vivo',    href: 'https://web-production-ef44a.up.railway.app/', primary: true },
-      { label: 'Código fuente',   href: 'https://github.com/dev-deivis/hackathon-events' },
+      { label: 'Ver código', href: 'https://github.com/dev-deivis/lu-nisa' },
     ],
   },
   {
     index: '02',
-    id: 'voces',
-    title: 'Voces Indígenas',
-    desc: 'Plataforma web educativa para la documentación y preservación de 6 lenguas indígenas mexicanas. Incluye mapa interactivo con Leaflet.js y análisis de crisis lingüística.',
-    tech: ['HTML5', 'CSS3', 'JavaScript', 'Leaflet.js'],
-    thumb: '/assets/images/projects/voces-1.png',
+    id: 'mappache',
+    title: 'MappAche',
+    desc: 'App móvil + dashboard municipal que detecta y prioriza baches en Oaxaca usando visión por computadora.',
+    impact: 'Automatiza la priorización de reparación vial, reemplazando reportes ciudadanos dispersos y poco confiables.',
+    tech: ['Flutter', 'Dart', 'Roboflow', 'Gemini API'],
+    accentRGB: '0,229,255',
     status: 'live',
-    note: 'Presentado en exposición de preservación de lenguas indígenas',
+    note: 'Categoría Móvil · HackaTec 2026',
     links: [
-      { label: 'Ver página',  href: 'https://dev-deivis.github.io/voces_indigenas/', primary: true },
-      { label: 'Ver código',  href: 'https://github.com/dev-deivis/voces_indigenas' },
+      { label: 'Ver código', href: 'https://github.com/dev-deivis/MappAche' },
     ],
   },
   {
     index: '03',
-    id: 'medibot',
-    title: 'MediBot',
-    desc: 'App móvil de salud inteligente con asistente conversacional basado en IA. Orientada a facilitar el acceso a información médica básica para poblaciones con acceso limitado a servicios de salud.',
-    tech: ['Flutter', 'Dart', 'IA'],
-    status: 'wip',
+    id: 'reservaciones',
+    title: 'Sistema de Reservaciones ITO',
+    desc: 'Sistema fullstack para gestionar reservaciones de aulas, laboratorios y salas del ITO, con API REST y autenticación JWT.',
+    impact: 'Eliminó el proceso manual en papel para reservar espacios, con control de acceso por roles de usuario.',
+    tech: ['Node.js', 'Express', 'React', 'Vite', 'PostgreSQL'],
+    accentRGB: '0,255,163',
+    status: 'live',
+    links: [
+      { label: 'Ver código', href: 'https://github.com/dev-deivis/sistema-reservaciones-ito' },
+    ],
+  },
+  {
+    index: '04',
+    id: 'lariscan',
+    title: 'LariScan',
+    desc: 'Web app con YOLOv8 (94.2% de precisión) para detectar defectos en telas automáticamente vía cámara móvil o imagen.',
+    impact: 'Reduce la inspección manual en producción textil, acelerando el control de calidad con precisión medible.',
+    tech: ['FastAPI', 'YOLOv8', 'Next.js', 'TypeScript'],
+    accentRGB: '108,99,255',
+    status: 'live',
+    links: [
+      { label: 'Ver código', href: 'https://github.com/dev-deivis/LariScan' },
+    ],
+  },
+  {
+    index: '05',
+    id: 'aprendia',
+    title: 'Aprendia',
+    desc: 'App móvil con Claude API que guía a adultos mexicanos a terminar primaria/secundaria vía INEA, con voz y avatar animado.',
+    impact: 'Da acompañamiento accesible (con voz) a personas que abandonaron la escuela, facilitando su regreso a través de INEA.',
+    tech: ['Flutter', 'Dart', 'Claude API'],
+    accentRGB: '0,255,163',
+    status: 'live',
+    links: [
+      { label: 'Ver código', href: 'https://github.com/dev-deivis/aprendia' },
+    ],
+  },
+  {
+    index: '06',
+    id: 'tienda-san-jose',
+    title: 'Tienda San José',
+    desc: 'Tienda en línea para artículos religiosos de un negocio familiar en Florida, con pagos vía Stripe y envíos gestionados con Shippo.',
+    impact: 'Le dio presencia digital y capacidad de venta en línea a un negocio que antes dependía solo de venta física.',
+    tech: ['Next.js', 'Prisma', 'MySQL', 'Stripe', 'Shippo'],
+    accentRGB: '245,158,11',
+    status: 'live',
+    note: 'Proyecto de cliente — repositorio privado',
     links: [],
   },
 ];
@@ -100,7 +144,7 @@ const projects: Project[] = [
                 loading="lazy"
               />
             ) : (
-              <!-- Placeholder MediBot — wireframe de chat móvil con grid punteado -->
+              <!-- Placeholder genérico con color de acento del proyecto -->
               <div class="visual-placeholder" aria-hidden="true">
                 <svg
                   class="wf-svg"
@@ -109,84 +153,36 @@ const projects: Project[] = [
                   preserveAspectRatio="xMidYMid slice"
                 >
                   <defs>
-                    <!-- Grid de puntos de fondo -->
-                    <pattern id="dots" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
-                      <circle cx="1.5" cy="1.5" r="1.5" fill="rgba(245,158,11,0.18)" />
+                    <pattern id={`dots-${p.id}`} x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+                      <circle cx="1.5" cy="1.5" r="1.5" fill={`rgba(${p.accentRGB},0.18)`} />
                     </pattern>
                   </defs>
 
-                  <!-- Fondo con puntos -->
-                  <rect width="800" height="450" fill="rgba(245,158,11,0.03)" />
-                  <rect width="800" height="450" fill="url(#dots)" />
+                  <!-- Fondo -->
+                  <rect width="800" height="450" fill={`rgba(${p.accentRGB},0.03)`} />
+                  <rect width="800" height="450" fill={`url(#dots-${p.id})`} />
 
-                  <!-- Marco del teléfono — centrado -->
-                  <rect x="290" y="30" width="220" height="390" rx="22" ry="22"
-                    fill="rgba(245,158,11,0.05)" stroke="rgba(245,158,11,0.3)" stroke-width="1.5"/>
+                  <!-- Número de índice grande, muy sutil -->
+                  <text
+                    x="400" y="260"
+                    text-anchor="middle" dominant-baseline="middle"
+                    font-family="'JetBrains Mono', monospace"
+                    font-size="200" font-weight="700" letter-spacing="-8"
+                    fill={`rgba(${p.accentRGB},0.05)`}
+                  >{p.index}</text>
 
-                  <!-- Notch superior -->
-                  <rect x="350" y="38" width="100" height="14" rx="7"
-                    fill="rgba(245,158,11,0.15)"/>
+                  <!-- Líneas decorativas horizontales -->
+                  <line x1="100" y1="180" x2="700" y2="180" stroke={`rgba(${p.accentRGB},0.08)`} stroke-width="1"/>
+                  <line x1="100" y1="270" x2="700" y2="270" stroke={`rgba(${p.accentRGB},0.06)`} stroke-width="1"/>
 
-                  <!-- Barra de estatus del app -->
-                  <rect x="306" y="66" width="188" height="28" rx="4"
-                    fill="rgba(245,158,11,0.08)" stroke="rgba(245,158,11,0.15)" stroke-width="1"/>
-                  <!-- Avatar bot -->
-                  <circle cx="322" cy="80" r="8" fill="rgba(245,158,11,0.2)" stroke="rgba(245,158,11,0.35)" stroke-width="1"/>
-                  <!-- Líneas de nombre en header -->
-                  <rect x="336" y="74" width="60" height="5" rx="2.5" fill="rgba(245,158,11,0.25)"/>
-                  <rect x="336" y="83" width="40" height="3.5" rx="1.75" fill="rgba(245,158,11,0.15)"/>
-                  <!-- Dot online -->
-                  <circle cx="318" cy="88" r="4" fill="rgba(74,222,128,0.5)"/>
-
-                  <!-- Burbuja IA (izquierda) — larga -->
-                  <rect x="308" y="106" width="130" height="30" rx="12" rx="12"
-                    fill="rgba(245,158,11,0.12)" stroke="rgba(245,158,11,0.22)" stroke-width="1"/>
-                  <rect x="318" y="115" width="80" height="5" rx="2.5" fill="rgba(245,158,11,0.3)"/>
-                  <rect x="318" y="124" width="55" height="4" rx="2" fill="rgba(245,158,11,0.18)"/>
-
-                  <!-- Burbuja usuario (derecha) -->
-                  <rect x="376" y="148" width="106" height="24" rx="10"
-                    fill="rgba(45,92,255,0.2)" stroke="rgba(45,92,255,0.3)" stroke-width="1"/>
-                  <rect x="386" y="157" width="68" height="4.5" rx="2.25" fill="rgba(45,92,255,0.45)"/>
-
-                  <!-- Burbuja IA (izquierda) — media -->
-                  <rect x="308" y="184" width="148" height="48" rx="12"
-                    fill="rgba(245,158,11,0.12)" stroke="rgba(245,158,11,0.22)" stroke-width="1"/>
-                  <rect x="318" y="194" width="100" height="5" rx="2.5" fill="rgba(245,158,11,0.3)"/>
-                  <rect x="318" y="203" width="82" height="4" rx="2" fill="rgba(245,158,11,0.18)"/>
-                  <rect x="318" y="211" width="60" height="4" rx="2" fill="rgba(245,158,11,0.12)"/>
-                  <!-- Indicador tipeo IA (tres puntitos) -->
-                  <circle cx="318" cy="225" r="3" fill="rgba(245,158,11,0.35)"/>
-                  <circle cx="327" cy="225" r="3" fill="rgba(245,158,11,0.25)"/>
-                  <circle cx="336" cy="225" r="3" fill="rgba(245,158,11,0.15)"/>
-
-                  <!-- Burbuja usuario (derecha) corta -->
-                  <rect x="410" y="246" width="72" height="24" rx="10"
-                    fill="rgba(45,92,255,0.2)" stroke="rgba(45,92,255,0.3)" stroke-width="1"/>
-                  <rect x="420" y="255" width="44" height="4.5" rx="2.25" fill="rgba(45,92,255,0.45)"/>
-
-                  <!-- Burbuja IA punteada (respondiendo) -->
-                  <rect x="308" y="282" width="80" height="28" rx="12"
-                    fill="none" stroke="rgba(245,158,11,0.3)" stroke-width="1" stroke-dasharray="4 3"/>
-                  <circle cx="326" cy="296" r="3.5" fill="rgba(245,158,11,0.4)"/>
-                  <circle cx="338" cy="296" r="3.5" fill="rgba(245,158,11,0.25)"/>
-                  <circle cx="350" cy="296" r="3.5" fill="rgba(245,158,11,0.12)"/>
-
-                  <!-- Barra de input inferior -->
-                  <rect x="306" y="328" width="188" height="34" rx="14"
-                    fill="rgba(245,158,11,0.07)" stroke="rgba(245,158,11,0.2)" stroke-width="1"/>
-                  <!-- Texto placeholder en input -->
-                  <rect x="318" y="341" width="90" height="4.5" rx="2.25" fill="rgba(245,158,11,0.15)"/>
-                  <!-- Botón enviar -->
-                  <circle cx="476" cy="345" r="11"
-                    fill="rgba(245,158,11,0.2)" stroke="rgba(245,158,11,0.35)" stroke-width="1"/>
-                  <path d="M471 345 l7-3 -7-3 v2.5 l4 0.5 -4 0.5 z"
-                    fill="rgba(245,158,11,0.6)"/>
-
-                  <!-- Label "En desarrollo" en la esquina -->
-                  <text x="400" y="396" text-anchor="middle"
-                    font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="3"
-                    fill="rgba(245,158,11,0.4)" text-transform="uppercase">EN DESARROLLO</text>
+                  <!-- Título del proyecto -->
+                  <text
+                    x="400" y="400"
+                    text-anchor="middle"
+                    font-family="'JetBrains Mono', monospace"
+                    font-size="11" letter-spacing="4"
+                    fill={`rgba(${p.accentRGB},0.32)`}
+                  >{p.title.toUpperCase()}</text>
                 </svg>
               </div>
             )}
@@ -196,6 +192,7 @@ const projects: Project[] = [
           <div class="project-body">
             <h3 class="project-title">{p.title}</h3>
             <p class="project-desc">{p.desc}</p>
+            <p class="project-impact">{p.impact}</p>
 
             <ul class="tech-pills" aria-label="Stack tecnológico">
               {p.tech.map((t) => <li class="tech-pill">{t}</li>)}
@@ -274,7 +271,7 @@ const projects: Project[] = [
 
   /* ── Fila de proyecto ── */
   .project-row {
-    padding: 2.5rem 0 3.5rem;
+    padding: 1.8rem 0 2.6rem;
   }
 
   /* Cabecera: índice + status, en una línea */
@@ -406,7 +403,19 @@ const projects: Project[] = [
     font-size: 0.93rem;
     line-height: 1.75;
     color: var(--text-muted);
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.6rem;
+  }
+
+  /* Línea de impacto / "Qué resolví" */
+  .project-impact {
+    font-size: 0.82rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+    opacity: 0.65;
+    font-style: italic;
+    margin-bottom: 1.1rem;
+    padding-left: 0.9rem;
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
   }
 
   /* Pills de stack */
@@ -472,6 +481,6 @@ const projects: Project[] = [
   @media (max-width: 600px) {
     .projects { padding: 5rem 1.5rem; }
     .projects-header { margin-bottom: 3rem; }
-    .project-row { padding: 2rem 0 2.5rem; }
+    .project-row { padding: 1.5rem 0 2rem; }
   }
 </style>
