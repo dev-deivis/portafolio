@@ -63,10 +63,10 @@ const techGroups = [
     techs: [
       { name: 'Python',          icon: 'py'                                                                              },
       { name: 'FastAPI',         icon: 'fastapi'                                                                         },
-      { name: 'YOLOv8',          si:   'ultralytics'                                                                     },
-      { name: 'Computer Vision', svg:  '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>' },
-      { name: 'Gemini API',      si:   'googlegemini'                                                                    },
-      { name: 'Claude API',      si:   'anthropic'                                                                       },
+      { name: 'YOLOv8',          si: 'ultralytics', siColor: 'ffffff'  },  // #111F68 invisible en fondo oscuro
+      { name: 'Computer Vision', svg: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>' },
+      { name: 'Gemini API',      si: 'googlegemini'                  },  // #8E75B2 — visible en fondo oscuro
+      { name: 'Claude API',      si: 'anthropic',  siColor: 'ffffff' },  // #191919 invisible en fondo oscuro
     ],
   },
 ];
@@ -120,7 +120,7 @@ const techGroups = [
                   )}
                   {'si' in t && (
                     <img
-                      src={`https://cdn.simpleicons.org/${t.si}/eaeaf0`}
+                      src={`https://cdn.simpleicons.org/${t.si}${'siColor' in t ? `/${t.siColor}` : ''}`}
                       alt={t.name}
                       width="20" height="20"
                       loading="lazy"
@@ -340,14 +340,14 @@ const techGroups = [
   .tech-item .si-icon  { width: 20px; height: 20px; border-radius: 3px; flex-shrink: 0; opacity: 0.85; }
   .tech-item span      { font-size: 0.88rem; font-weight: 500; color: var(--text); }
 
-  /* Icono inline SVG (ej. Computer Vision eye) */
+  /* Icono inline SVG (Computer Vision eye) */
   .inline-icon {
     width: 24px;
     height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-muted);
+    color: var(--accent);
     flex-shrink: 0;
   }
 
