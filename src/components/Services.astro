@@ -29,8 +29,15 @@ const services: Service[] = [
     num:  '03',
     title: 'Backend & Bases de Datos',
     desc:  'Diseño e implementación de APIs robustas y esquemas de base de datos optimizados. Autenticación, migraciones, consultas eficientes y despliegue en la nube.',
-    features: ['PostgreSQL & MySQL', 'APIs con autenticación', 'Docker & Railway'],
+    features: ['PostgreSQL & MySQL', 'APIs con autenticación', 'Docker & Linux'],
     icon: '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>',
+  },
+  {
+    num:  '04',
+    title: 'Inteligencia Artificial Aplicada',
+    desc:  'Integración de modelos de IA en productos reales: visión por computadora, chatbots conversacionales y automatización inteligente. Desde el prototipo hasta producción.',
+    features: ['Computer Vision (YOLOv8)', 'APIs de IA (Claude, Gemini)', 'Python & FastAPI'],
+    icon: '<path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/>',
   },
 ];
 ---
@@ -46,7 +53,7 @@ const services: Service[] = [
       </h2>
     </div>
 
-    <!-- Grid de 3 tarjetas -->
+    <!-- Grid de 4 tarjetas (2x2) -->
     <div class="services-grid">
       {services.map(({ num, title, desc, features, icon }) => (
         <div class="svc-card service-card">
@@ -128,7 +135,7 @@ const services: Service[] = [
   /* ── Grid ── */
   .services-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5px;  /* borde compartido: separador fino entre tarjetas */
     background: rgba(255, 255, 255, 0.07); /* el color del gap actúa como borde */
     border: 1px solid rgba(255, 255, 255, 0.07);
@@ -272,6 +279,11 @@ const services: Service[] = [
     .services { padding: 6rem 2rem; }
     .services-grid { grid-template-columns: 1fr; }
     .svc-cta { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
+  }
+
+  @media (min-width: 601px) and (max-width: 900px) {
+    /* En tablet, mantener 2 columnas en lugar de colapsar a 1 */
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 600px) {

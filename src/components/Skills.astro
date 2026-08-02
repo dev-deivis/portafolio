@@ -58,6 +58,17 @@ const techGroups = [
       { name: 'Git',    icon: 'git'    },
     ],
   },
+  {
+    label: 'IA / ML',
+    techs: [
+      { name: 'Python',          icon: 'py'      },
+      { name: 'FastAPI',         icon: 'fastapi' },
+      { name: 'YOLOv8',         chip: true      },
+      { name: 'Computer Vision', chip: true      },
+      { name: 'Gemini API',      chip: true      },
+      { name: 'Claude API',      chip: true      },
+    ],
+  },
 ];
 ---
 
@@ -99,13 +110,22 @@ const techGroups = [
             <div class="col-items">
               {g.techs.map((t) => (
                 <div class="tech-item">
-                  <img
-                    src={`https://skillicons.dev/icons?i=${t.icon}&theme=dark`}
-                    alt={t.name}
-                    width="24"
-                    height="24"
-                    loading="lazy"
-                  />
+                  {'icon' in t ? (
+                    <img
+                      src={`https://skillicons.dev/icons?i=${t.icon}&theme=dark`}
+                      alt={t.name}
+                      width="24"
+                      height="24"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <span class="tech-chip-icon" aria-hidden="true">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="7" y="7" width="10" height="10" rx="1"/>
+                        <path d="M9 7V4M12 7V4M15 7V4M9 20v-3M12 20v-3M15 20v-3M4 9h3M4 12h3M4 15h3M17 9h3M17 12h3M17 15h3"/>
+                      </svg>
+                    </span>
+                  )}
                   <span>{t.name}</span>
                 </div>
               ))}
@@ -241,7 +261,7 @@ const techGroups = [
 
   .tech-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 1.2rem;
   }
 
@@ -296,8 +316,23 @@ const techGroups = [
   .tech-item img  { width: 24px; height: 24px; border-radius: 4px; flex-shrink: 0; }
   .tech-item span { font-size: 0.88rem; font-weight: 500; color: var(--text); }
 
+  /* Icono chip para tecnologías sin skillicon */
+  .tech-chip-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(45, 92, 255, 0.55);
+    flex-shrink: 0;
+  }
+
   /* ── Responsive ── */
   @media (max-width: 1100px) {
+    .steps-grid { grid-template-columns: repeat(2, 1fr); }
+    .tech-grid  { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 700px) {
     .steps-grid { grid-template-columns: repeat(2, 1fr); }
     .tech-grid  { grid-template-columns: repeat(2, 1fr); }
   }
