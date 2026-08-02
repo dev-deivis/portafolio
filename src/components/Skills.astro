@@ -1,6 +1,5 @@
 ---
 // Skills.astro — De la Idea al Producto + Stack Tecnológico
-// Paleta unificada: --accent azul eléctrico. Sin morado/cian/verde/menta.
 
 const steps = [
   {
@@ -31,32 +30,72 @@ const steps = [
 
 const techGroups = [
   {
-    label: 'Frontend',
+    label: 'FRONTEND',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
     techs: [
       { name: 'React',   icon: 'react'   },
       { name: 'Next.js', icon: 'nextjs'  },
     ],
   },
   {
-    label: 'Backend',
+    label: 'BACKEND',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>`,
     techs: [
       { name: 'Laravel', icon: 'laravel' },
       { name: 'Node.js', icon: 'nodejs'  },
     ],
   },
   {
-    label: 'Bases de datos',
+    label: 'BASES DE DATOS',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>`,
     techs: [
       { name: 'MySQL',      icon: 'mysql'      },
       { name: 'PostgreSQL', icon: 'postgresql' },
     ],
   },
   {
-    label: 'Herramientas',
+    label: 'HERRAMIENTAS',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
     techs: [
       { name: 'Docker', icon: 'docker' },
       { name: 'Git',    icon: 'git'    },
     ],
+  },
+  {
+    label: 'IA / ML',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>`,
+    isWide: true,
+    techs: [
+      { name: 'Python',          icon: 'py'                                                                              },
+      { name: 'FastAPI',         icon: 'fastapi'                                                                         },
+      { name: 'YOLOv8',          si: 'ultralytics', siColor: 'ffffff'  },
+      { name: 'Computer Vision', svg: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>' },
+      { name: 'Gemini API',      si: 'googlegemini'                  },
+      { name: 'Claude API',      si: 'anthropic',  siColor: 'ffffff' },
+    ],
+  },
+];
+
+const features = [
+  {
+    title: 'Tecnologías modernas',
+    desc: 'Stack actualizado y escalable',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`,
+  },
+  {
+    title: 'Alto rendimiento',
+    desc: 'Optimizado para producción',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>`,
+  },
+  {
+    title: 'Buenas prácticas',
+    desc: 'Código limpio y mantenible',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+  },
+  {
+    title: 'Seguro y confiable',
+    desc: 'Estándares de seguridad',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
   },
 ];
 ---
@@ -64,7 +103,7 @@ const techGroups = [
 <section id="skills" class="skills reveal-section">
   <div class="container">
 
-    <!-- Encabezado — mismo patrón que Proyectos / Servicios / Historia -->
+    <!-- Encabezado -->
     <div class="skills-header">
       <span class="section-label">Proceso & Stack</span>
       <h2 class="skills-title">
@@ -80,7 +119,7 @@ const techGroups = [
           <div class="step-bar" aria-hidden="true"></div>
           <div class="step-top">
             <span class="step-num">{s.num}</span>
-            <div class="step-icon" set:html={s.icon} />
+            <div class="step-icon" set:html={s.icon}></div>
           </div>
           <h3 class="step-title">{s.title}</h3>
           <p class="step-desc">{s.desc}</p>
@@ -92,20 +131,30 @@ const techGroups = [
     <div class="tech-wrap">
       <span class="tech-eyebrow">Stack tecnológico</span>
 
+      <!-- Grid de Tarjetas Stack -->
       <div class="tech-grid">
         {techGroups.map((g) => (
-          <div class="tech-col">
-            <span class="col-label">{g.label}</span>
+          <div class={`tech-col ${g.isWide ? 'tech-col--wide' : ''}`}>
+            <div class="col-header">
+              <div class="col-icon" set:html={g.icon}></div>
+              <span class="col-label">{g.label}</span>
+            </div>
             <div class="col-items">
               {g.techs.map((t) => (
                 <div class="tech-item">
-                  <img
-                    src={`https://skillicons.dev/icons?i=${t.icon}&theme=dark`}
-                    alt={t.name}
-                    width="24"
-                    height="24"
-                    loading="lazy"
-                  />
+                  {'icon' in t && (
+                    <img src={`https://skillicons.dev/icons?i=${t.icon}&theme=dark`} alt={t.name} width="24" height="24" loading="lazy" />
+                  )}
+                  {'si' in t && (
+                    <img src={`https://cdn.simpleicons.org/${t.si}${'siColor' in t ? `/${t.siColor}` : ''}`} alt={t.name} width="20" height="20" loading="lazy" class="si-icon" />
+                  )}
+                  {'svg' in t && (
+                    <span class="inline-icon" aria-hidden="true">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <Fragment set:html={t.svg} />
+                      </svg>
+                    </span>
+                  )}
                   <span>{t.name}</span>
                 </div>
               ))}
@@ -113,6 +162,20 @@ const techGroups = [
           </div>
         ))}
       </div>
+
+      <!-- Barra inferior de características -->
+      <div class="features-bar">
+        {features.map((f) => (
+          <div class="feature-item">
+            <div class="feature-icon" set:html={f.icon}></div>
+            <div class="feature-text">
+              <span class="feature-title">{f.title}</span>
+              <span class="feature-desc">{f.desc}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
     </div>
   </div>
 </section>
@@ -120,7 +183,7 @@ const techGroups = [
 <style>
   .skills { background: rgba(0, 0, 0, 0.15); }
 
-  /* ── Encabezado — mismo patrón que Proyectos / Servicios / Historia ── */
+  /* ── Encabezado ── */
   .skills-header {
     margin-bottom: 4rem;
   }
@@ -174,7 +237,6 @@ const techGroups = [
     border-color: rgba(45, 92, 255, 0.4);
   }
 
-  /* Barra superior — azul eléctrico para todos */
   .step-bar {
     position: absolute;
     top: 0; left: 0; right: 0;
@@ -192,7 +254,6 @@ const techGroups = [
     margin-bottom: 0.3rem;
   }
 
-  /* Número — azul eléctrico unificado */
   .step-num {
     width: 34px; height: 34px;
     border-radius: 50%;
@@ -205,7 +266,6 @@ const techGroups = [
     color: var(--accent);
   }
 
-  /* Icono — azul eléctrico unificado */
   .step-icon {
     width: 38px; height: 38px;
     border-radius: 10px;
@@ -239,70 +299,195 @@ const techGroups = [
     margin-bottom: 2rem;
   }
 
+  /* CSS Grid de 3 columnas para las tarjetas */
   .tech-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.2rem;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1.25rem !important;
   }
 
-  /* Columna — borde superior azul para todas */
+  /* Estilos de cada tarjeta de categoría */
   .tech-col {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-top: 2px solid rgba(45, 92, 255, 0.4);
-    border-radius: 12px;
-    padding: 1.4rem 1.2rem;
-    transition: background 0.3s, border-color 0.3s;
+    background: rgba(10, 16, 30, 0.65);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(45, 92, 255, 0.22);
+    border-radius: 14px;
+    padding: 1.4rem 1.4rem;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
   }
   .tech-col:hover {
-    background: rgba(45, 92, 255, 0.04);
-    border-color: rgba(45, 92, 255, 0.3);
-    border-top-color: var(--accent);
+    background: rgba(15, 24, 45, 0.75);
+    border-color: rgba(45, 92, 255, 0.45);
+    box-shadow: 0 8px 30px -5px rgba(45, 92, 255, 0.15);
+  }
+
+  .tech-col--wide {
+    grid-column: span 2 !important;
+  }
+
+  /* Encabezado con Icono + Label */
+  .col-header {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    margin-bottom: 1.2rem !important;
+  }
+
+  .col-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: rgba(45, 92, 255, 0.12);
+    border: 1px solid rgba(45, 92, 255, 0.3);
+    color: var(--accent, #3b82f6);
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0;
+  }
+
+  .col-icon :global(svg) {
+    width: 18px;
+    height: 18px;
+    color: #3b82f6;
   }
 
   .col-label {
-    display: block;
     font-family: var(--mono);
-    font-size: 0.65rem;
+    font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1rem;
+    color: #3b82f6;
   }
 
+  /* Grid interna para las pastillas/pills */
   .col-items {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+    width: 100%;
   }
 
+  /* Pastillas de tecnologías */
   .tech-item {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-    padding: 0.5rem 0.8rem;
-    border-radius: 8px;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 0.75rem;
+    padding: 0.65rem 0.9rem;
+    border-radius: 10px;
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    transition: background 0.2s, transform 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    transition: all 0.2s ease;
     cursor: default;
+    width: 100%;
+    box-sizing: border-box;
   }
   .tech-item:hover {
-    background: rgba(45, 92, 255, 0.08);
-    transform: translateX(4px);
+    background: rgba(45, 92, 255, 0.09);
+    border-color: rgba(45, 92, 255, 0.3);
+    transform: translateY(-2px);
   }
 
-  .tech-item img  { width: 24px; height: 24px; border-radius: 4px; flex-shrink: 0; }
-  .tech-item span { font-size: 0.88rem; font-weight: 500; color: var(--text); }
+  .tech-item img       { width: 22px; height: 22px; border-radius: 4px; flex-shrink: 0; }
+  .tech-item .si-icon  { width: 20px; height: 20px; border-radius: 3px; flex-shrink: 0; opacity: 0.9; }
+  .tech-item span      { font-size: 0.88rem; font-weight: 500; color: var(--text); }
+
+  .inline-icon {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* ── Barra inferior de características ── */
+  .features-bar {
+    margin-top: 1.25rem;
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    background: rgba(10, 16, 30, 0.65);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(45, 92, 255, 0.22);
+    border-radius: 14px;
+    padding: 1.25rem 0.5rem;
+  }
+
+  .feature-item {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 0.85rem;
+    padding: 0.4rem 1.2rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .feature-item:last-child {
+    border-right: none;
+  }
+
+  .feature-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: rgba(45, 92, 255, 0.1);
+    border: 1px solid rgba(45, 92, 255, 0.25);
+    color: #3b82f6;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0;
+  }
+
+  .feature-icon :global(svg) {
+    width: 20px;
+    height: 20px;
+    color: #3b82f6;
+  }
+
+  .feature-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .feature-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text, #fff);
+    line-height: 1.2;
+  }
+
+  .feature-desc {
+    font-size: 0.76rem;
+    color: var(--text-muted, #94a3b8);
+    line-height: 1.3;
+  }
 
   /* ── Responsive ── */
-  @media (max-width: 1100px) {
-    .steps-grid { grid-template-columns: repeat(2, 1fr); }
-    .tech-grid  { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 900px) {
+    .steps-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .tech-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .tech-col--wide { grid-column: span 2 !important; }
+    .features-bar {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 1rem;
+      padding: 1.25rem;
+    }
+    .feature-item { border-right: none; }
   }
-  @media (max-width: 600px) {
-    .steps-grid { grid-template-columns: 1fr; }
-    .tech-grid  { grid-template-columns: repeat(2, 1fr); }
+
+  @media (max-width: 550px) {
+    .steps-grid { grid-template-columns: 1fr !important; }
+    .tech-grid { grid-template-columns: 1fr !important; }
+    .tech-col--wide { grid-column: span 1 !important; }
+    .col-items { grid-template-columns: 1fr !important; }
+    .features-bar { grid-template-columns: 1fr !important; }
   }
 </style>
