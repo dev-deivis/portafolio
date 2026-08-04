@@ -1,0 +1,282 @@
+---
+/**
+ * ProjectCarousel.astro — Focus Rail 3D
+ *
+ * Props:
+ *   images   — array de rutas absolutas de asset (ej. '/assets/images/projects/foo/1.png')
+ *   projectId — slug del proyecto, usado para IDs únicos en el DOM
+ *
+ * Comportamiento:
+ *   - Imagen central: nítida, scale 1, sin blur
+ *   - Adyacentes: scale 0.84, blur progresivo, opacidad reducida (efecto profundidad)
+ *   - Click en imagen lateral → la trae al centro
+ *   - Flechas prev/next + contador "X / Y"
+ *   - Swipe/drag con pointer events (sin Draggable plugin)
+ *   - Transiciones con GSAP (ease power3.out)
+ */
+
+interface Props {
+  images:    string[];
+  projectId: string;
+}
+
+const { images, projectId } = Astro.props;
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<div class="cr" id={`cr-${projectId}`} data-carousel>
+  <!-- Stage — overflow:hidden aquí clip los slides laterales al 16:9 -->
+  <div class="cr-stage" role="region" aria-label="Galería de imágenes" data-stage>
+    {images.map((src, i) => (
+      <div
+        class="cr-slide"
+        data-idx={i}
+        aria-label={`Imagen ${i + 1} de ${images.length}`}
+        role="img"
+      >
+        <img
+          src={`${BASE}${src.startsWith('/') ? src : '/' + src}`}
+          alt={`Captura ${i + 1}`}
+          loading={i === 0 ? 'eager' : 'lazy'}
+          draggable="false"
+        />
+      </div>
+    ))}
+  </div>
+
+  <!-- Controles -->
+  <div class="cr-controls" aria-label="Navegación de galería">
+    <button class="cr-btn cr-prev" aria-label="Imagen anterior" data-prev>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M9 2.5L4.5 7L9 11.5" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <span class="cr-counter" aria-live="polite" data-counter>1 / {images.length}</span>
+
+    <button class="cr-btn cr-next" aria-label="Imagen siguiente" data-next>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M5 2.5L9.5 7L5 11.5" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  /* ── Contenedor raíz ── */
+  .cr {
+    width: 100%;
+    margin-bottom: 1.8rem;
+  }
+
+  /* ── Stage: 16:9, clips los slides laterales ── */
+  .cr-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(13, 14, 21, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y; /* permite scroll vertical en touch pero capturamos horizontal */
+  }
+
+  .cr-stage:active { cursor: grabbing; }
+
+  /* ── Slides — apilados en position:absolute ── */
+  .cr-slide {
+    position: absolute;
+    inset: 0;
+    will-change: transform, opacity, filter;
+    transform-origin: center center;
+  }
+
+  .cr-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  /* ── Controles debajo del stage ── */
+  .cr-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    margin-top: 0.65rem;
+  }
+
+  .cr-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+    flex-shrink: 0;
+  }
+
+  .cr-btn:hover {
+    border-color: rgba(255, 255, 255, 0.22);
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  .cr-btn:focus-visible {
+    outline: 2px solid var(--c-purple);
+    outline-offset: 2px;
+  }
+
+  .cr-counter {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    opacity: 0.55;
+    min-width: 36px;
+    text-align: center;
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+
+  /**
+   * Propiedades visuales para cada posición relativa al slide activo.
+   * offset = index - currentIndex
+   *
+   * La geometría de xPercent con scale 0.84 y overflow:hidden:
+   *   xPercent: 76 → el slide +1 empieza en ~806px de un container de 960px
+   *   → ~154px (16%) de peek en el borde derecho ✓
+   */
+  function slideProps(offset: number) {
+    const abs = Math.abs(offset);
+    const sign = offset >= 0 ? 1 : -1;
+
+    if (abs === 0) {
+      return {
+        xPercent: 0,
+        scale: 1,
+        opacity: 1,
+        filter: 'blur(0px)',
+        zIndex: 10,
+        pointerEvents: 'auto' as const,
+      };
+    }
+    if (abs === 1) {
+      return {
+        xPercent: sign * 76,
+        scale: 0.84,
+        opacity: 0.55,
+        filter: 'blur(3.5px)',
+        zIndex: 5,
+        pointerEvents: 'auto' as const,  // click para navegar
+      };
+    }
+    if (abs === 2) {
+      return {
+        xPercent: sign * 96,
+        scale: 0.70,
+        opacity: 0.18,
+        filter: 'blur(8px)',
+        zIndex: 2,
+        pointerEvents: 'none' as const,
+      };
+    }
+    // |offset| >= 3: fuera del stage, invisible
+    return {
+      xPercent: sign * 112,
+      scale: 0.60,
+      opacity: 0,
+      filter: 'blur(14px)',
+      zIndex: 0,
+      pointerEvents: 'none' as const,
+    };
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const stage   = root.querySelector<HTMLElement>('[data-stage]')!;
+    const slides  = Array.from(root.querySelectorAll<HTMLElement>('.cr-slide'));
+    const counter = root.querySelector<HTMLElement>('[data-counter]');
+    const prevBtn = root.querySelector<HTMLButtonElement>('[data-prev]');
+    const nextBtn = root.querySelector<HTMLButtonElement>('[data-next]');
+    const total   = slides.length;
+    let current   = 0;
+
+    /** Aplica las transformaciones GSAP a todos los slides */
+    function render(animated: boolean) {
+      slides.forEach((slide, i) => {
+        const props = slideProps(i - current);
+        if (animated) {
+          gsap.to(slide, { ...props, duration: 0.52, ease: 'power3.out' });
+        } else {
+          gsap.set(slide, props);
+        }
+      });
+      if (counter) counter.textContent = `${current + 1} / ${total}`;
+    }
+
+    /** Navega al slide N (con wrap circular) */
+    function goTo(n: number) {
+      current = ((n % total) + total) % total;
+      render(true);
+    }
+
+    // Estado inicial sin animación
+    render(false);
+
+    // ── Botones ────────────────────────────────────────────────────────
+    prevBtn?.addEventListener('click', () => goTo(current - 1));
+    nextBtn?.addEventListener('click', () => goTo(current + 1));
+
+    // ── Click en slide lateral → navegar a ese slide ──────────────────
+    slides.forEach((slide, i) => {
+      slide.addEventListener('click', () => {
+        if (i !== current) goTo(i);
+      });
+    });
+
+    // ── Swipe / drag con Pointer Events (sin plugin Draggable) ─────────
+    let dragStartX  = 0;
+    let isDragging  = false;
+    const THRESHOLD = 48; // px mínimo para considerar swipe
+
+    stage.addEventListener('pointerdown', (e) => {
+      dragStartX = e.clientX;
+      isDragging = true;
+      stage.setPointerCapture(e.pointerId);
+    });
+
+    stage.addEventListener('pointerup', (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      const delta = e.clientX - dragStartX;
+      if (delta < -THRESHOLD)      goTo(current + 1);  // swipe izquierda → siguiente
+      else if (delta > THRESHOLD)  goTo(current - 1);  // swipe derecha   → anterior
+    });
+
+    stage.addEventListener('pointercancel', () => { isDragging = false; });
+
+    // ── Teclado (cuando el root tiene foco) ───────────────────────────
+    root.setAttribute('tabindex', '0');
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(current - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); }
+    });
+  });
+</script>
